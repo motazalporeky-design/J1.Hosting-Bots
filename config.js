@@ -28,7 +28,7 @@ module.exports = {
         end: 65535     
     },
     // ========== إعدادات البانل ==========
-    panelPort: 24595,
+    panelPort: 8080,
     sessionSecret: 'mD8#xP92!kL5@vQ7$rN1zA4',
     siteName: 'J1 Hosting',
     siteUrl: 'https://j1-hosting-bots.fly.dev',
