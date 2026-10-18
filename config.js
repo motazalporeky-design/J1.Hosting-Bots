@@ -14,7 +14,7 @@ module.exports = {
     discord: {
         clientID: '1556566591058083860',// ايدي البوت
         clientSecret: '-B-1Y6cjqwtOjohHiF8HGJ36jTYZCDAr',// سيكريت البوت
-        callbackURL: 'http://lou.hidencloud.com:24595/auth/discord/callback'
+        callbackURL: 'https://j1-hosting-bots.fly.dev/auth/discord/callback'
     },
     
     // ========== نظام العملات ==========
@@ -31,7 +31,7 @@ module.exports = {
     panelPort: 24595,
     sessionSecret: 'mD8#xP92!kL5@vQ7$rN1zA4',
     siteName: 'J1 Hosting',
-    siteUrl: 'http://lou.hidencloud.com:24595',
+    siteUrl: 'https://j1-hosting-bots.fly.dev',
     
     // ========== حدود الرفع ==========
     maxUploadSize: 4024 * 4024 * 4024, // 100MB
