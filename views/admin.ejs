@@ -1,0 +1,2568 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>لوحة المالك - J1 Studio</title>
+
+    <link rel="stylesheet" href="/css/style.css">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+
+    <style>
+
+        /* =========================================================
+           J1 STUDIO - PREMIUM OWNER DASHBOARD
+           BLACK / WHITE / GRAY EDITION
+        ========================================================= */
+
+        :root {
+            --bg: #060606;
+            --bg-2: #0a0a0a;
+            --bg-3: #101010;
+
+            --card: rgba(18, 18, 18, .86);
+            --card-hover: rgba(25, 25, 25, .95);
+
+            --white: #ffffff;
+            --text: #f5f5f5;
+            --text-soft: #d0d0d0;
+            --muted: #8b8b8b;
+            --muted-dark: #666666;
+
+            --border: rgba(255,255,255,.08);
+            --border-hover: rgba(255,255,255,.18);
+
+            --danger: #ef4444;
+            --warning: #bdbdbd;
+
+            --shadow:
+                0 25px 70px rgba(0,0,0,.50);
+
+            --glow:
+                0 0 35px rgba(255,255,255,.035);
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            margin: 0;
+            min-height: 100vh;
+
+            font-family: "Cairo", sans-serif;
+
+            color: var(--text);
+
+            background:
+                radial-gradient(
+                    circle at 10% 10%,
+                    rgba(255,255,255,.035),
+                    transparent 28%
+                ),
+                radial-gradient(
+                    circle at 90% 20%,
+                    rgba(255,255,255,.025),
+                    transparent 25%
+                ),
+                radial-gradient(
+                    circle at 50% 100%,
+                    rgba(255,255,255,.025),
+                    transparent 35%
+                ),
+                linear-gradient(
+                    135deg,
+                    #030303,
+                    #0a0a0a 45%,
+                    #050505
+                );
+
+            overflow-x: hidden;
+        }
+
+        /* =========================================================
+           GRID BACKGROUND
+        ========================================================= */
+
+        body::before {
+            content: "";
+
+            position: fixed;
+            inset: 0;
+
+            background-image:
+                linear-gradient(
+                    rgba(255,255,255,.018) 1px,
+                    transparent 1px
+                ),
+                linear-gradient(
+                    90deg,
+                    rgba(255,255,255,.018) 1px,
+                    transparent 1px
+                );
+
+            background-size: 45px 45px;
+
+            mask-image:
+                linear-gradient(
+                    to bottom,
+                    transparent,
+                    black 20%,
+                    black 80%,
+                    transparent
+                );
+
+            pointer-events: none;
+            z-index: -2;
+        }
+
+        /* =========================================================
+           AMBIENT LIGHT
+        ========================================================= */
+
+        body::after {
+            content: "";
+
+            position: fixed;
+
+            width: 500px;
+            height: 500px;
+
+            border-radius: 50%;
+
+            background: rgba(255,255,255,.025);
+
+            filter: blur(130px);
+
+            top: -220px;
+            left: -180px;
+
+            pointer-events: none;
+            z-index: -1;
+        }
+
+        /* =========================================================
+           NAVBAR
+        ========================================================= */
+
+        .navbar {
+            position: sticky;
+            top: 0;
+
+            z-index: 1000;
+
+            background:
+                rgba(6,6,6,.78);
+
+            border-bottom:
+                1px solid var(--border);
+
+            backdrop-filter: blur(22px);
+            -webkit-backdrop-filter: blur(22px);
+
+            box-shadow:
+                0 10px 40px rgba(0,0,0,.35);
+        }
+
+        .navbar .container {
+            min-height: 78px;
+
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+
+            gap: 20px;
+        }
+
+        .logo {
+            display: inline-flex;
+            align-items: center;
+            gap: 11px;
+
+            color: var(--white);
+
+            text-decoration: none;
+
+            font-size: 20px;
+            font-weight: 900;
+
+            transition: .25s ease;
+        }
+
+        .logo:hover {
+            color: #dcdcdc;
+
+            transform: translateY(-1px);
+        }
+
+        .nav-menu {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        /* =========================================================
+           GENERAL CONTAINER
+        ========================================================= */
+
+        .container {
+            width: min(1400px, calc(100% - 36px));
+
+            margin: auto;
+        }
+
+        /* =========================================================
+           BUTTONS
+        ========================================================= */
+
+        .btn {
+            border: 1px solid rgba(255,255,255,.10);
+
+            border-radius: 12px;
+
+            padding: 10px 17px;
+
+            font-family: "Cairo", sans-serif;
+
+            font-weight: 800;
+
+            color: white;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #242424,
+                    #111111
+                );
+
+            text-decoration: none;
+
+            cursor: pointer;
+
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+
+            gap: 7px;
+
+            transition: .25s ease;
+
+            position: relative;
+
+            overflow: hidden;
+
+            box-shadow:
+                inset 0 1px 0 rgba(255,255,255,.04);
+        }
+
+        .btn::before {
+            content: "";
+
+            position: absolute;
+
+            width: 80%;
+            height: 100%;
+
+            left: -110%;
+            top: 0;
+
+            background:
+                linear-gradient(
+                    90deg,
+                    transparent,
+                    rgba(255,255,255,.10),
+                    transparent
+                );
+
+            transform: skewX(-20deg);
+
+            transition: .5s ease;
+        }
+
+        .btn:hover::before {
+            left: 130%;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+
+            border-color:
+                rgba(255,255,255,.22);
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #303030,
+                    #161616
+                );
+
+            box-shadow:
+                0 12px 30px rgba(0,0,0,.40),
+                0 0 20px rgba(255,255,255,.025);
+        }
+
+        .btn-outline {
+            background:
+                rgba(15,15,15,.65);
+
+            border:
+                1px solid rgba(255,255,255,.10);
+        }
+
+        .btn-primary {
+            background:
+                linear-gradient(
+                    135deg,
+                    #f5f5f5,
+                    #a8a8a8
+                );
+
+            color: #050505;
+
+            border-color:
+                rgba(255,255,255,.25);
+        }
+
+        .btn-primary:hover {
+            background:
+                linear-gradient(
+                    135deg,
+                    #ffffff,
+                    #cfcfcf
+                );
+
+            color: #000;
+        }
+
+        .btn-danger {
+            background:
+                linear-gradient(
+                    135deg,
+                    #3a3a3a,
+                    #181818
+                );
+
+            border-color:
+                rgba(255,255,255,.10);
+        }
+
+        .btn-danger:hover {
+            background:
+                linear-gradient(
+                    135deg,
+                    #ef4444,
+                    #991b1b
+                );
+
+            border-color:
+                rgba(239,68,68,.30);
+        }
+
+        .btn-warning {
+            background:
+                linear-gradient(
+                    135deg,
+                    #353535,
+                    #181818
+                );
+
+            color: #eeeeee;
+        }
+
+        .btn-info {
+            background:
+                linear-gradient(
+                    135deg,
+                    #303030,
+                    #151515
+                );
+        }
+
+        .btn-success {
+            background:
+                linear-gradient(
+                    135deg,
+                    #eeeeee,
+                    #999999
+                );
+
+            color: #050505;
+        }
+
+        .btn-sm {
+            min-width: 42px;
+
+            padding: 8px 11px;
+
+            border-radius: 10px;
+
+            font-size: 12px;
+        }
+
+        /* =========================================================
+           OWNER INFO
+        ========================================================= */
+
+        .info-box {
+            position: relative;
+
+            margin-top: 35px;
+            margin-bottom: 28px;
+
+            padding: 25px 27px;
+
+            border-radius: 20px;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    rgba(28,28,28,.88),
+                    rgba(9,9,9,.88)
+                );
+
+            border:
+                1px solid var(--border);
+
+            box-shadow:
+                var(--shadow),
+                var(--glow);
+
+            overflow: hidden;
+        }
+
+        .info-box::before {
+            content: "";
+
+            position: absolute;
+
+            top: 0;
+            right: 0;
+
+            width: 4px;
+            height: 100%;
+
+            background:
+                linear-gradient(
+                    to bottom,
+                    #ffffff,
+                    #777777,
+                    transparent
+                );
+
+            box-shadow:
+                0 0 20px rgba(255,255,255,.15);
+        }
+
+        .info-box h3 {
+            margin: 0 0 15px;
+
+            color: #ffffff !important;
+
+            font-size: 18px;
+
+            font-weight: 900;
+
+            text-shadow:
+                0 0 18px rgba(255,255,255,.08);
+        }
+
+        .info-box p {
+            margin: 8px 0;
+
+            color: var(--text-soft);
+
+            font-size: 14px;
+        }
+
+        .info-box strong {
+            color: #ffffff;
+        }
+
+        /* =========================================================
+           BADGES
+        ========================================================= */
+
+        .badge {
+            display: inline-flex;
+
+            align-items: center;
+            justify-content: center;
+
+            padding: 5px 11px;
+
+            border-radius: 999px;
+
+            font-size: 11px;
+
+            font-weight: 800;
+
+            border: 1px solid rgba(255,255,255,.10);
+        }
+
+        .badge-owner {
+            color: #050505;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #ffffff,
+                    #a7a7a7
+                );
+
+            box-shadow:
+                0 0 15px rgba(255,255,255,.08);
+        }
+
+        .badge-admin {
+            color: #ffffff;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #444444,
+                    #1b1b1b
+                );
+        }
+
+        .badge-banned {
+            color: #ffffff;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #444444,
+                    #111111
+                );
+
+            border-color:
+                rgba(255,255,255,.16);
+        }
+
+        /* =========================================================
+           STATS
+        ========================================================= */
+
+        .stats-grid {
+            display: grid;
+
+            grid-template-columns:
+                repeat(5, minmax(0, 1fr));
+
+            gap: 16px;
+
+            margin-bottom: 45px;
+        }
+
+        .stat-card {
+            min-height: 145px;
+
+            padding: 23px;
+
+            border-radius: 20px;
+
+            background:
+                linear-gradient(
+                    145deg,
+                    rgba(25,25,25,.90),
+                    rgba(9,9,9,.90)
+                );
+
+            border:
+                1px solid var(--border);
+
+            box-shadow:
+                0 20px 50px rgba(0,0,0,.30);
+
+            display: flex;
+            align-items: center;
+
+            gap: 17px;
+
+            position: relative;
+
+            overflow: hidden;
+
+            transition: .3s ease;
+        }
+
+        .stat-card::before {
+            content: "";
+
+            position: absolute;
+
+            width: 110px;
+            height: 110px;
+
+            border-radius: 50%;
+
+            background:
+                rgba(255,255,255,.025);
+
+            filter: blur(25px);
+
+            left: -40px;
+            bottom: -40px;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-5px);
+
+            border-color:
+                rgba(255,255,255,.18);
+
+            background:
+                linear-gradient(
+                    145deg,
+                    rgba(34,34,34,.95),
+                    rgba(11,11,11,.95)
+                );
+
+            box-shadow:
+                0 25px 60px rgba(0,0,0,.40),
+                0 0 30px rgba(255,255,255,.025);
+        }
+
+        .stat-icon {
+            width: 58px;
+            height: 58px;
+
+            flex-shrink: 0;
+
+            border-radius: 17px;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            font-size: 25px;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    rgba(255,255,255,.10),
+                    rgba(255,255,255,.025)
+                );
+
+            border:
+                1px solid rgba(255,255,255,.10);
+
+            box-shadow:
+                inset 0 0 20px rgba(255,255,255,.025);
+        }
+
+        .stat-content h3 {
+            margin: 0 0 3px;
+
+            font-size: 25px;
+
+            font-weight: 900;
+
+            color: #ffffff;
+        }
+
+        .stat-content p {
+            margin: 0;
+
+            color: var(--muted);
+
+            font-size: 12px;
+
+            font-weight: 600;
+        }
+
+        /* =========================================================
+           SECTION HEADER
+        ========================================================= */
+
+        .section-header {
+            display: flex;
+            align-items: center;
+
+            margin: 42px 0 17px;
+
+            position: relative;
+        }
+
+        .section-header h2 {
+            margin: 0;
+
+            font-size: 20px;
+
+            font-weight: 900;
+
+            color: #ffffff;
+
+            display: flex;
+            align-items: center;
+            gap: 9px;
+        }
+
+        .section-header h2::after {
+            content: "";
+
+            width: 45px;
+            height: 3px;
+
+            border-radius: 20px;
+
+            background:
+                linear-gradient(
+                    90deg,
+                    #ffffff,
+                    transparent
+                );
+
+            margin-right: 8px;
+        }
+
+        /* =========================================================
+           TABLE
+        ========================================================= */
+
+        .table-container {
+            width: 100%;
+
+            overflow-x: auto;
+
+            border-radius: 20px;
+
+            background:
+                rgba(10,10,10,.82);
+
+            border:
+                1px solid var(--border);
+
+            box-shadow:
+                0 25px 65px rgba(0,0,0,.32);
+
+            scrollbar-width: thin;
+
+            scrollbar-color:
+                #555555
+                #090909;
+        }
+
+        table {
+            width: 100%;
+
+            border-collapse: separate;
+
+            border-spacing: 0;
+
+            min-width: 850px;
+        }
+
+        thead {
+            background:
+                linear-gradient(
+                    90deg,
+                    rgba(255,255,255,.055),
+                    rgba(10,10,10,.55)
+                );
+        }
+
+        th {
+            padding: 17px 16px;
+
+            color: #bdbdbd;
+
+            font-size: 12px;
+
+            font-weight: 800;
+
+            text-align: right;
+
+            white-space: nowrap;
+
+            border-bottom:
+                1px solid var(--border);
+        }
+
+        td {
+            padding: 16px;
+
+            color: #c8c8c8;
+
+            font-size: 13px;
+
+            border-bottom:
+                1px solid rgba(255,255,255,.035);
+
+            white-space: nowrap;
+
+            transition: .2s ease;
+        }
+
+        tbody tr {
+            transition: .25s ease;
+        }
+
+        tbody tr:hover {
+            background:
+                rgba(255,255,255,.025);
+        }
+
+        tbody tr:last-child td {
+            border-bottom: none;
+        }
+
+        td img {
+            border:
+                2px solid rgba(255,255,255,.16);
+
+            box-shadow:
+                0 0 15px rgba(255,255,255,.04);
+        }
+
+        /* =========================================================
+           STATUS
+        ========================================================= */
+
+        .server-status {
+            display: inline-flex;
+
+            align-items: center;
+
+            gap: 6px;
+
+            padding: 6px 11px;
+
+            border-radius: 999px;
+
+            font-size: 11px;
+
+            font-weight: 800;
+        }
+
+        .status-running {
+            color: #ffffff;
+
+            background:
+                rgba(255,255,255,.08);
+
+            border:
+                1px solid rgba(255,255,255,.16);
+
+            box-shadow:
+                0 0 18px rgba(255,255,255,.03);
+        }
+
+        .status-stopped {
+            color: #999999;
+
+            background:
+                rgba(100,100,100,.08);
+
+            border:
+                1px solid rgba(100,100,100,.16);
+        }
+
+        /* =========================================================
+           ACTION BUTTONS
+        ========================================================= */
+
+        .action-buttons {
+            display: flex;
+
+            align-items: center;
+
+            gap: 7px;
+
+            flex-wrap: wrap;
+        }
+
+        /* =========================================================
+           MODAL
+        ========================================================= */
+
+        .modal {
+            display: none;
+
+            position: fixed;
+
+            inset: 0;
+
+            width: 100%;
+            height: 100%;
+
+            background:
+                rgba(0,0,0,.84);
+
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+
+            z-index: 9999;
+
+            align-items: center;
+            justify-content: center;
+
+            padding: 20px;
+        }
+
+        .modal.active {
+            display: flex;
+
+            animation: modalFade .25s ease;
+        }
+
+        @keyframes modalFade {
+            from {
+                opacity: 0;
+            }
+
+            to {
+                opacity: 1;
+            }
+        }
+
+        .modal-content {
+            position: relative;
+
+            width: 100%;
+            max-width: 500px;
+
+            padding: 30px;
+
+            border-radius: 24px;
+
+            background:
+                linear-gradient(
+                    145deg,
+                    rgba(30,30,30,.97),
+                    rgba(7,7,7,.98)
+                );
+
+            border:
+                1px solid rgba(255,255,255,.12);
+
+            box-shadow:
+                0 35px 100px rgba(0,0,0,.70),
+                0 0 50px rgba(255,255,255,.025);
+
+            animation:
+                modalOpen .3s cubic-bezier(.2,.8,.2,1);
+        }
+
+        .modal-content::before {
+            content: "";
+
+            position: absolute;
+
+            top: 0;
+            left: 15%;
+            right: 15%;
+
+            height: 2px;
+
+            background:
+                linear-gradient(
+                    90deg,
+                    transparent,
+                    #ffffff,
+                    #777777,
+                    transparent
+                );
+
+            box-shadow:
+                0 0 20px rgba(255,255,255,.20);
+        }
+
+        @keyframes modalOpen {
+            from {
+                opacity: 0;
+                transform:
+                    translateY(25px)
+                    scale(.96);
+            }
+
+            to {
+                opacity: 1;
+                transform:
+                    translateY(0)
+                    scale(1);
+            }
+        }
+
+        .modal-content h2 {
+            margin-top: 0;
+
+            color: #ffffff;
+
+            font-size: 21px;
+
+            font-weight: 900;
+        }
+
+        .modal-content .form-group {
+            margin-bottom: 18px;
+        }
+
+        .modal-content label {
+            display: block;
+
+            margin-bottom: 8px;
+
+            color: #bdbdbd;
+
+            font-size: 13px;
+
+            font-weight: 700;
+        }
+
+        .modal-content input {
+            width: 100%;
+
+            height: 50px;
+
+            padding: 0 15px;
+
+            border-radius: 12px;
+
+            border:
+                1px solid rgba(255,255,255,.09);
+
+            background:
+                rgba(2,2,2,.78);
+
+            color: white;
+
+            outline: none;
+
+            font-family: "Cairo", sans-serif;
+
+            transition: .25s ease;
+        }
+
+        .modal-content input:focus {
+            border-color:
+                rgba(255,255,255,.35);
+
+            box-shadow:
+                0 0 0 4px rgba(255,255,255,.035),
+                0 0 25px rgba(255,255,255,.025);
+        }
+
+        .modal-content input::placeholder {
+            color: #555555;
+        }
+
+        /* =========================================================
+           OWNER BADGE
+        ========================================================= */
+
+        .owner-badge {
+            display: inline-flex;
+
+            align-items: center;
+
+            margin-right: 6px;
+
+            padding: 2px 7px;
+
+            border-radius: 999px;
+
+            font-size: 9px;
+
+            font-weight: 800;
+
+            color: #050505;
+
+            background:
+                #ffffff;
+
+            vertical-align: middle;
+        }
+
+        /* =========================================================
+           SCROLLBAR
+        ========================================================= */
+
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: #050505;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background:
+                linear-gradient(
+                    #555555,
+                    #222222
+                );
+
+            border-radius: 20px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: #888888;
+        }
+
+        /* =========================================================
+           MOBILE
+        ========================================================= */
+
+        @media (max-width: 1100px) {
+
+            .stats-grid {
+                grid-template-columns:
+                    repeat(3, minmax(0, 1fr));
+            }
+        }
+
+        @media (max-width: 750px) {
+
+            .container {
+                width: min(
+                    100% - 24px,
+                    1400px
+                );
+            }
+
+            .navbar .container {
+                min-height: 70px;
+            }
+
+            .logo {
+                font-size: 16px;
+            }
+
+            .nav-menu .btn {
+                padding: 8px 11px;
+
+                font-size: 11px;
+            }
+
+            .stats-grid {
+                grid-template-columns:
+                    repeat(2, minmax(0, 1fr));
+
+                gap: 12px;
+            }
+
+            .stat-card {
+                min-height: 125px;
+
+                padding: 17px;
+            }
+
+            .stat-icon {
+                width: 48px;
+                height: 48px;
+
+                font-size: 21px;
+            }
+
+            .stat-content h3 {
+                font-size: 21px;
+            }
+
+            .info-box {
+                padding: 21px;
+            }
+        }
+
+        @media (max-width: 480px) {
+
+            .stats-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .nav-menu {
+                gap: 5px;
+            }
+
+            .nav-menu .btn {
+                font-size: 0;
+            }
+
+            .nav-menu .btn::after {
+                font-size: 15px;
+            }
+
+            .section-header h2 {
+                font-size: 17px;
+            }
+
+            .modal-content {
+                padding: 23px;
+            }
+        }
+
+    </style>
+</head>
+
+<body>
+
+    <!-- =========================================================
+         NAVBAR
+    ========================================================= -->
+
+    <nav class="navbar">
+
+        <div class="container">
+
+            <a href="/dashboard" class="logo">
+                👑 لوحة المالك
+            </a>
+
+            <div class="nav-menu">
+
+                <a
+                    href="/dashboard"
+                    class="btn btn-outline"
+                >
+                    🏠 لوحة التحكم
+                </a>
+
+                <a
+                    href="/logout"
+                    class="btn btn-outline"
+                >
+                    🚪 تسجيل خروج
+                </a>
+
+            </div>
+
+        </div>
+
+    </nav>
+
+
+    <main class="container">
+
+        <!-- =====================================================
+             OWNER INFORMATION
+        ====================================================== -->
+
+        <div class="info-box">
+
+            <h3>
+                👑 معلومات المالك
+            </h3>
+
+            <p>
+                <strong>المالك:</strong>
+                <%= user.username %>
+
+                <% if (user.discordId) { %>
+                    <span style="color:#888;">
+                        (<%= user.discordId %>)
+                    </span>
+                <% } %>
+            </p>
+
+            <p>
+                <strong>البريد:</strong>
+                <%= user.email || '—' %>
+            </p>
+
+            <p>
+                <strong>الصلاحية:</strong>
+
+                <span class="badge badge-owner">
+                    مالك كامل
+                </span>
+            </p>
+
+        </div>
+
+
+        <!-- =====================================================
+             STATISTICS
+        ====================================================== -->
+
+        <div class="stats-grid">
+
+            <div class="stat-card">
+
+                <div class="stat-icon">
+                    👥
+                </div>
+
+                <div class="stat-content">
+
+                    <h3>
+                        <%= stats.totalUsers || 0 %>
+                    </h3>
+
+                    <p>
+                        المستخدمين
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <div class="stat-card">
+
+                <div class="stat-icon">
+                    🖥️
+                </div>
+
+                <div class="stat-content">
+
+                    <h3>
+                        <%= stats.totalServers || 0 %>
+                    </h3>
+
+                    <p>
+                        السيرفرات
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <div class="stat-card">
+
+                <div class="stat-icon">
+                    ⚪
+                </div>
+
+                <div class="stat-content">
+
+                    <h3>
+                        <%= stats.runningServers || 0 %>
+                    </h3>
+
+                    <p>
+                        قيد التشغيل
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <div class="stat-card">
+
+                <div class="stat-icon">
+                    💰
+                </div>
+
+                <div class="stat-content">
+
+                    <h3>
+                        <%= stats.totalCoins || 0 %>
+                    </h3>
+
+                    <p>
+                        إجمالي العملات
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <div class="stat-card">
+
+                <div class="stat-icon">
+                    🔌
+                </div>
+
+                <div class="stat-content">
+
+                    <h3>
+                        <%= stats.usedPorts || 0 %>
+                        /
+                        <%= (stats.usedPorts || 0) + (stats.availablePorts || 0) %>
+                    </h3>
+
+                    <p>
+                        المنافذ
+                    </p>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- =====================================================
+             USERS
+        ====================================================== -->
+
+        <div class="section-header">
+
+            <h2>
+                👥 إدارة المستخدمين
+            </h2>
+
+        </div>
+
+
+        <div class="table-container">
+
+            <table>
+
+                <thead>
+
+                    <tr>
+
+                        <th>المستخدم</th>
+                        <th>البريد</th>
+                        <th>العملات</th>
+                        <th>السيرفرات</th>
+                        <th>الصلاحيات</th>
+                        <th>الحالة</th>
+                        <th>إجراءات</th>
+
+                    </tr>
+
+                </thead>
+
+
+                <tbody>
+
+                    <% if (users && users.length > 0) { %>
+
+                        <% users.forEach(function(u) { %>
+
+                            <tr>
+
+                                <td>
+
+                                    <div
+                                        style="
+                                            display:flex;
+                                            align-items:center;
+                                            gap:10px;
+                                        "
+                                    >
+
+                                        <% if (u.discordId) { %>
+
+                                            <img
+                                                src="https://cdn.discordapp.com/avatars/<%= u.discordId %>/<%= u.discordAvatar %>.png"
+                                                style="
+                                                    width:36px;
+                                                    height:36px;
+                                                    border-radius:50%;
+                                                    object-fit:cover;
+                                                "
+                                                onerror="
+                                                    this.src='https://ui-avatars.com/api/?name='
+                                                    + encodeURIComponent('<%= u.username %>')
+                                                    + '&background=222222&color=fff'
+                                                "
+                                            >
+
+                                        <% } else { %>
+
+                                            <img
+                                                src="https://ui-avatars.com/api/?name=<%= encodeURIComponent(u.username) %>&background=222222&color=fff"
+                                                style="
+                                                    width:36px;
+                                                    height:36px;
+                                                    border-radius:50%;
+                                                "
+                                            >
+
+                                        <% } %>
+
+
+                                        <div>
+
+                                            <div
+                                                style="
+                                                    color:#f4f4f4;
+                                                    font-weight:800;
+                                                "
+                                            >
+                                                <%= u.username %>
+
+                                                <% if (u._id.toString() === user._id.toString()) { %>
+
+                                                    <span class="owner-badge">
+                                                        أنت
+                                                    </span>
+
+                                                <% } %>
+
+                                            </div>
+
+                                        </div>
+
+                                    </div>
+
+                                </td>
+
+
+                                <td>
+                                    <%= u.email || '—' %>
+                                </td>
+
+
+                                <td>
+                                    <span style="color:#eeeeee;">
+                                        💰
+                                    </span>
+
+                                    <%= u.coins || 0 %>
+                                </td>
+
+
+                                <td>
+                                    <%= u.maxServers === 999999
+                                        ? '∞'
+                                        : (u.maxServers || 0)
+                                    %>
+                                </td>
+
+
+                                <td>
+
+                                    <% if (u.isOwner) { %>
+
+                                        <span class="badge badge-owner">
+                                            مالك
+                                        </span>
+
+                                    <% } else if (u.isAdmin) { %>
+
+                                        <span class="badge badge-admin">
+                                            مشرف
+                                        </span>
+
+                                    <% } else { %>
+
+                                        <span style="color:#777;">
+                                            مستخدم
+                                        </span>
+
+                                    <% } %>
+
+                                </td>
+
+
+                                <td>
+
+                                    <% if (u.isBanned) { %>
+
+                                        <span class="badge badge-banned">
+                                            محظور
+                                        </span>
+
+                                    <% } else { %>
+
+                                        <span
+                                            style="
+                                                color:#dddddd;
+                                                font-weight:700;
+                                            "
+                                        >
+                                            ● نشط
+                                        </span>
+
+                                    <% } %>
+
+                                </td>
+
+
+                                <td>
+
+                                    <div class="action-buttons">
+
+                                        <button
+                                            class="btn btn-sm btn-primary"
+                                            onclick="
+                                                addCoins(
+                                                    '<%= u._id %>',
+                                                    '<%= u.username %>'
+                                                )
+                                            "
+                                        >
+                                            💰
+                                        </button>
+
+
+                                        <button
+                                            class="btn btn-sm btn-warning"
+                                            onclick="
+                                                editLimits(
+                                                    '<%= u._id %>',
+                                                    '<%= u.username %>',
+                                                    <%= u.maxServers || 2 %>
+                                                )
+                                            "
+                                        >
+                                            ⚙️
+                                        </button>
+
+
+                                        <% if (
+                                            u._id.toString() !== user._id.toString()
+                                            &&
+                                            !u.isOwner
+                                        ) { %>
+
+                                            <button
+                                                class="btn btn-sm <%= u.isAdmin ? 'btn-danger' : 'btn-info' %>"
+                                                onclick="
+                                                    toggleAdmin(
+                                                        '<%= u._id %>',
+                                                        '<%= u.username %>',
+                                                        <%= u.isAdmin || false %>
+                                                    )
+                                                "
+                                            >
+                                                <%= u.isAdmin ? '⬇️' : '⬆️' %>
+                                            </button>
+
+
+                                            <button
+                                                class="btn btn-sm <%= u.isBanned ? 'btn-success' : 'btn-danger' %>"
+                                                onclick="
+                                                    toggleBan(
+                                                        '<%= u._id %>',
+                                                        '<%= u.username %>',
+                                                        <%= u.isBanned || false %>
+                                                    )
+                                                "
+                                            >
+                                                <%= u.isBanned ? '✅' : '🚫' %>
+                                            </button>
+
+                                        <% } %>
+
+                                    </div>
+
+                                </td>
+
+                            </tr>
+
+                        <% }); %>
+
+
+                    <% } else { %>
+
+                        <tr>
+
+                            <td
+                                colspan="7"
+                                style="
+                                    text-align:center;
+                                    padding:40px;
+                                    color:#777;
+                                "
+                            >
+                                لا يوجد مستخدمين
+                            </td>
+
+                        </tr>
+
+                    <% } %>
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+
+        <!-- =====================================================
+             SERVERS
+        ====================================================== -->
+
+        <div class="section-header">
+
+            <h2>
+                🖥️ جميع السيرفرات
+            </h2>
+
+        </div>
+
+
+        <div class="table-container">
+
+            <table>
+
+                <thead>
+
+                    <tr>
+
+                        <th>الاسم</th>
+                        <th>المالك</th>
+                        <th>المنفذ</th>
+                        <th>الخطة</th>
+                        <th>الحالة</th>
+                        <th>إجراءات</th>
+
+                    </tr>
+
+                </thead>
+
+
+                <tbody>
+
+                    <% if (servers && servers.length > 0) { %>
+
+                        <% servers.forEach(function(s) { %>
+
+                            <tr>
+
+                                <td>
+                                    <strong style="color:#eeeeee;">
+                                        <%= s.name || '—' %>
+                                    </strong>
+                                </td>
+
+
+                                <td>
+                                    <%= (s.owner && s.owner.username)
+                                        ? s.owner.username
+                                        : '—'
+                                    %>
+                                </td>
+
+
+                                <td>
+                                    <span style="color:#dddddd;">
+                                        :<%= s.port || '—' %>
+                                    </span>
+                                </td>
+
+
+                                <td>
+
+                                    <% if (s.plan) { %>
+
+                                        <% if (s.plan === 'weekly') { %>
+
+                                            <span class="badge badge-owner">
+                                                أسبوعية
+                                            </span>
+
+                                        <% } else if (s.plan === 'biweekly') { %>
+
+                                            <span
+                                                class="badge"
+                                                style="
+                                                    background:rgba(255,255,255,.07);
+                                                    color:#d0d0d0;
+                                                "
+                                            >
+                                                أسبوعين
+                                            </span>
+
+                                        <% } else if (s.plan === 'monthly') { %>
+
+                                            <span
+                                                class="badge"
+                                                style="
+                                                    background:rgba(255,255,255,.10);
+                                                    color:#eeeeee;
+                                                "
+                                            >
+                                                شهرية
+                                            </span>
+
+                                        <% } else { %>
+
+                                            <%= s.plan %>
+
+                                        <% } %>
+
+                                    <% } else { %>
+
+                                        <span style="color:#666;">
+                                            غير محدد
+                                        </span>
+
+                                    <% } %>
+
+                                </td>
+
+
+                                <td>
+
+                                    <span
+                                        class="server-status status-<%= s.status || 'stopped' %>"
+                                    >
+
+                                        <%= s.status === 'running'
+                                            ? '⚪ يعمل'
+                                            : '⚫ متوقف'
+                                        %>
+
+                                    </span>
+
+                                </td>
+
+
+                                <td>
+
+                                    <div class="action-buttons">
+
+                                        <a
+                                            href="/servers/<%= s._id %>"
+                                            class="btn btn-sm"
+                                        >
+                                            🔧 عرض
+                                        </a>
+
+
+                                        <button
+                                            class="btn btn-sm btn-danger"
+                                            onclick="
+                                                deleteServer(
+                                                    '<%= s._id %>',
+                                                    '<%= s.name || 'بدون اسم' %>'
+                                                )
+                                            "
+                                        >
+                                            🗑️
+                                        </button>
+
+                                    </div>
+
+                                </td>
+
+                            </tr>
+
+                        <% }); %>
+
+
+                    <% } else { %>
+
+                        <tr>
+
+                            <td
+                                colspan="6"
+                                style="
+                                    text-align:center;
+                                    padding:40px;
+                                    color:#777;
+                                "
+                            >
+                                لا يوجد سيرفرات
+                            </td>
+
+                        </tr>
+
+                    <% } %>
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+
+        <!-- =====================================================
+             TRANSACTIONS
+        ====================================================== -->
+
+        <div class="section-header">
+
+            <h2>
+                📋 آخر العمليات
+            </h2>
+
+        </div>
+
+
+        <div class="table-container">
+
+            <table>
+
+                <thead>
+
+                    <tr>
+
+                        <th>من</th>
+                        <th>إلى</th>
+                        <th>المبلغ</th>
+                        <th>السبب</th>
+                        <th>التاريخ</th>
+
+                    </tr>
+
+                </thead>
+
+
+                <tbody>
+
+                    <% if (transactions && transactions.length > 0) { %>
+
+                        <% transactions.forEach(function(tx) { %>
+
+                            <tr>
+
+                                <td>
+                                    <%= (tx.from && tx.from.username)
+                                        ? tx.from.username
+                                        : 'النظام'
+                                    %>
+                                </td>
+
+
+                                <td>
+                                    <%= (tx.to && tx.to.username)
+                                        ? tx.to.username
+                                        : '—'
+                                    %>
+                                </td>
+
+
+                                <td>
+
+                                    <span style="color:#eeeeee;">
+                                        💰
+                                    </span>
+
+                                    <%= tx.amount || 0 %>
+
+                                </td>
+
+
+                                <td>
+                                    <%= tx.reason || '—' %>
+                                </td>
+
+
+                                <td>
+                                    <span style="color:#777;">
+                                        <%= tx.createdAt
+                                            ? new Date(
+                                                tx.createdAt
+                                            ).toLocaleString('ar')
+                                            : '—'
+                                        %>
+                                    </span>
+                                </td>
+
+                            </tr>
+
+                        <% }); %>
+
+
+                    <% } else { %>
+
+                        <tr>
+
+                            <td
+                                colspan="5"
+                                style="
+                                    text-align:center;
+                                    padding:40px;
+                                    color:#777;
+                                "
+                            >
+                                لا يوجد عمليات
+                            </td>
+
+                        </tr>
+
+                    <% } %>
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+        <div style="height:50px;"></div>
+
+    </main>
+
+
+    <!-- =========================================================
+         ADD COINS MODAL
+    ========================================================= -->
+
+    <div
+        id="coinsModal"
+        class="modal"
+    >
+
+        <div class="modal-content">
+
+            <h2>
+                💰 إضافة عملات
+            </h2>
+
+            <form id="coinsForm">
+
+                <input
+                    type="hidden"
+                    id="coinsUserId"
+                >
+
+
+                <div class="form-group">
+
+                    <label>
+                        المستخدم:
+                        <span
+                            id="coinsUsername"
+                            style="color:#ffffff;"
+                        ></span>
+                    </label>
+
+                </div>
+
+
+                <div class="form-group">
+
+                    <label>
+                        عدد العملات
+                    </label>
+
+                    <input
+                        type="number"
+                        id="coinsAmount"
+                        required
+                        min="1"
+                        placeholder="مثال: 100"
+                    >
+
+                </div>
+
+
+                <div class="form-group">
+
+                    <label>
+                        السبب
+                    </label>
+
+                    <input
+                        type="text"
+                        id="coinsReason"
+                        required
+                        placeholder="سبب الإضافة"
+                    >
+
+                </div>
+
+
+                <div
+                    style="
+                        display:flex;
+                        gap:10px;
+                        margin-top:22px;
+                    "
+                >
+
+                    <button
+                        type="submit"
+                        class="btn btn-primary"
+                        style="flex:1;"
+                    >
+                        💰 إضافة
+                    </button>
+
+
+                    <button
+                        type="button"
+                        class="btn btn-outline"
+                        onclick="closeModal()"
+                        style="flex:1;"
+                    >
+                        إلغاء
+                    </button>
+
+                </div>
+
+            </form>
+
+        </div>
+
+    </div>
+
+
+    <!-- =========================================================
+         JAVASCRIPT
+    ========================================================= -->
+
+    <script>
+
+        var modal =
+            document.getElementById('coinsModal');
+
+
+        /* =========================
+           Add Coins
+        ========================= */
+
+        function addCoins(userId, username) {
+
+            document.getElementById(
+                'coinsUserId'
+            ).value = userId;
+
+            document.getElementById(
+                'coinsUsername'
+            ).textContent = username;
+
+            modal.classList.add('active');
+        }
+
+
+        /* =========================
+           Close Modal
+        ========================= */
+
+        function closeModal() {
+
+            modal.classList.remove('active');
+
+            document.getElementById(
+                'coinsAmount'
+            ).value = '';
+
+            document.getElementById(
+                'coinsReason'
+            ).value = '';
+        }
+
+
+        /* =========================
+           Submit Coins
+        ========================= */
+
+        document
+            .getElementById('coinsForm')
+            .addEventListener(
+                'submit',
+                async function(e) {
+
+                    e.preventDefault();
+
+                    var userId =
+                        document.getElementById(
+                            'coinsUserId'
+                        ).value;
+
+                    var amount =
+                        document.getElementById(
+                            'coinsAmount'
+                        ).value;
+
+                    var reason =
+                        document.getElementById(
+                            'coinsReason'
+                        ).value;
+
+
+                    try {
+
+                        var res =
+                            await fetch(
+                                '/admin/users/'
+                                + userId
+                                + '/coins',
+                                {
+                                    method: 'POST',
+
+                                    headers: {
+                                        'Content-Type':
+                                            'application/json'
+                                    },
+
+                                    body:
+                                        JSON.stringify({
+                                            amount:
+                                                amount,
+                                            reason:
+                                                reason
+                                        })
+                                }
+                            );
+
+
+                        var data =
+                            await res.json();
+
+
+                        if (data.success) {
+
+                            location.reload();
+
+                        } else {
+
+                            alert(
+                                data.error ||
+                                'حدث خطأ'
+                            );
+
+                        }
+
+                    } catch (err) {
+
+                        alert(
+                            'حدث خطأ في الاتصال'
+                        );
+
+                    }
+
+                }
+            );
+
+
+        /* =========================
+           Edit Limits
+        ========================= */
+
+        async function editLimits(
+            userId,
+            username,
+            currentMax
+        ) {
+
+            var maxServers =
+                prompt(
+                    'الحد الأقصى للسيرفرات لـ '
+                    + username
+                    + ':',
+
+                    currentMax === 999999
+                        ? '999'
+                        : currentMax
+                );
+
+
+            if (maxServers === null)
+                return;
+
+
+            try {
+
+                var res =
+                    await fetch(
+                        '/admin/users/'
+                        + userId
+                        + '/limits',
+                        {
+                            method: 'POST',
+
+                            headers: {
+                                'Content-Type':
+                                    'application/json'
+                            },
+
+                            body:
+                                JSON.stringify({
+                                    maxServers:
+                                        parseInt(
+                                            maxServers
+                                        )
+                                })
+                        }
+                    );
+
+
+                var data =
+                    await res.json();
+
+
+                if (data.success) {
+
+                    location.reload();
+
+                } else {
+
+                    alert(
+                        data.error ||
+                        'حدث خطأ'
+                    );
+
+                }
+
+            } catch (err) {
+
+                alert(
+                    'حدث خطأ في الاتصال'
+                );
+
+            }
+
+        }
+
+
+        /* =========================
+           Toggle Admin
+        ========================= */
+
+        async function toggleAdmin(
+            userId,
+            username,
+            isAdmin
+        ) {
+
+            var action =
+                isAdmin
+                    ? 'إزالة من المشرفين'
+                    : 'تعيين كمشرف';
+
+
+            if (
+                !confirm(
+                    action
+                    + ' للمستخدم '
+                    + username
+                    + '؟'
+                )
+            )
+                return;
+
+
+            try {
+
+                var res =
+                    await fetch(
+                        '/admin/users/'
+                        + userId
+                        + '/admin',
+                        {
+                            method: 'POST',
+
+                            headers: {
+                                'Content-Type':
+                                    'application/json'
+                            }
+                        }
+                    );
+
+
+                var data =
+                    await res.json();
+
+
+                if (data.success) {
+
+                    location.reload();
+
+                } else {
+
+                    alert(
+                        data.error ||
+                        'حدث خطأ'
+                    );
+
+                }
+
+            } catch (err) {
+
+                alert(
+                    'حدث خطأ في الاتصال'
+                );
+
+            }
+
+        }
+
+
+        /* =========================
+           Toggle Ban
+        ========================= */
+
+        async function toggleBan(
+            userId,
+            username,
+            isBanned
+        ) {
+
+            var action =
+                isBanned
+                    ? 'إلغاء حظر'
+                    : 'حظر';
+
+
+            var reason =
+                isBanned
+                    ? ''
+                    : prompt(
+                        'سبب حظر '
+                        + username
+                        + ':'
+                    );
+
+
+            if (
+                !isBanned &&
+                !reason
+            )
+                return;
+
+
+            try {
+
+                var res =
+                    await fetch(
+                        '/admin/users/'
+                        + userId
+                        + '/ban',
+                        {
+                            method: 'POST',
+
+                            headers: {
+                                'Content-Type':
+                                    'application/json'
+                            },
+
+                            body:
+                                JSON.stringify({
+                                    reason:
+                                        reason
+                                })
+                        }
+                    );
+
+
+                var data =
+                    await res.json();
+
+
+                if (data.success) {
+
+                    location.reload();
+
+                } else {
+
+                    alert(
+                        data.error ||
+                        'حدث خطأ'
+                    );
+
+                }
+
+            } catch (err) {
+
+                alert(
+                    'حدث خطأ في الاتصال'
+                );
+
+            }
+
+        }
+
+
+        /* =========================
+           Delete Server
+        ========================= */
+
+        async function deleteServer(
+            serverId,
+            serverName
+        ) {
+
+            if (
+                !confirm(
+                    'حذف السيرفر "'
+                    + serverName
+                    + '"؟\n\n'
+                    + 'لا يمكن التراجع عن هذه العملية!'
+                )
+            )
+                return;
+
+
+            try {
+
+                var res =
+                    await fetch(
+                        '/admin/servers/'
+                        + serverId
+                        + '/delete',
+                        {
+                            method: 'POST',
+
+                            headers: {
+                                'Content-Type':
+                                    'application/json'
+                            }
+                        }
+                    );
+
+
+                var data =
+                    await res.json();
+
+
+                if (data.success) {
+
+                    location.reload();
+
+                } else {
+
+                    alert(
+                        data.error ||
+                        'حدث خطأ'
+                    );
+
+                }
+
+            } catch (err) {
+
+                alert(
+                    'حدث خطأ في الاتصال'
+                );
+
+            }
+
+        }
+
+
+        /* =========================
+           Modal Click Outside
+        ========================= */
+
+        modal.addEventListener(
+            'click',
+            function(e) {
+
+                if (
+                    e.target === modal
+                ) {
+                    closeModal();
+                }
+
+            }
+        );
+
+
+        /* =========================
+           Escape
+        ========================= */
+
+        document.addEventListener(
+            'keydown',
+            function(e) {
+
+                if (
+                    e.key === 'Escape' &&
+                    modal.classList.contains(
+                        'active'
+                    )
+                ) {
+
+                    closeModal();
+
+                }
+
+            }
+        );
+
+    </script>
+
+</body>
+
+</html>

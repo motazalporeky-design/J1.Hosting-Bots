@@ -1,0 +1,7150 @@
+<!DOCTYPE html>
+
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
+
+<title><%= server.name %> - J1 Studio</title>
+
+<link rel="stylesheet" href="/css/style.css">
+
+<!-- CodeMirror -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/codemirror.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/theme/dracula.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/addon/fold/foldgutter.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/addon/dialog/dialog.min.css">
+
+<!-- Font Awesome -->
+<link rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+
+<style>
+
+    /* =========================================================
+       PREMIUM VARIABLES
+    ========================================================= */
+
+:root {
+--bg: #030806;
+--bg-2: #06100b;
+
+--panel: rgba(8, 20, 13, .94);
+--panel-2: #08150e;
+--panel-3: #0c1d13;
+
+--border: rgba(74, 222, 128, .09);
+--border-hover: rgba(34, 197, 94, .32);
+
+--text: #f0fdf4;
+--muted: #8aa494;
+--muted-2: #607568;
+
+/* اللون الأساسي الأخضر الغامق */
+--primary: #15803d;
+--primary-2: #22c55e;
+
+--success: #16a34a;
+--danger: #ef4444;
+--warning: #f59e0b;
+--info: #38bdf8;
+
+--radius: 16px;
+--shadow: 0 20px 60px rgba(0, 0, 0, .45);
+
+}
+
+    html, body {
+        min-height: 100%;
+    }
+
+    * {
+        box-sizing: border-box;
+    }
+
+    html {
+        scroll-behavior: smooth;
+    }
+
+body {
+background:
+linear-gradient(
+rgba(3, 8, 6, .72),
+rgba(3, 8, 6, .88)
+),
+url('/images/background.png') center center / cover fixed no-repeat,
+radial-gradient(
+circle at 10% 0%,
+rgba(21, 128, 61, .13),
+transparent 28%
+),
+radial-gradient(
+circle at 90% 10%,
+rgba(34, 197, 94, .055),
+transparent 25%
+),
+var(--bg);
+
+background-attachment: fixed;
+color: var(--text);
+min-height: 100vh;
+}
+
+    button,
+    input,
+    select,
+    textarea {
+        font-family: inherit;
+    }
+
+::selection {
+background: rgba(34, 197, 94, .30);
+color: #f0fdf4;
+}
+
+::-webkit-scrollbar {
+width: 7px;
+height: 7px;
+}
+
+::-webkit-scrollbar-track {
+background: #030806;
+}
+
+::-webkit-scrollbar-thumb {
+background: #123c24;
+border-radius: 20px;
+}
+
+::-webkit-scrollbar-thumb {
+background: #166534;
+}
+
+    /* =========================================================
+       NAVBAR
+    ========================================================= */
+
+.navbar {
+background: rgba(3,8,6,.88) !important;
+border-bottom: 1px solid var(--border) !important;
+backdrop-filter: blur(20px);
+-webkit-backdrop-filter: blur(20px);
+position: sticky;
+top: 0;
+z-index: 5000;
+}
+
+    .navbar .container {
+        min-height: 72px;
+    }
+
+    .logo {
+        display: inline-flex !important;
+        align-items: center;
+        gap: 10px;
+        color: #fff !important;
+        font-weight: 800;
+        text-decoration: none;
+        letter-spacing: -.3px;
+    }
+
+.logo::before {
+content: "\f233";
+font-family: "Font Awesome 6 Free";
+font-weight: 900;
+
+width: 36px;
+height: 36px;
+
+display: flex;
+align-items: center;
+justify-content: center;
+
+border-radius: 11px;
+
+background: linear-gradient(
+    135deg,
+    #14532d,
+    #16a34a
+);
+
+color: #dcfce7;
+
+box-shadow:
+    0 8px 25px rgba(22, 163, 74, .28),
+    inset 0 1px 0 rgba(255,255,255,.08);
+
+}
+
+    .user-info {
+        display: flex;
+        align-items: center;
+        gap: 9px;
+        color: #e5e7eb;
+        font-weight: 600;
+    }
+
+    .avatar {
+        width: 36px !important;
+        height: 36px !important;
+        border-radius: 12px !important;
+        object-fit: cover;
+        border: 2px solid rgba(34,197,94,.28);
+
+box-shadow:
+0 5px 20px rgba(0,0,0,.35),
+0 0 15px rgba(34,197,94,.05);
+box-shadow: 0 5px 20px rgba(0,0,0,.35);
+}
+
+    .coins-badge {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        padding: 9px 13px;
+        border-radius: 12px;
+        background: rgba(245,158,11,.08);
+        border: 1px solid rgba(245,158,11,.16);
+        color: #fbbf24;
+        font-weight: 700;
+    }
+
+    .coins-badge::before {
+        content: "\f51e";
+        font-family: "Font Awesome 6 Free";
+        font-weight: 900;
+    }
+
+    .coins-badge {
+        font-size: 0;
+    }
+
+    .coins-badge::after {
+        content: "<%= user.coins %>";
+        font-size: 13px;
+    }
+
+    .coins-badge::before {
+        font-size: 13px;
+    }
+
+    /* =========================================================
+       SERVER HEADER
+    ========================================================= */
+
+.server-header-detail {
+background:
+linear-gradient(
+135deg,
+rgba(21, 128, 61, .13),
+rgba(15, 35, 23, .78) 45%,
+rgba(3, 10, 6, .96)
+);
+
+border: 1px solid rgba(34, 197, 94, .11);
+
+box-shadow:
+    0 20px 60px rgba(0,0,0,.40),
+    inset 0 1px 0 rgba(74,222,128,.025);
+
+}
+
+    .server-header-detail h1 {
+        margin: 0;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        font-size: clamp(22px,3vw,32px);
+        font-weight: 800;
+        letter-spacing: -.7px;
+    }
+
+    .server-header-detail h1::before {
+        content: "\f233";
+        font-family: "Font Awesome 6 Free";
+        font-weight: 900;
+        color: var(--primary-2);
+        font-size: 20px;
+    }
+
+    .server-status {
+        display: inline-flex !important;
+        align-items: center;
+        gap: 8px;
+        padding: 9px 14px;
+        border-radius: 999px;
+        font-size: 13px;
+        font-weight: 700;
+        border: 1px solid transparent;
+    }
+
+    .server-status::before {
+        font-family: "Font Awesome 6 Free";
+        font-weight: 900;
+    }
+
+    .status-running {
+        background: rgba(16,185,129,.08) !important;
+        border-color: rgba(16,185,129,.18) !important;
+        color: #34d399 !important;
+    }
+
+    .status-running::before {
+        content: "\f058";
+    }
+
+    .status-stopped {
+        background: rgba(239,68,68,.08) !important;
+        border-color: rgba(239,68,68,.18) !important;
+        color: #f87171 !important;
+    }
+
+    .status-stopped::before {
+        content: "\f057";
+    }
+
+    /* =========================================================
+       STAT CARDS
+    ========================================================= */
+
+    .stats-grid {
+        display: grid;
+        grid-template-columns: repeat(5, minmax(0,1fr));
+        gap: 14px;
+        margin: 18px 0 22px;
+    }
+
+    .stat-card {
+        position: relative;
+        overflow: hidden;
+
+        background:
+            linear-gradient(145deg,
+                rgba(17,24,39,.92),
+                rgba(8,11,19,.96));
+
+        border: 1px solid var(--border);
+        border-radius: var(--radius);
+
+        padding: 18px;
+
+        display: flex;
+        align-items: center;
+        gap: 13px;
+
+        transition: .25s ease;
+    }
+
+    .stat-card::after {
+        content: "";
+        position: absolute;
+        width: 100px;
+        height: 100px;
+        right: -45px;
+        top: -45px;
+        border-radius: 50%;
+        background: rgba(34,197,94,.07);
+        filter: blur(10px);
+    }
+
+    .stat-card:hover {
+        transform: translateY(-3px);
+        border-color: var(--border-hover);
+        box-shadow: 0 15px 40px rgba(0,0,0,.25);
+    }
+
+    .stat-icon {
+width: 48px;
+height: 48px;
+min-width: 48px;
+border-radius: 14px;
+
+display: flex;
+align-items: center;
+justify-content: center;
+
+background: rgba(21,128,61,.09);
+border: 1px solid rgba(34,197,94,.13);
+
+color: #4ade80;
+font-size: 19px;
+
+box-shadow:
+    inset 0 0 15px rgba(34,197,94,.025);
+
+}
+
+    .stat-content {
+        min-width: 0;
+    }
+
+    .stat-content h3 {
+        margin: 0 0 3px;
+        color: #fff;
+        font-size: 20px;
+        font-weight: 800;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+
+    .stat-content p {
+        margin: 0;
+        color: var(--muted);
+        font-size: 11px;
+        text-transform: uppercase;
+        letter-spacing: .8px;
+    }
+
+#serverAddress {
+color: #bbf7d0 !important;
+}
+
+    /* =========================================================
+       TABS
+    ========================================================= */
+
+    .server-tabs {
+        display: flex;
+        gap: 5px;
+        padding: 6px;
+        margin: 18px 0;
+        overflow-x: auto;
+
+        background: rgba(10,14,23,.8);
+        border: 1px solid var(--border);
+        border-radius: 14px;
+
+        scrollbar-width: none;
+    }
+
+    .server-tabs::-webkit-scrollbar {
+        display: none;
+    }
+
+    .tab-btn {
+        position: relative;
+
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+
+        padding: 11px 17px;
+
+        background: transparent;
+        border: 0;
+        border-radius: 10px;
+
+        color: var(--muted);
+        cursor: pointer;
+        font-size: 13px;
+        font-weight: 700;
+
+        white-space: nowrap;
+        transition: .2s ease;
+    }
+
+    .tab-btn i {
+        font-size: 13px;
+    }
+
+.tab-btn {
+color: #fff;
+background: rgba(34,197,94,.045);
+}
+
+.tab-btn.active {
+color: #fff;
+
+background: linear-gradient(
+    135deg,
+    rgba(21, 128, 61, .25),
+    rgba(34, 197, 94, .07)
+);
+
+box-shadow:
+    inset 0 0 0 1px rgba(34, 197, 94, .16),
+    0 5px 18px rgba(0,0,0,.18);
+
+}
+
+.tab-btn.active::after {
+background: #22c55e;
+
+box-shadow:
+    0 0 12px rgba(34,197,94,.65);
+
+}
+
+    .tab-content {
+        display: none;
+        padding: 5px 0 25px;
+        animation: fadeUp .25s ease;
+    }
+
+    .tab-content.active {
+        display: block;
+    }
+
+    @keyframes fadeUp {
+        from {
+            opacity: 0;
+            transform: translateY(5px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    /* =========================================================
+       PREMIUM BUTTONS
+    ========================================================= */
+
+    .btn {
+        border-radius: 10px !important;
+        font-weight: 700 !important;
+        transition: .2s ease !important;
+    }
+
+    .btn:hover {
+        transform: translateY(-1px);
+    }
+
+.btn-primary {
+background: linear-gradient(
+135deg,
+#166534,
+#15803d
+) !important;
+
+border: 1px solid rgba(74,222,128,.25) !important;
+
+box-shadow:
+    0 8px 22px rgba(21,128,61,.20);
+
+}
+
+.btn-primary {
+background: linear-gradient(
+135deg,
+#15803d,
+#16a34a
+) !important;
+
+box-shadow:
+    0 10px 28px rgba(34,197,94,.25);
+
+}
+
+    .btn-success {
+        background: linear-gradient(135deg,#059669,#10b981) !important;
+        border: 1px solid rgba(16,185,129,.25) !important;
+    }
+
+    .btn-danger {
+        background: linear-gradient(135deg,#dc2626,#ef4444) !important;
+        border: 1px solid rgba(239,68,68,.25) !important;
+    }
+
+    .btn-secondary {
+        background: #151b29 !important;
+        border: 1px solid var(--border) !important;
+    }
+
+.btn-info {
+background: rgba(34,197,94,.08) !important;
+color: #4ade80 !important;
+border: 1px solid rgba(34,197,94,.16) !important;
+}
+
+.btn-warning {
+background: rgba(34,197,94,.08) !important;
+color: #4ade80 !important;
+border: 1px solid rgba(34,197,94,.16) !important;
+}
+
+    .btn-outline {
+        background: rgba(255,255,255,.025) !important;
+        border: 1px solid var(--border) !important;
+        color: #d1d5db !important;
+    }
+
+    /* =========================================================
+       CONSOLE
+    ========================================================= */
+
+    .console-container {
+        display: flex;
+        flex-direction: column;
+        height: calc(100vh - 340px);
+        min-height: 520px;
+
+        background: #06080e;
+        border: 1px solid var(--border);
+        border-radius: 18px;
+        overflow: hidden;
+
+        box-shadow: var(--shadow);
+    }
+
+    .console-header {
+        min-height: 64px;
+
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+
+        padding: 12px 16px;
+
+        background:
+            linear-gradient(
+                180deg,
+                rgba(18,24,37,.98),
+                rgba(11,15,24,.98)
+            );
+
+        border-bottom: 1px solid var(--border);
+
+        gap: 12px;
+        flex-wrap: wrap;
+    }
+
+    .console-status {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+    }
+
+.console-icon {
+width: 35px;
+height: 35px;
+
+display: inline-flex;
+align-items: center;
+justify-content: center;
+
+border-radius: 10px;
+
+background: rgba(21,128,61,.10);
+border: 1px solid rgba(34,197,94,.16);
+
+color: #4ade80 !important;
+font-size: 13px !important;
+
+box-shadow:
+    0 0 20px rgba(34,197,94,.04);
+
+}
+
+    .console-title {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+    }
+
+    .status-badge {
+        display: inline-flex;
+        align-items: center;
+        gap: 7px;
+
+        padding: 7px 11px;
+        border-radius: 999px;
+
+        font-size: 11px;
+        font-weight: 800;
+    }
+
+    .status-badge.running {
+        color: #34d399;
+        background: rgba(16,185,129,.08);
+        border: 1px solid rgba(16,185,129,.14);
+    }
+
+    .status-badge.stopped {
+        color: #f87171;
+        background: rgba(239,68,68,.08);
+        border: 1px solid rgba(239,68,68,.14);
+    }
+
+    .pulse-dot,
+    .stop-dot {
+        width: 7px;
+        height: 7px;
+        display: inline-block;
+        border-radius: 50%;
+    }
+
+    .pulse-dot {
+        background: #10b981;
+        box-shadow: 0 0 0 4px rgba(16,185,129,.08);
+        animation: pulse 1.6s infinite;
+    }
+
+    .stop-dot {
+        background: #ef4444;
+    }
+
+    @keyframes pulse {
+        0%,100% {
+            opacity: 1;
+            transform: scale(1);
+        }
+
+        50% {
+            opacity: .45;
+            transform: scale(.8);
+        }
+    }
+
+    .console-actions {
+        display: flex;
+        gap: 7px;
+        flex-wrap: wrap;
+    }
+
+   .console-output {
+flex: 1;
+
+padding: 17px;
+
+overflow-y: auto;
+
+background:
+    radial-gradient(
+        circle at 80% 20%,
+        rgba(34,197,94,.035),
+        transparent 25%
+    ),
+    #020604;
+
+font-family: "Fira Code","Cascadia Code","Consolas",monospace;
+font-size: 12px;
+line-height: 1.75;
+
+color: #d1fae5;
+
+direction: ltr;
+text-align: left;
+
+white-space: pre-wrap;
+word-break: break-word;
+
+border: 0;
+
+}
+
+    .console-output::before {
+        content: "SYSTEM CONSOLE";
+        display: block;
+        color: #30394d;
+        font-size: 9px;
+        letter-spacing: 2px;
+        margin-bottom: 10px;
+    }
+
+    .console-input-area {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+
+        padding: 10px;
+
+        background: #0b0f18;
+        border-top: 1px solid var(--border);
+    }
+
+    .console-input {
+        flex: 1;
+
+        height: 42px;
+
+        background: #070a11 !important;
+        border: 1px solid var(--border) !important;
+        border-radius: 10px !important;
+
+        padding: 0 13px !important;
+
+        color: #fff !important;
+
+        font-family: "Fira Code","Consolas",monospace;
+        font-size: 12px;
+
+        outline: none;
+    }
+
+    .console-input:focus {
+        border-color: rgba(99,102,241,.5) !important;
+        box-shadow: 0 0 0 3px rgba(99,102,241,.07);
+    }
+
+    .log-line {
+        padding: 1px 0;
+    }
+
+    .log-time {
+        color: #394257;
+        margin-right: 10px;
+        user-select: none;
+    }
+
+    .log-stdout {
+        color: #cbd5e1;
+    }
+
+    .log-stderr {
+        color: #fb7185;
+    }
+
+    .log-info {
+        color: #60a5fa;
+    }
+
+    .log-command {
+        color: #fbbf24;
+    }
+
+    .console-placeholder {
+        height: 100%;
+
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+
+        color: #475166;
+    }
+
+.console-placeholder-icon {
+width: 70px;
+height: 70px;
+
+display: flex;
+align-items: center;
+justify-content: center;
+
+margin-bottom: 15px;
+
+border-radius: 20px;
+
+background: rgba(21,128,61,.07);
+border: 1px solid rgba(34,197,94,.13);
+
+color: #22c55e;
+font-size: 25px;
+
+box-shadow:
+    0 0 30px rgba(34,197,94,.05);
+
+}
+
+    /* =========================================================
+       RESOURCE BARS
+    ========================================================= */
+
+    .resource-box {
+        margin-top: 20px;
+        padding: 20px;
+
+        background: rgba(13,17,28,.8);
+        border: 1px solid var(--border);
+        border-radius: var(--radius);
+    }
+
+    .resource-item {
+        margin-bottom: 18px;
+    }
+
+    .resource-item:last-child {
+        margin-bottom: 0;
+    }
+
+    .resource-header {
+        display: flex;
+        justify-content: space-between;
+
+        margin-bottom: 8px;
+
+        color: #e5e7eb;
+        font-size: 13px;
+        font-weight: 700;
+    }
+
+    .progress-bar {
+        width: 100%;
+        height: 8px;
+
+        overflow: hidden;
+
+        background: #05070d;
+        border-radius: 999px;
+    }
+
+    .progress-fill {
+        height: 100%;
+        width: 0;
+
+        border-radius: inherit;
+
+        transition: width .4s ease;
+    }
+
+    .cpu-fill {
+        background: linear-gradient(90deg,#6366f1,#818cf8);
+    }
+
+    .ram-fill {
+        background: linear-gradient(90deg,#059669,#34d399);
+    }
+
+    .disk-fill {
+        background: linear-gradient(90deg,#d97706,#fbbf24);
+    }
+
+    /* =========================================================
+       FILE MANAGER
+    ========================================================= */
+
+    .file-manager {
+        overflow: hidden;
+
+        background: rgba(10,14,23,.86);
+        border: 1px solid var(--border);
+        border-radius: var(--radius);
+
+        box-shadow: 0 15px 45px rgba(0,0,0,.2);
+    }
+
+    .file-header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+
+        padding: 13px;
+
+        background: rgba(17,24,39,.72);
+        border-bottom: 1px solid var(--border);
+
+        gap: 10px;
+        flex-wrap: wrap;
+    }
+
+    .file-actions {
+        display: flex;
+        gap: 7px;
+        flex-wrap: wrap;
+    }
+
+    .breadcrumb {
+        padding: 11px 15px;
+
+        background: #080b12;
+        border-bottom: 1px solid var(--border);
+
+        overflow-x: auto;
+        white-space: nowrap;
+
+        font-size: 12px;
+    }
+
+    .breadcrumb a {
+        color: #818cf8;
+        text-decoration: none;
+    }
+
+    .file-table {
+        width: 100%;
+        border-collapse: collapse;
+    }
+
+    .file-table th {
+        text-align: right;
+
+        padding: 12px 15px;
+
+        background: rgba(17,24,39,.6);
+
+        color: #667085;
+
+        font-size: 11px;
+        font-weight: 800;
+
+        text-transform: uppercase;
+    }
+
+    .file-table td {
+        padding: 11px 15px;
+        border-bottom: 1px solid rgba(255,255,255,.045);
+
+        color: #cbd5e1;
+        font-size: 12px;
+    }
+
+    .file-table tbody tr {
+        transition: .15s ease;
+    }
+
+    .file-table tbody tr:hover {
+        background: rgba(99,102,241,.045);
+    }
+
+    .file-name {
+        display: inline-flex;
+        align-items: center;
+        gap: 9px;
+
+        cursor: pointer;
+
+        color: #e5e7eb;
+        font-weight: 600;
+    }
+
+    .file-name:hover {
+        color: #a5b4fc;
+    }
+
+    .file-icon {
+        width: 24px;
+        text-align: center;
+    }
+
+    .fa-folder {
+        color: #fbbf24;
+    }
+
+    .fa-js {
+        color: #f7df1e;
+    }
+
+    .fa-html5 {
+        color: #f97316;
+    }
+
+    .fa-css3-alt {
+        color: #38bdf8;
+    }
+
+    .fa-python {
+        color: #60a5fa;
+    }
+
+    .fa-php {
+        color: #818cf8;
+    }
+
+    .fa-markdown {
+        color: #94a3b8;
+    }
+
+    /* =========================================================
+       FILE MENU
+    ========================================================= */
+
+    .file-actions-menu {
+        position: relative;
+        display: inline-block;
+    }
+
+    .menu-dots {
+        width: 34px;
+        height: 34px;
+
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+
+        background: transparent;
+        border: 1px solid transparent;
+        border-radius: 9px;
+
+        color: #64748b;
+
+        cursor: pointer;
+
+        transition: .2s ease;
+    }
+
+    .menu-dots:hover {
+        color: #fff;
+        background: rgba(255,255,255,.05);
+        border-color: var(--border);
+    }
+
+    .menu-dropdown {
+        display: none;
+
+        position: absolute;
+        left: 0;
+        top: calc(100% + 5px);
+
+        min-width: 185px;
+
+        background: #101521;
+
+        border: 1px solid rgba(255,255,255,.08);
+        border-radius: 12px;
+
+        z-index: 2000;
+
+        padding: 5px;
+
+        box-shadow:
+            0 25px 60px rgba(0,0,0,.5),
+            0 0 0 1px rgba(0,0,0,.2);
+    }
+
+    .menu-dropdown.active {
+        display: block;
+        animation: menuIn .15s ease;
+    }
+
+    @keyframes menuIn {
+        from {
+            opacity: 0;
+            transform: translateY(-4px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    .menu-item {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+
+        padding: 10px;
+
+        border-radius: 8px;
+
+        color: #cbd5e1;
+        cursor: pointer;
+
+        font-size: 12px;
+
+        transition: .15s ease;
+    }
+
+    .menu-item:hover {
+        background: rgba(99,102,241,.1);
+        color: #fff;
+    }
+
+    .menu-item i {
+        width: 18px;
+        text-align: center;
+        color: #818cf8;
+    }
+
+    .menu-item.danger {
+        color: #fb7185;
+    }
+
+    .menu-item.danger i {
+        color: #fb7185;
+    }
+
+    .menu-item.danger:hover {
+        background: rgba(239,68,68,.08);
+    }
+
+    /* =========================================================
+       BULK ACTIONS
+    ========================================================= */
+
+    #bulkActions {
+        background: rgba(99,102,241,.05) !important;
+        border-bottom: 1px solid rgba(99,102,241,.1) !important;
+    }
+
+    #selectedCount {
+        font-size: 12px;
+        font-weight: 700;
+    }
+
+    /* =========================================================
+       MODALS
+    ========================================================= */
+
+    .modal-overlay {
+        display: none;
+
+        position: fixed;
+        inset: 0;
+
+        width: 100%;
+        height: 100%;
+
+        background: rgba(0,0,0,.78);
+
+        backdrop-filter: blur(12px);
+        -webkit-backdrop-filter: blur(12px);
+
+        z-index: 10000;
+
+        align-items: center;
+        justify-content: center;
+
+        padding: 15px;
+    }
+
+    .modal-overlay.active {
+        display: flex;
+        animation: modalFade .18s ease;
+    }
+
+    @keyframes modalFade {
+        from { opacity: 0; }
+        to { opacity: 1; }
+    }
+
+    .modal-box {
+        background:
+            linear-gradient(
+                145deg,
+                #111725,
+                #080b12
+            );
+
+        border: 1px solid rgba(255,255,255,.08);
+        border-radius: 18px;
+
+        padding: 20px;
+
+        width: 95%;
+        max-width: 1400px;
+        height: 90vh;
+
+        display: flex;
+        flex-direction: column;
+
+        box-shadow:
+            0 35px 100px rgba(0,0,0,.6),
+            0 0 0 1px rgba(0,0,0,.3);
+
+        animation: modalUp .2s ease;
+    }
+
+    @keyframes modalUp {
+        from {
+            opacity: 0;
+            transform: translateY(12px) scale(.98);
+        }
+
+        to {
+            opacity: 1;
+            transform: translateY(0) scale(1);
+        }
+    }
+
+    .modal-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+
+        margin-bottom: 15px;
+        padding-bottom: 12px;
+
+        border-bottom: 1px solid var(--border);
+    }
+
+    .modal-header h2 {
+        margin: 0;
+
+        display: flex;
+        align-items: center;
+        gap: 9px;
+
+        color: #fff;
+        font-size: 16px;
+    }
+
+    .modal-header h2 i {
+        color: #818cf8;
+    }
+
+    .editor-container {
+        flex: 1;
+        overflow: hidden;
+
+        border: 1px solid var(--border);
+        border-radius: 12px;
+    }
+
+    .editor-footer {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+
+        margin-top: 12px;
+        padding-top: 12px;
+
+        border-top: 1px solid var(--border);
+
+        flex-wrap: wrap;
+        gap: 10px;
+    }
+
+    .editor-status {
+        display: flex;
+        gap: 18px;
+
+        color: #64748b;
+        font-size: 11px;
+    }
+
+    .upload-area {
+        border: 2px dashed rgba(99,102,241,.2);
+        border-radius: 14px;
+
+        padding: 45px 25px;
+
+        text-align: center;
+
+        margin: 15px;
+
+        cursor: pointer;
+
+        color: #94a3b8;
+
+        background: rgba(99,102,241,.025);
+
+        transition: .25s ease;
+    }
+
+    .upload-area i {
+        display: block;
+        margin-bottom: 10px;
+
+        font-size: 30px;
+        color: #818cf8;
+    }
+
+    .upload-area:hover {
+        border-color: rgba(99,102,241,.55);
+        background: rgba(99,102,241,.06);
+    }
+
+    /* =========================================================
+       FORMS
+    ========================================================= */
+
+    .auth-box {
+        background: rgba(13,17,28,.9) !important;
+        border: 1px solid var(--border) !important;
+        border-radius: 16px !important;
+        box-shadow: var(--shadow);
+    }
+
+    .form-group label {
+        color: #cbd5e1 !important;
+        font-size: 12px;
+        font-weight: 700;
+    }
+
+    .form-group input,
+    .form-group select,
+    .form-group textarea,
+    .modal-box input,
+    .modal-box select {
+        background: #070a11 !important;
+        border: 1px solid var(--border) !important;
+        color: #fff !important;
+
+        border-radius: 10px !important;
+
+        transition: .2s ease;
+    }
+
+    .form-group input:focus,
+    .form-group select:focus,
+    .form-group textarea:focus,
+    .modal-box input:focus,
+    .modal-box select:focus {
+        border-color: rgba(99,102,241,.5) !important;
+        box-shadow: 0 0 0 3px rgba(99,102,241,.07);
+        outline: none;
+    }
+
+    /* =========================================================
+       CODEMIRROR
+    ========================================================= */
+
+    .CodeMirror {
+        height: 100% !important;
+
+        font-family:
+            "Fira Code",
+            "Cascadia Code",
+            "Consolas",
+            monospace;
+
+        font-size: 13px;
+
+        background: #090c14 !important;
+        color: #f8f8f2 !important;
+    }
+
+    .cm-s-dracula.CodeMirror {
+        background: #090c14 !important;
+    }
+
+    .cm-s-dracula .CodeMirror-gutters {
+        background: #080b12 !important;
+        border-right: 1px solid #171d2a !important;
+    }
+
+    .cm-s-dracula .CodeMirror-linenumber {
+        color: #46516a !important;
+    }
+
+    .cm-s-dracula .CodeMirror-cursor {
+        border-left: 2px solid #818cf8 !important;
+    }
+
+    .cm-s-dracula .CodeMirror-selected {
+        background: rgba(99,102,241,.2) !important;
+    }
+
+    /* =========================================================
+       TOAST NOTIFICATIONS
+    ========================================================= */
+
+    #toastContainer {
+        position: fixed;
+        top: 85px;
+        left: 20px;
+
+        z-index: 50000;
+
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+
+        width: min(370px,calc(100vw - 30px));
+
+        pointer-events: none;
+    }
+
+    .premium-toast {
+        display: flex;
+        align-items: flex-start;
+        gap: 12px;
+
+        padding: 13px 14px;
+
+        background:
+            linear-gradient(
+                135deg,
+                rgba(17,24,39,.98),
+                rgba(8,11,18,.98)
+            );
+
+        border: 1px solid rgba(255,255,255,.08);
+        border-radius: 13px;
+
+        box-shadow:
+            0 20px 45px rgba(0,0,0,.4),
+            0 0 0 1px rgba(0,0,0,.15);
+
+        animation: toastIn .25s ease;
+
+        pointer-events: auto;
+    }
+
+    .premium-toast.hide {
+        animation: toastOut .2s ease forwards;
+    }
+
+    .toast-icon {
+        width: 34px;
+        height: 34px;
+        min-width: 34px;
+
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        border-radius: 10px;
+
+        background: rgba(99,102,241,.1);
+        color: #818cf8;
+    }
+
+    .premium-toast.success .toast-icon {
+        background: rgba(16,185,129,.1);
+        color: #34d399;
+    }
+
+    .premium-toast.error .toast-icon {
+        background: rgba(239,68,68,.1);
+        color: #fb7185;
+    }
+
+    .premium-toast.warning .toast-icon {
+        background: rgba(245,158,11,.1);
+        color: #fbbf24;
+    }
+
+    .toast-content {
+        flex: 1;
+    }
+
+    .toast-title {
+        color: #fff;
+        font-size: 12px;
+        font-weight: 800;
+        margin-bottom: 2px;
+    }
+
+    .toast-message {
+        color: #8993a6;
+        font-size: 11px;
+        line-height: 1.5;
+    }
+
+    @keyframes toastIn {
+        from {
+            opacity: 0;
+            transform: translateX(-15px);
+        }
+        to {
+            opacity: 1;
+            transform: translateX(0);
+        }
+    }
+
+    @keyframes toastOut {
+        to {
+            opacity: 0;
+            transform: translateX(-15px);
+        }
+    }
+
+    /* =========================================================
+       MOBILE
+    ========================================================= */
+
+    @media (max-width: 1100px) {
+
+        .stats-grid {
+            grid-template-columns: repeat(3,1fr);
+        }
+
+    }
+
+    @media (max-width: 768px) {
+
+        .container {
+            width: 100%;
+            padding-left: 12px;
+            padding-right: 12px;
+        }
+
+        .navbar .container {
+            min-height: 64px;
+        }
+
+        .navbar .nav-menu {
+            gap: 6px !important;
+        }
+
+        .logo {
+            font-size: 0;
+        }
+
+        .logo::before {
+            width: 35px;
+            height: 35px;
+        }
+
+        .user-info span {
+            display: none;
+        }
+
+        .coins-badge {
+            padding: 8px 10px;
+        }
+
+        .server-header-detail {
+            margin-top: 15px;
+            padding: 17px;
+            align-items: flex-start;
+            flex-direction: column;
+        }
+
+        .server-header-detail h1 {
+            font-size: 22px;
+        }
+
+        .stats-grid {
+            grid-template-columns: 1fr 1fr;
+            gap: 9px;
+        }
+
+        .stat-card {
+            padding: 13px;
+            gap: 10px;
+        }
+
+        .stat-icon {
+            width: 40px;
+            height: 40px;
+            min-width: 40px;
+            font-size: 15px;
+        }
+
+        .stat-content h3 {
+            font-size: 16px;
+        }
+
+        .stat-content p {
+            font-size: 9px;
+        }
+
+        .stats-grid .stat-card:nth-child(2) {
+            grid-column: span 2;
+        }
+
+        .server-tabs {
+            margin: 12px 0;
+        }
+
+        .tab-btn {
+            padding: 10px 13px;
+            font-size: 11px;
+        }
+
+        .console-container {
+            height: 600px;
+            min-height: 450px;
+            border-radius: 14px;
+        }
+
+        .console-header {
+            align-items: stretch;
+            flex-direction: column;
+        }
+
+        .console-status {
+            justify-content: space-between;
+        }
+
+        .console-actions {
+            width: 100%;
+        }
+
+        .console-actions .btn {
+            flex: 1;
+        }
+
+        .console-input-area {
+            padding: 8px;
+        }
+
+        .console-input {
+            min-width: 0;
+        }
+
+        .file-table {
+            font-size: 11px;
+        }
+
+        .file-table th,
+        .file-table td {
+            padding: 8px;
+        }
+
+        .file-table th:nth-child(3),
+        .file-table td:nth-child(3) {
+            display: none;
+        }
+
+        .file-name {
+            max-width: 170px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+
+        .menu-dropdown {
+            left: auto;
+            right: 0;
+        }
+
+        .modal-box {
+            width: 100%;
+            height: 92vh;
+            padding: 13px;
+            border-radius: 15px;
+        }
+
+        .editor-status {
+            gap: 10px;
+        }
+
+        #toastContainer {
+            left: 10px;
+            right: 10px;
+            width: auto;
+        }
+
+    }
+
+    @media (max-width: 450px) {
+
+        .stats-grid {
+            grid-template-columns: 1fr;
+        }
+
+        .stats-grid .stat-card:nth-child(2) {
+            grid-column: span 1;
+        }
+
+        .stat-card {
+            width: 100%;
+        }
+
+        .server-header-detail h1 {
+            max-width: 100%;
+            overflow: hidden;
+        }
+
+        #serverName {
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+
+    }
+
+
+/* =========================================================
+   PREMIUM BLACK / WHITE / GRAY THEME
+   بدون تغيير الوظائف أو HTML
+========================================================= */
+
+:root {
+    --bg: #070707;
+    --bg-2: #0b0b0b;
+
+    --panel: rgba(17,17,17,.94);
+    --panel-2: #111111;
+    --panel-3: #181818;
+
+    --border: rgba(255,255,255,.08);
+    --border-hover: rgba(255,255,255,.20);
+
+    --text: #f5f5f5;
+    --muted: #999999;
+    --muted-2: #666666;
+
+    --primary: #bdbdbd;
+    --primary-2: #ffffff;
+
+    --success: #d4d4d4;
+    --danger: #ef4444;
+    --warning: #cfcfcf;
+    --info: #e5e5e5;
+
+    --radius: 16px;
+    --shadow: 0 20px 60px rgba(0,0,0,.55);
+}
+
+
+/* =========================================================
+   BODY
+========================================================= */
+
+body {
+    background:
+        radial-gradient(
+            circle at 10% 0%,
+            rgba(255,255,255,.045),
+            transparent 28%
+        ),
+        radial-gradient(
+            circle at 90% 10%,
+            rgba(255,255,255,.025),
+            transparent 25%
+        ),
+        linear-gradient(
+            135deg,
+            #050505,
+            #0b0b0b 50%,
+            #060606
+        ) !important;
+
+    color: #f5f5f5 !important;
+}
+
+
+/* =========================================================
+   SELECTION
+========================================================= */
+
+::selection {
+    background: rgba(255,255,255,.18) !important;
+    color: #ffffff !important;
+}
+
+
+/* =========================================================
+   SCROLLBAR
+========================================================= */
+
+::-webkit-scrollbar-track {
+    background: #070707 !important;
+}
+
+::-webkit-scrollbar-thumb {
+    background: linear-gradient(
+        #555555,
+        #222222
+    ) !important;
+
+    border-radius: 20px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #777777 !important;
+}
+
+
+/* =========================================================
+   NAVBAR
+========================================================= */
+
+.navbar {
+    background: rgba(7,7,7,.90) !important;
+    border-bottom: 1px solid rgba(255,255,255,.08) !important;
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+}
+
+.logo {
+    color: #ffffff !important;
+}
+
+.logo::before {
+    background: linear-gradient(
+        135deg,
+        #222222,
+        #666666
+    ) !important;
+
+    color: #ffffff !important;
+
+    box-shadow:
+        0 8px 25px rgba(0,0,0,.45),
+        inset 0 1px 0 rgba(255,255,255,.10);
+}
+
+.user-info {
+    color: #eeeeee !important;
+}
+
+.avatar {
+    border-color: rgba(255,255,255,.16) !important;
+
+    box-shadow:
+        0 5px 20px rgba(0,0,0,.35) !important;
+}
+
+
+/* =========================================================
+   COINS
+========================================================= */
+
+.coins-badge {
+    background: rgba(255,255,255,.045) !important;
+    border: 1px solid rgba(255,255,255,.10) !important;
+    color: #eeeeee !important;
+}
+
+
+/* =========================================================
+   SERVER HEADER
+========================================================= */
+
+.server-header-detail {
+    background:
+        linear-gradient(
+            145deg,
+            rgba(35,35,35,.96),
+            rgba(10,10,10,.98)
+        ) !important;
+
+    border-color: rgba(255,255,255,.09) !important;
+
+    box-shadow:
+        0 20px 60px rgba(0,0,0,.45),
+        inset 0 1px 0 rgba(255,255,255,.035);
+}
+
+.server-header-detail h1 {
+    color: #ffffff !important;
+}
+
+.server-header-detail h1::before {
+    color: #ffffff !important;
+}
+
+
+/* =========================================================
+   STATUS
+========================================================= */
+
+.status-running {
+    background: rgba(255,255,255,.06) !important;
+    border-color: rgba(255,255,255,.15) !important;
+    color: #eeeeee !important;
+}
+
+.status-stopped {
+    background: rgba(239,68,68,.07) !important;
+    border-color: rgba(239,68,68,.17) !important;
+    color: #fca5a5 !important;
+}
+
+
+/* =========================================================
+   STAT CARDS
+========================================================= */
+
+.stat-card {
+    background:
+        linear-gradient(
+            145deg,
+            rgba(25,25,25,.96),
+            rgba(9,9,9,.98)
+        ) !important;
+
+    border-color: rgba(255,255,255,.075) !important;
+}
+
+.stat-card::after {
+    background: rgba(255,255,255,.025) !important;
+}
+
+.stat-card:hover {
+    border-color: rgba(255,255,255,.18) !important;
+
+    box-shadow:
+        0 15px 40px rgba(0,0,0,.30) !important;
+}
+
+.stat-icon {
+    background: rgba(255,255,255,.045) !important;
+    border-color: rgba(255,255,255,.09) !important;
+    color: #dddddd !important;
+
+    box-shadow:
+        inset 0 0 15px rgba(255,255,255,.015) !important;
+}
+
+.stat-content h3 {
+    color: #ffffff !important;
+}
+
+.stat-content p {
+    color: #888888 !important;
+}
+
+#serverAddress {
+    color: #eeeeee !important;
+}
+
+
+/* =========================================================
+   TABS
+========================================================= */
+
+.server-tabs {
+    background: rgba(12,12,12,.88) !important;
+    border-color: rgba(255,255,255,.08) !important;
+}
+
+.tab-btn {
+    color: #888888 !important;
+}
+
+.tab-btn:hover {
+    color: #ffffff !important;
+    background: rgba(255,255,255,.035) !important;
+}
+
+.tab-btn.active {
+    color: #ffffff !important;
+
+    background:
+        linear-gradient(
+            135deg,
+            rgba(255,255,255,.09),
+            rgba(255,255,255,.025)
+        ) !important;
+
+    box-shadow:
+        inset 0 0 0 1px rgba(255,255,255,.12),
+        0 5px 18px rgba(0,0,0,.20);
+}
+
+.tab-btn.active::after {
+    background: #ffffff !important;
+
+    box-shadow:
+        0 0 12px rgba(255,255,255,.30) !important;
+}
+
+
+/* =========================================================
+   BUTTONS
+========================================================= */
+
+.btn-primary {
+    background:
+        linear-gradient(
+            135deg,
+            #eeeeee,
+            #aaaaaa
+        ) !important;
+
+    border: 1px solid rgba(255,255,255,.18) !important;
+
+    color: #080808 !important;
+
+    box-shadow:
+        0 10px 28px rgba(0,0,0,.35) !important;
+}
+
+.btn-primary:hover {
+    filter: brightness(1.08);
+}
+
+.btn-success {
+    background:
+        linear-gradient(
+            135deg,
+            #eeeeee,
+            #aaaaaa
+        ) !important;
+
+    border: 1px solid rgba(255,255,255,.16) !important;
+    color: #080808 !important;
+}
+
+.btn-secondary {
+    background: #181818 !important;
+    border: 1px solid rgba(255,255,255,.08) !important;
+    color: #eeeeee !important;
+}
+
+.btn-info,
+.btn-warning {
+    background: rgba(255,255,255,.045) !important;
+    color: #eeeeee !important;
+    border: 1px solid rgba(255,255,255,.10) !important;
+}
+
+.btn-outline {
+    background: rgba(255,255,255,.025) !important;
+    border: 1px solid rgba(255,255,255,.09) !important;
+    color: #dddddd !important;
+}
+
+.btn-outline:hover,
+.btn-secondary:hover,
+.btn-info:hover,
+.btn-warning:hover {
+    background: rgba(255,255,255,.07) !important;
+    color: #ffffff !important;
+}
+
+
+/* =========================================================
+   CONSOLE
+========================================================= */
+
+.console-container {
+    background: #080808 !important;
+    border-color: rgba(255,255,255,.08) !important;
+}
+
+.console-header {
+    background:
+        linear-gradient(
+            180deg,
+            rgba(25,25,25,.98),
+            rgba(10,10,10,.98)
+        ) !important;
+
+    border-color: rgba(255,255,255,.08) !important;
+}
+
+.console-icon {
+    background: rgba(255,255,255,.045) !important;
+    border-color: rgba(255,255,255,.09) !important;
+    color: #eeeeee !important;
+
+    box-shadow:
+        0 0 20px rgba(255,255,255,.025) !important;
+}
+
+.status-badge.running {
+    color: #dddddd !important;
+    background: rgba(255,255,255,.05) !important;
+    border-color: rgba(255,255,255,.10) !important;
+}
+
+.status-badge.stopped {
+    color: #fca5a5 !important;
+    background: rgba(239,68,68,.06) !important;
+    border-color: rgba(239,68,68,.12) !important;
+}
+
+.pulse-dot {
+    background: #ffffff !important;
+    box-shadow:
+        0 0 0 4px rgba(255,255,255,.06) !important;
+}
+
+.console-output {
+    background:
+        radial-gradient(
+            circle at 80% 20%,
+            rgba(255,255,255,.025),
+            transparent 25%
+        ),
+        #030303 !important;
+
+    color: #dddddd !important;
+}
+
+.console-input-area {
+    background: #101010 !important;
+    border-color: rgba(255,255,255,.08) !important;
+}
+
+.console-input {
+    background: #080808 !important;
+    border-color: rgba(255,255,255,.08) !important;
+    color: #ffffff !important;
+}
+
+.console-input:focus {
+    border-color: rgba(255,255,255,.25) !important;
+
+    box-shadow:
+        0 0 0 3px rgba(255,255,255,.035) !important;
+}
+
+.log-time {
+    color: #555555 !important;
+}
+
+.log-stdout {
+    color: #d4d4d4 !important;
+}
+
+.log-stderr {
+    color: #f87171 !important;
+}
+
+.log-info {
+    color: #bbbbbb !important;
+}
+
+.log-command {
+    color: #eeeeee !important;
+}
+
+.console-placeholder {
+    color: #555555 !important;
+}
+
+.console-placeholder-icon {
+    background: rgba(255,255,255,.035) !important;
+    border-color: rgba(255,255,255,.08) !important;
+    color: #cccccc !important;
+}
+
+
+/* =========================================================
+   RESOURCE BARS
+========================================================= */
+
+.resource-box {
+    background: rgba(15,15,15,.88) !important;
+    border-color: rgba(255,255,255,.08) !important;
+}
+
+.resource-header {
+    color: #dddddd !important;
+}
+
+.progress-bar {
+    background: #050505 !important;
+}
+
+.cpu-fill,
+.ram-fill,
+.disk-fill {
+    background:
+        linear-gradient(
+            90deg,
+            #777777,
+            #eeeeee
+        ) !important;
+}
+
+
+/* =========================================================
+   FILE MANAGER
+========================================================= */
+
+.file-manager {
+    background: rgba(12,12,12,.90) !important;
+    border-color: rgba(255,255,255,.08) !important;
+}
+
+.file-header {
+    background: rgba(25,25,25,.78) !important;
+    border-color: rgba(255,255,255,.08) !important;
+}
+
+.breadcrumb {
+    background: #090909 !important;
+    border-color: rgba(255,255,255,.07) !important;
+}
+
+.breadcrumb a {
+    color: #cccccc !important;
+}
+
+.file-table th {
+    background: rgba(25,25,25,.65) !important;
+    color: #777777 !important;
+}
+
+.file-table td {
+    border-color: rgba(255,255,255,.045) !important;
+    color: #cccccc !important;
+}
+
+.file-table tbody tr:hover {
+    background: rgba(255,255,255,.035) !important;
+}
+
+.file-name {
+    color: #e5e5e5 !important;
+}
+
+.file-name:hover {
+    color: #ffffff !important;
+}
+
+
+/* =========================================================
+   FILE ICONS
+========================================================= */
+
+.fa-folder,
+.fa-js,
+.fa-html5,
+.fa-css3-alt,
+.fa-python,
+.fa-php,
+.fa-markdown {
+    color: #cccccc !important;
+}
+
+
+/* =========================================================
+   FILE MENU
+========================================================= */
+
+.menu-dots {
+    color: #777777 !important;
+}
+
+.menu-dots:hover {
+    color: #ffffff !important;
+    background: rgba(255,255,255,.05) !important;
+}
+
+.menu-dropdown {
+    background: #111111 !important;
+    border-color: rgba(255,255,255,.09) !important;
+}
+
+.menu-item {
+    color: #cccccc !important;
+}
+
+.menu-item:hover {
+    background: rgba(255,255,255,.06) !important;
+    color: #ffffff !important;
+}
+
+.menu-item i {
+    color: #bbbbbb !important;
+}
+
+
+/* =========================================================
+   BULK ACTIONS
+========================================================= */
+
+#bulkActions {
+    background: rgba(255,255,255,.025) !important;
+    border-color: rgba(255,255,255,.07) !important;
+}
+
+
+/* =========================================================
+   MODALS
+========================================================= */
+
+.modal-overlay {
+    background: rgba(0,0,0,.82) !important;
+}
+
+.modal-box {
+    background:
+        linear-gradient(
+            145deg,
+            #171717,
+            #080808
+        ) !important;
+
+    border-color: rgba(255,255,255,.09) !important;
+}
+
+.modal-header h2 {
+    color: #ffffff !important;
+}
+
+.modal-header h2 i {
+    color: #cccccc !important;
+}
+
+.editor-container {
+    border-color: rgba(255,255,255,.08) !important;
+}
+
+.upload-area {
+    border-color: rgba(255,255,255,.16) !important;
+    background: rgba(255,255,255,.02) !important;
+    color: #999999 !important;
+}
+
+.upload-area i {
+    color: #dddddd !important;
+}
+
+.upload-area:hover {
+    border-color: rgba(255,255,255,.35) !important;
+    background: rgba(255,255,255,.04) !important;
+}
+
+
+/* =========================================================
+   FORMS
+========================================================= */
+
+.auth-box {
+    background: rgba(15,15,15,.92) !important;
+    border-color: rgba(255,255,255,.08) !important;
+}
+
+.form-group label {
+    color: #cccccc !important;
+}
+
+.form-group input,
+.form-group select,
+.form-group textarea,
+.modal-box input,
+.modal-box select {
+    background: #080808 !important;
+    border-color: rgba(255,255,255,.08) !important;
+    color: #ffffff !important;
+}
+
+.form-group input:focus,
+.form-group select:focus,
+.form-group textarea:focus,
+.modal-box input:focus,
+.modal-box select:focus {
+    border-color: rgba(255,255,255,.28) !important;
+
+    box-shadow:
+        0 0 0 3px rgba(255,255,255,.035) !important;
+}
+
+
+/* =========================================================
+   CODEMIRROR
+========================================================= */
+
+.CodeMirror,
+.cm-s-dracula.CodeMirror {
+    background: #090909 !important;
+    color: #f5f5f5 !important;
+}
+
+.cm-s-dracula .CodeMirror-gutters {
+    background: #070707 !important;
+    border-right: 1px solid #202020 !important;
+}
+
+.cm-s-dracula .CodeMirror-linenumber {
+    color: #555555 !important;
+}
+
+.cm-s-dracula .CodeMirror-cursor {
+    border-left-color: #ffffff !important;
+}
+
+.cm-s-dracula .CodeMirror-selected {
+    background: rgba(255,255,255,.12) !important;
+}
+
+
+/* =========================================================
+   TOAST
+========================================================= */
+
+.premium-toast {
+    background:
+        linear-gradient(
+            135deg,
+            rgba(25,25,25,.98),
+            rgba(8,8,8,.98)
+        ) !important;
+
+    border-color: rgba(255,255,255,.08) !important;
+}
+
+.toast-icon {
+    background: rgba(255,255,255,.06) !important;
+    color: #dddddd !important;
+}
+
+.premium-toast.success .toast-icon {
+    background: rgba(255,255,255,.06) !important;
+    color: #eeeeee !important;
+}
+
+.premium-toast.warning .toast-icon {
+    background: rgba(255,255,255,.06) !important;
+    color: #dddddd !important;
+}
+
+.toast-title {
+    color: #ffffff !important;
+}
+
+.toast-message {
+    color: #888888 !important;
+}
+
+
+/* =========================================================
+   DANGER — يبقى أحمر حتى يكون واضحًا
+========================================================= */
+
+.btn-danger {
+    background:
+        linear-gradient(
+            135deg,
+            #b91c1c,
+            #ef4444
+        ) !important;
+
+    border-color: rgba(239,68,68,.25) !important;
+}
+
+
+/* =========================================================
+   MOBILE
+========================================================= */
+
+@media (max-width: 768px) {
+
+    .server-header-detail {
+        background:
+            linear-gradient(
+                145deg,
+                rgba(28,28,28,.97),
+                rgba(9,9,9,.99)
+            ) !important;
+    }
+
+}
+
+
+</style>
+
+</head>
+
+<body>
+
+<!-- =========================================================
+     TOAST CONTAINER
+========================================================= -->
+
+<div id="toastContainer"></div>
+
+<!-- =========================================================
+     NAVBAR
+========================================================= -->
+
+<nav class="navbar">
+    <div class="container">
+
+    <a href="/dashboard" class="logo">
+        J1 Studio
+    </a>
+
+    <div class="nav-menu">
+
+        <div class="user-info">
+
+            <% if (user.discordId) { %>
+                <img
+                    src="https://cdn.discordapp.com/avatars/<%= user.discordId %>/<%= user.discordAvatar %>.png"
+                    class="avatar"
+                    onerror="this.style.display='none'"
+                >
+            <% } %>
+
+            <span><%= user.username %></span>
+
+        </div>
+
+        <div class="coins-badge">
+            <%= user.coins %>
+        </div>
+
+        <a href="/dashboard" class="btn btn-outline btn-sm" title="العودة">
+
+            <i class="fas fa-arrow-right"></i>
+
+        </a>
+
+    </div>
+
+</div>
+
+</nav>
+
+<!-- =========================================================
+     MAIN
+========================================================= -->
+
+<div class="container">
+
+<!-- SERVER HEADER -->
+
+<div class="server-header-detail">
+
+    <h1>
+
+        <span id="serverName">
+            <%= server.name %>
+        </span>
+
+        <button
+            class="btn btn-sm btn-outline"
+            onclick="editName()"
+            title="تعديل اسم السيرفر"
+        >
+            <i class="fas fa-pen"></i>
+        </button>
+
+    </h1>
+
+    <span
+        class="server-status status-<%= server.status %>"
+        id="serverStatus"
+    >
+        <%= server.status === 'running' ? 'يعمل' : 'متوقف' %>
+    </span>
+
+</div>
+
+<!-- =====================================================
+     STATISTICS
+===================================================== -->
+
+<div class="stats-grid">
+
+    <div class="stat-card">
+
+        <div class="stat-icon">
+            <i class="fas fa-microchip"></i>
+        </div>
+
+        <div class="stat-content">
+
+            <h3 id="cpuPercent">
+                0%
+            </h3>
+
+            <p>CPU Usage</p>
+
+        </div>
+
+    </div>
+
+    <div class="stat-card">
+
+        <div class="stat-icon">
+            <i class="fas fa-globe"></i>
+        </div>
+
+        <div class="stat-content">
+
+            <h3
+                id="serverAddress"
+                style="font-size:13px;word-break:break-all;"
+            >
+                http://J1.hosting:<%=portRange%>
+            </h3>
+
+            <p>Server Address</p>
+
+        </div>
+
+    </div>
+
+    <div class="stat-card">
+
+        <div class="stat-icon">
+            <i class="fas fa-memory"></i>
+        </div>
+
+        <div class="stat-content">
+
+            <h3 id="ramPercent">
+                0%
+            </h3>
+
+            <p>RAM Usage</p>
+
+        </div>
+
+    </div>
+
+    <div class="stat-card">
+
+        <div class="stat-icon">
+            <i class="fas fa-hard-drive"></i>
+        </div>
+
+        <div class="stat-content">
+
+            <h3 id="diskPercent">
+                0%
+            </h3>
+
+            <p>Disk Usage</p>
+
+        </div>
+
+    </div>
+
+    <div class="stat-card">
+
+        <div class="stat-icon">
+            <i class="fas fa-stopwatch"></i>
+        </div>
+
+        <div class="stat-content">
+
+            <h3 id="uptime">
+                —
+            </h3>
+
+            <p>Uptime</p>
+
+        </div>
+
+    </div>
+
+</div>
+
+<!-- =====================================================
+     TABS
+===================================================== -->
+
+<div class="server-tabs">
+
+    <button
+        class="tab-btn active"
+        onclick="switchTab('console', this)"
+    >
+        <i class="fas fa-terminal"></i>
+        الكونسول
+    </button>
+
+    <button
+        class="tab-btn"
+        onclick="switchTab('files', this)"
+    >
+        <i class="fas fa-folder-tree"></i>
+        الملفات
+    </button>
+
+    <button
+        class="tab-btn"
+        onclick="switchTab('databases', this)"
+    >
+        <i class="fas fa-database"></i>
+        قواعد البيانات
+    </button>
+
+    <button
+        class="tab-btn"
+        onclick="switchTab('users', this)"
+    >
+        <i class="fas fa-user-shield"></i>
+        المستخدمين
+    </button>
+
+    <button
+        class="tab-btn"
+        onclick="switchTab('settings', this)"
+    >
+        <i class="fas fa-sliders"></i>
+        الإعدادات
+    </button>
+
+</div>
+
+<!-- =====================================================
+     CONSOLE
+===================================================== -->
+
+<div id="console" class="tab-content active">
+
+    <div class="console-container">
+
+        <div class="console-header">
+
+            <div class="console-status">
+
+                <h2
+                    class="console-title"
+                    style="font-size:15px;font-weight:800;color:#fff;margin:0;"
+                >
+
+                    <span class="console-icon">
+                        <i class="fas fa-terminal"></i>
+                    </span>
+
+                    <span>
+                        <%= server.name %>
+                    </span>
+
+                </h2>
+
+                <span
+                    class="status-badge <%= server.status === 'running' ? 'running' : 'stopped' %>"
+                    id="status-badge"
+                >
+
+                    <span id="status-text">
+
+                        <% if (server.status === 'running') { %>
+
+                            <span class="pulse-dot"></span>
+                            شغال
+
+                        <% } else { %>
+
+                            <span class="stop-dot"></span>
+                            متوقف
+
+                        <% } %>
+
+                    </span>
+
+                </span>
+
+            </div>
+
+            <div class="console-actions">
+
+                <% if (server.status === 'running') { %>
+
+                    <button
+                        class="btn btn-danger btn-sm"
+                        onclick="stopServer()"
+                    >
+                        <i class="fas fa-power-off"></i>
+                        إيقاف
+                    </button>
+
+                    <button
+                        class="btn btn-secondary btn-sm"
+                        onclick="restartServer()"
+                    >
+                        <i class="fas fa-rotate"></i>
+                        إعادة تشغيل
+                    </button>
+
+                <% } else { %>
+
+                    <button
+                        class="btn btn-success btn-sm"
+                        onclick="startServer()"
+                    >
+                        <i class="fas fa-play"></i>
+                        تشغيل
+                    </button>
+
+                <% } %>
+
+                <button
+                    class="btn btn-secondary btn-sm"
+                    onclick="clearConsole()"
+                >
+                    <i class="fas fa-broom"></i>
+                    مسح
+                </button>
+
+            </div>
+
+        </div>
+
+        <div
+            class="console-output"
+            id="console-output"
+        >
+
+            <div class="console-placeholder">
+
+                <div class="console-placeholder-icon">
+                    <i class="fas fa-terminal"></i>
+                </div>
+
+                <p>
+                    الكونسول جاهز لاستقبال سجلات السيرفر
+                </p>
+
+            </div>
+
+        </div>
+
+        <div class="console-input-area">
+
+            <input
+                type="text"
+                class="console-input"
+                id="console-input"
+                placeholder="اكتب أمر السيرفر..."
+                <%= server.status !== 'running' ? 'disabled' : '' %>
+            >
+
+            <button
+                class="btn btn-primary btn-sm"
+                onclick="sendCommand()"
+                id="send-btn"
+                <%= server.status !== 'running' ? 'disabled' : '' %>
+            >
+                <i class="fas fa-paper-plane"></i>
+                إرسال
+            </button>
+
+        </div>
+
+    </div>
+
+</div>
+
+<!-- =====================================================
+     FILES
+===================================================== -->
+
+<div id="files" class="tab-content">
+
+    <div class="file-manager">
+
+        <div class="file-header">
+
+            <div class="file-actions">
+
+                <button
+                    class="btn btn-sm btn-success"
+                    onclick="showUploadModal()"
+                >
+                    <i class="fas fa-cloud-arrow-up"></i>
+                    رفع
+                </button>
+
+                <button
+                    class="btn btn-sm btn-primary"
+                    onclick="showCreateFileModal()"
+                >
+                    <i class="fas fa-file-circle-plus"></i>
+                    ملف
+                </button>
+
+                <button
+                    class="btn btn-sm btn-primary"
+                    onclick="showCreateFolderModal()"
+                >
+                    <i class="fas fa-folder-plus"></i>
+                    مجلد
+                </button>
+
+                <button
+                    class="btn btn-sm btn-info"
+                    onclick="refreshFiles()"
+                    title="تحديث"
+                >
+                    <i class="fas fa-rotate"></i>
+                </button>
+
+            </div>
+
+        </div>
+
+        <div
+            id="bulkActions"
+            style="
+                display:none;
+                padding:11px;
+                gap:8px;
+                align-items:center;
+            "
+        >
+
+            <span id="selectedCount">
+                0 محدد
+            </span>
+
+            <button
+                class="btn btn-warning btn-sm"
+                onclick="archiveSelected()"
+            >
+                <i class="fas fa-file-zipper"></i>
+                أرشفة
+            </button>
+
+            <button
+                class="btn btn-danger btn-sm"
+                onclick="deleteSelected()"
+            >
+                <i class="fas fa-trash-can"></i>
+                حذف
+            </button>
+
+        </div>
+
+        <div
+            class="breadcrumb"
+            id="breadcrumb"
+        >
+            <a
+                href="#"
+                onclick="navigateTo('');return false;"
+            >
+                <i class="fas fa-house"></i>
+                الرئيسية
+            </a>
+        </div>
+
+        <div style="overflow-x:auto;">
+
+            <table class="file-table">
+
+                <thead>
+
+                    <tr>
+
+                        <th style="width:40px;">
+                            <input
+                                type="checkbox"
+                                id="selectAllFiles"
+                                onchange="toggleSelectAll(this)"
+                            >
+                        </th>
+
+                        <th>الاسم</th>
+                        <th>الحجم</th>
+                        <th>التاريخ</th>
+                        <th style="width:60px;"></th>
+
+                    </tr>
+
+                </thead>
+
+                <tbody id="fileList">
+
+                    <tr>
+
+                        <td
+                            colspan="5"
+                            style="text-align:center;padding:35px;"
+                        >
+                            <i class="fas fa-spinner fa-spin"></i>
+                            جاري تحميل الملفات...
+                        </td>
+
+                    </tr>
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+    </div>
+
+</div>
+
+<!-- =====================================================
+     DATABASES
+===================================================== -->
+
+<div id="databases" class="tab-content">
+
+    <div class="file-manager">
+
+        <div class="file-header">
+
+            <div class="file-actions">
+
+                <button
+                    class="btn btn-sm btn-success"
+                    onclick="showCreateDatabaseModal()"
+                >
+                    <i class="fas fa-database"></i>
+                    <i class="fas fa-plus" style="font-size:8px;margin-right:-4px;"></i>
+                    إنشاء قاعدة
+                </button>
+
+                <button
+                    class="btn btn-sm btn-info"
+                    onclick="refreshDatabases()"
+                >
+                    <i class="fas fa-rotate"></i>
+                </button>
+
+            </div>
+
+        </div>
+
+        <div style="overflow-x:auto;">
+
+            <table class="file-table">
+
+                <thead>
+
+                    <tr>
+                        <th>الاسم</th>
+                        <th>المستخدم</th>
+                        <th>المضيف</th>
+                        <th>الحجم</th>
+                        <th></th>
+                    </tr>
+
+                </thead>
+
+                <tbody id="databaseList">
+
+                    <tr>
+
+                        <td
+                            colspan="5"
+                            style="text-align:center;color:#667085;padding:35px;"
+                        >
+
+                            <i
+                                class="fas fa-database"
+                                style="font-size:30px;display:block;margin-bottom:10px;"
+                            ></i>
+
+                            لا توجد قواعد بيانات بعد
+
+                        </td>
+
+                    </tr>
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+    </div>
+
+</div>
+
+<!-- =====================================================
+     USERS
+===================================================== -->
+
+<div id="users" class="tab-content">
+
+    <div class="file-manager">
+
+        <div class="file-header">
+
+            <div class="file-actions">
+
+                <button
+                    class="btn btn-sm btn-success"
+                    onclick="showAddUserModal()"
+                >
+                    <i class="fas fa-user-plus"></i>
+                    إضافة مستخدم
+                </button>
+
+                <button
+                    class="btn btn-sm btn-info"
+                    onclick="refreshServerUsers()"
+                >
+                    <i class="fas fa-rotate"></i>
+                </button>
+
+            </div>
+
+        </div>
+
+        <div style="overflow-x:auto;">
+
+            <table class="file-table">
+
+                <thead>
+
+                    <tr>
+                        <th>المستخدم</th>
+                        <th>الصلاحية</th>
+                        <th>تاريخ الإضافة</th>
+                        <th></th>
+                    </tr>
+
+                </thead>
+
+                <tbody id="serverUsersList">
+
+                    <tr>
+
+                        <td>
+                            <i
+                                class="fas fa-crown"
+                                style="color:#fbbf24;"
+                            ></i>
+
+                            <%= user.username %>
+                            <span style="color:#64748b;">
+                                (المالك)
+                            </span>
+                        </td>
+
+                        <td>
+                            <span style="color:#34d399;">
+                                كل الصلاحيات
+                            </span>
+                        </td>
+
+                        <td>—</td>
+
+                        <td></td>
+
+                    </tr>
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+    </div>
+
+</div>
+
+<!-- =====================================================
+     SETTINGS
+===================================================== -->
+
+<div id="settings" class="tab-content">
+
+    <div class="auth-box" style="max-width:600px;padding:22px;">
+
+        <h3
+            style="
+                margin-top:0;
+                display:flex;
+                align-items:center;
+                gap:9px;
+            "
+        >
+            <i class="fas fa-sliders" style="color:#818cf8;"></i>
+            إعدادات السيرفر
+        </h3>
+
+        <div class="form-group">
+
+            <label>
+                <i class="fas fa-file-code"></i>
+                الملف الرئيسي
+            </label>
+
+            <input
+                type="text"
+                id="mainFile"
+                value="<%= server.mainFile %>"
+                placeholder="index.js"
+            >
+
+        </div>
+
+        <div class="form-group">
+
+            <label>
+                <i class="fab fa-node-js"></i>
+                إصدار Node.js
+            </label>
+
+            <select id="nodeVersion">
+
+                <option
+                    value="18"
+                    <%= server.nodeVersion === '18' ? 'selected' : '' %>
+                >
+                    Node.js 18
+                </option>
+
+                <option
+                    value="20"
+                    <%= server.nodeVersion === '20' ? 'selected' : '' %>
+                >
+                    Node.js 20
+                </option>
+
+                <option
+                    value="22"
+                    <%= server.nodeVersion === '22' ? 'selected' : '' %>
+                >
+                    Node.js 22
+                </option>
+
+                <option
+                    value="24"
+                    <%= server.nodeVersion === '24' ? 'selected' : '' %>
+                >
+                    Node.js 24
+                </option>
+
+            </select>
+
+        </div>
+
+        <div class="form-group">
+
+            <label>
+                <i class="fas fa-key"></i>
+                متغيرات البيئة
+            </label>
+
+            <textarea
+                id="envVariables"
+                rows="5"
+                placeholder="PORT=3000&#10;TOKEN=xxx"
+            ><% if (server.envVariables) { %><% for (const [key, value] of server.envVariables) { %><%= key %>=<%= value %>
+
+<% } %><% } %></textarea>
+
+        </div>
+
+        <hr
+            style="
+                border:0;
+                border-top:1px solid var(--border);
+                margin:20px 0;
+            "
+        >
+
+        <div class="form-group">
+
+            <label>
+                <i class="fas fa-box-open"></i>
+                تنزيل بكجات البوت
+            </label>
+
+            <button
+                class="btn btn-success"
+                onclick="showPackagesModal()"
+            >
+                <i class="fas fa-cloud-arrow-down"></i>
+                فتح مدير البكجات
+            </button>
+
+        </div>
+
+        <button
+            class="btn btn-primary"
+            onclick="saveSettings()"
+        >
+            <i class="fas fa-floppy-disk"></i>
+            حفظ الإعدادات
+        </button>
+
+    </div>
+
+</div>
+
+</div>
+
+<!-- =========================================================
+     UPLOAD MODAL
+========================================================= -->
+
+<div id="uploadModal" class="modal-overlay">
+
+<div
+    class="modal-box"
+    style="height:auto;max-width:540px;"
+>
+
+    <div class="modal-header">
+
+        <h2>
+            <i class="fas fa-cloud-arrow-up"></i>
+            رفع الملفات
+        </h2>
+
+        <button
+            class="btn btn-sm btn-outline"
+            onclick="closeModal('uploadModal')"
+        >
+            <i class="fas fa-xmark"></i>
+        </button>
+
+    </div>
+
+    <div
+        class="upload-area"
+        id="dropZone"
+    >
+
+        <i class="fas fa-cloud-arrow-up"></i>
+
+        <p style="margin:0;color:#cbd5e1;">
+            اسحب الملفات هنا أو اضغط للاختيار
+        </p>
+
+        <small style="color:#64748b;">
+            يمكنك رفع أكثر من ملف
+        </small>
+
+        <input
+            type="file"
+            id="fileInput"
+            multiple
+            style="display:none;"
+        >
+
+    </div>
+
+    <div
+        id="selectedFiles"
+        style="
+            color:#fff;
+            max-height:150px;
+            overflow-y:auto;
+            padding:0 15px;
+        "
+    ></div>
+
+    <label
+        style="
+            color:#cbd5e1;
+            display:flex;
+            align-items:center;
+            gap:8px;
+            margin:15px;
+            font-size:12px;
+        "
+    >
+
+        <input
+            type="checkbox"
+            id="extractArchive"
+        >
+
+        استخراج الأرشيفات تلقائياً
+
+    </label>
+
+    <div
+        style="
+            display:flex;
+            gap:8px;
+            margin-top:5px;
+        "
+    >
+
+        <button
+            class="btn btn-success"
+            onclick="uploadFiles()"
+            style="flex:1;"
+        >
+            <i class="fas fa-cloud-arrow-up"></i>
+            رفع
+        </button>
+
+        <button
+            class="btn btn-outline"
+            onclick="closeModal('uploadModal')"
+        >
+            إلغاء
+        </button>
+
+    </div>
+
+</div>
+
+</div>
+
+<!-- =========================================================
+     CREATE FILE
+========================================================= -->
+
+<div id="createFileModal" class="modal-overlay">
+
+<div
+    class="modal-box"
+    style="height:auto;max-width:430px;"
+>
+
+    <div class="modal-header">
+
+        <h2>
+            <i class="fas fa-file-circle-plus"></i>
+            ملف جديد
+        </h2>
+
+        <button
+            class="btn btn-sm btn-outline"
+            onclick="closeModal('createFileModal')"
+        >
+            <i class="fas fa-xmark"></i>
+        </button>
+
+    </div>
+
+    <input
+        type="text"
+        id="newFileName"
+        placeholder="example.js"
+        style="width:100%;padding:12px;"
+    >
+
+    <div
+        style="
+            display:flex;
+            gap:8px;
+            margin-top:15px;
+        "
+    >
+
+        <button
+            class="btn btn-success"
+            onclick="createFile()"
+            style="flex:1;"
+        >
+            <i class="fas fa-plus"></i>
+            إنشاء
+        </button>
+
+        <button
+            class="btn btn-outline"
+            onclick="closeModal('createFileModal')"
+        >
+            إلغاء
+        </button>
+
+    </div>
+
+</div>
+
+</div>
+
+<!-- =========================================================
+     CREATE FOLDER
+========================================================= -->
+
+<div id="createFolderModal" class="modal-overlay">
+
+<div
+    class="modal-box"
+    style="height:auto;max-width:430px;"
+>
+
+    <div class="modal-header">
+
+        <h2>
+            <i class="fas fa-folder-plus"></i>
+            مجلد جديد
+        </h2>
+
+        <button
+            class="btn btn-sm btn-outline"
+            onclick="closeModal('createFolderModal')"
+        >
+            <i class="fas fa-xmark"></i>
+        </button>
+
+    </div>
+
+    <input
+        type="text"
+        id="newFolderName"
+        placeholder="folder"
+        style="width:100%;padding:12px;"
+    >
+
+    <div
+        style="
+            display:flex;
+            gap:8px;
+            margin-top:15px;
+        "
+    >
+
+        <button
+            class="btn btn-success"
+            onclick="createFolder()"
+            style="flex:1;"
+        >
+            <i class="fas fa-folder-plus"></i>
+            إنشاء
+        </button>
+
+        <button
+            class="btn btn-outline"
+            onclick="closeModal('createFolderModal')"
+        >
+            إلغاء
+        </button>
+
+    </div>
+
+</div>
+
+</div>
+
+<!-- =========================================================
+     EDITOR
+========================================================= -->
+
+<div id="editorModal" class="modal-overlay">
+
+<div class="modal-box">
+
+    <div class="modal-header">
+
+        <h2>
+
+            <i
+                id="editorIcon"
+                class="fas fa-file-code"
+            ></i>
+
+            <span id="editorTitle">
+                تحرير ملف
+            </span>
+
+        </h2>
+
+        <div>
+
+            <span
+                id="editorLang"
+                style="color:#64748b;margin-left:15px;"
+            >
+                JS
+            </span>
+
+            <button
+                class="btn btn-sm btn-outline"
+                onclick="closeModal('editorModal')"
+            >
+                <i class="fas fa-xmark"></i>
+            </button>
+
+        </div>
+
+    </div>
+
+    <div class="editor-container">
+
+        <textarea id="editor"></textarea>
+
+    </div>
+
+    <div class="editor-footer">
+
+        <div class="editor-status">
+
+            <span id="editorCursor">
+                Ln 1, Col 1
+            </span>
+
+            <span id="editorSize">
+                0 lines
+            </span>
+
+        </div>
+
+        <div>
+
+            <button
+                class="btn btn-sm btn-success"
+                onclick="saveFileFromEditor()"
+            >
+                <i class="fas fa-floppy-disk"></i>
+                حفظ
+            </button>
+
+            <button
+                class="btn btn-sm btn-outline"
+                onclick="closeModal('editorModal')"
+            >
+                إلغاء
+            </button>
+
+        </div>
+
+    </div>
+
+</div>
+
+</div>
+
+<!-- =========================================================
+     RENAME
+========================================================= -->
+
+<div id="renameModal" class="modal-overlay">
+
+<div
+    class="modal-box"
+    style="height:auto;max-width:430px;"
+>
+
+    <div class="modal-header">
+
+        <h2>
+            <i class="fas fa-pen"></i>
+            إعادة تسمية
+        </h2>
+
+        <button
+            class="btn btn-sm btn-outline"
+            onclick="closeModal('renameModal')"
+        >
+            <i class="fas fa-xmark"></i>
+        </button>
+
+    </div>
+
+    <input
+        type="hidden"
+        id="renameOldPath"
+    >
+
+    <input
+        type="text"
+        id="renameNewName"
+        style="width:100%;padding:12px;"
+    >
+
+    <div
+        style="
+            display:flex;
+            gap:8px;
+            margin-top:15px;
+        "
+    >
+
+        <button
+            class="btn btn-success"
+            onclick="renameFile()"
+            style="flex:1;"
+        >
+            <i class="fas fa-check"></i>
+            حفظ
+        </button>
+
+        <button
+            class="btn btn-outline"
+            onclick="closeModal('renameModal')"
+        >
+            إلغاء
+        </button>
+
+    </div>
+
+</div>
+
+</div>
+
+<!-- =========================================================
+     PACKAGES
+========================================================= -->
+
+<div id="packagesModal" class="modal-overlay">
+
+<div
+    class="modal-box"
+    style="height:auto;max-width:600px;"
+>
+
+    <div class="modal-header">
+
+        <h2>
+            <i class="fas fa-box-open"></i>
+            مدير البكجات
+        </h2>
+
+        <button
+            class="btn btn-sm btn-outline"
+            onclick="closeModal('packagesModal')"
+        >
+            <i class="fas fa-xmark"></i>
+        </button>
+
+    </div>
+
+    <div
+        style="
+            color:#fff;
+            display:flex;
+            flex-direction:column;
+            gap:12px;
+        "
+    >
+
+        <p style="color:#64748b;margin:0;">
+            اختر بكج جاهز أو اكتب اسم البكج الذي تريد تنزيله.
+        </p>
+
+        <select
+            id="packageSelect"
+            style="padding:11px;"
+        >
+
+            <option value="">
+                اختر بكج
+            </option>
+
+            <option value="discord-bot-basic">
+                Discord Bot Basic
+            </option>
+
+            <option value="ticket-bot">
+                Ticket Bot
+            </option>
+
+            <option value="music-bot">
+                Music Bot
+            </option>
+
+            <option value="moderation-bot">
+                Moderation Bot
+            </option>
+
+        </select>
+
+        <input
+            type="text"
+            id="customPackage"
+            placeholder="أو اكتب اسم البكج"
+            style="padding:12px;"
+        >
+
+        <button
+            class="btn btn-primary"
+            onclick="downloadPackage()"
+        >
+            <i class="fas fa-cloud-arrow-down"></i>
+            تنزيل البكج
+        </button>
+
+    </div>
+
+</div>
+
+</div>
+
+<!-- =========================================================
+     SCRIPTS
+========================================================= -->
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/codemirror.min.js"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/mode/javascript/javascript.min.js"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/mode/css/css.min.js"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/mode/xml/xml.min.js"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/mode/htmlmixed/htmlmixed.min.js"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/mode/markdown/markdown.min.js"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/mode/python/python.min.js"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/mode/php/php.min.js"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/mode/shell/shell.min.js"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/mode/yaml/yaml.min.js"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/addon/edit/matchbrackets.min.js"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/addon/edit/closebrackets.min.js"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/addon/edit/closetag.min.js"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/addon/comment/comment.min.js"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/addon/fold/foldcode.min.js"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/addon/fold/foldgutter.min.js"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/addon/fold/brace-fold.min.js"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/addon/search/search.min.js"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/addon/search/searchcursor.min.js"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/addon/search/jump-to-line.min.js"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/addon/dialog/dialog.min.js"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/addon/selection/active-line.min.js"></script>
+
+<script src="/socket.io/socket.io.js"></script>
+
+<script>
+
+const socket = io();
+
+const serverId = '<%= server._id %>';
+let serverName = '<%= server.name %>';
+
+/* =========================================================
+   SERVER PERMISSIONS
+========================================================= */
+
+const currentUserId = '<%= user._id %>';
+
+const isServerOwner =
+    '<%= server.owner && server.owner._id ? server.owner._id.toString() : server.owner.toString() %>'
+    === currentUserId;
+
+const isSystemAdmin =
+    <%= !!(
+        user.isOwner ||
+        user.isAdmin ||
+        config.ownerId === user.discordId ||
+        (config.ownerIds || []).includes(user.discordId) ||
+        (config.adminIds || []).includes(user.discordId)
+    ) %>;
+
+const serverPermissions = <%- JSON.stringify(permissions || {}) %>;
+
+console.log('SERVER DEBUG:', {
+    currentUserId,
+    isServerOwner,
+    isSystemAdmin,
+    serverPermissions
+});
+
+/* =========================================================
+   HIDE UNAUTHORIZED TABS
+========================================================= */
+
+if (isServerOwner || isSystemAdmin) {
+
+    Object.keys(serverPermissions).forEach(permission => {
+        serverPermissions[permission] = true;
+    });
+
+} else {
+
+    const collaborator =
+        <%- JSON.stringify(
+            (server.collaborators || []).find(c =>
+                c.user &&
+                c.user._id &&
+                c.user._id.toString() === user._id.toString()
+            )?.permissions || {}
+        ) %>;
+
+    Object.keys(serverPermissions).forEach(permission => {
+
+        serverPermissions[permission] =
+            collaborator[permission] === true;
+
+    });
+
+}
+
+let currentPath = '';
+let selectedFiles = [];
+let selectedPaths = [];
+let currentFile = '';
+let editor = null;
+
+let startTime = Date.now();
+let isRunning = <%= server.status === 'running' %>;
+
+/* =========================================================
+   ELEMENTS
+========================================================= */
+
+const consoleOutput =
+    document.getElementById('console-output');
+
+const consoleInput =
+    document.getElementById('console-input');
+
+const sendBtn =
+    document.getElementById('send-btn');
+
+const statusBadge =
+    document.getElementById('status-badge');
+
+const statusText =
+    document.getElementById('status-text');
+
+/* =========================================================
+   TOAST SYSTEM
+========================================================= */
+
+function showToast(message, type = 'info', title = null) {
+
+    const container =
+        document.getElementById('toastContainer');
+
+    const toast =
+        document.createElement('div');
+
+    const icons = {
+
+        success: 'fa-circle-check',
+        error: 'fa-circle-xmark',
+        warning: 'fa-triangle-exclamation',
+        info: 'fa-circle-info'
+
+    };
+
+    const titles = {
+
+        success: 'تمت العملية',
+        error: 'حدث خطأ',
+        warning: 'تنبيه',
+        info: 'إشعار'
+
+    };
+
+    toast.className =
+        `premium-toast ${type}`;
+
+    toast.innerHTML = `
+
+        <div class="toast-icon">
+            <i class="fas ${icons[type] || icons.info}"></i>
+        </div>
+
+        <div class="toast-content">
+
+            <div class="toast-title">
+                ${escapeHtml(title || titles[type] || 'إشعار')}
+            </div>
+
+            <div class="toast-message">
+                ${escapeHtml(message)}
+            </div>
+
+        </div>
+
+    `;
+
+    container.appendChild(toast);
+
+    setTimeout(() => {
+
+        toast.classList.add('hide');
+
+        setTimeout(() => toast.remove(), 220);
+
+    }, 3500);
+}
+
+/* =========================================================
+   SOCKET.IO
+========================================================= */
+
+socket.on('connect', () => {
+
+    socket.emit('joinServer', serverId);
+
+    socket.emit('get-console-history', {
+        serverId
+    });
+
+});
+
+socket.on('console-log', data => {
+
+    addLogLine(
+        data.type,
+        data.message,
+        data.timestamp || Date.now()
+    );
+
+});
+
+socket.on('console-history', logs => {
+
+    if (!logs || !logs.length) return;
+
+    consoleOutput.innerHTML = '';
+
+    logs.forEach(log => {
+
+        addLogLine(
+            log.type,
+            log.message,
+            log.timestamp
+        );
+
+    });
+
+});
+
+socket.on('status-update', data => {
+
+    if (data.id !== serverId) return;
+
+    isRunning =
+        data.status === 'running';
+
+    updateStatusUI(isRunning);
+
+    if (isRunning) {
+
+        startTime = Date.now();
+
+    }
+
+});
+
+socket.on('resource-update', data => {
+
+    if (data.id !== serverId) return;
+
+    const cpu =
+        Math.min(100, Math.max(0, Number(data.cpu) || 0));
+
+    const ram =
+        Math.min(100, Math.max(0, Number(data.ramPercent) || 0));
+
+    const disk =
+        Math.min(100, Math.max(0, Number(data.diskPercent) || 0));
+
+    document.getElementById('cpuPercent').textContent =
+        cpu + '%';
+
+    document.getElementById('ramPercent').textContent =
+        ram + '%';
+
+    document.getElementById('diskPercent').textContent =
+        disk + '%';
+
+    const cpuBar =
+        document.getElementById('cpuBar');
+
+    const ramBar =
+        document.getElementById('ramBar');
+
+    const diskBar =
+        document.getElementById('diskBar');
+
+    if (cpuBar)
+        cpuBar.style.width = cpu + '%';
+
+    if (ramBar)
+        ramBar.style.width = ram + '%';
+
+    if (diskBar)
+        diskBar.style.width = disk + '%';
+
+});
+
+/* =========================================================
+   CONSOLE
+========================================================= */
+
+function addLogLine(type, message, timestamp) {
+
+    const placeholder =
+        consoleOutput.querySelector('.console-placeholder');
+
+    if (placeholder)
+        placeholder.remove();
+
+    const line =
+        document.createElement('div');
+
+    line.className = 'log-line';
+
+    const time =
+        new Date(timestamp || Date.now())
+            .toLocaleTimeString('en-US', {
+                hour12: false
+            });
+
+    let colorClass = 'log-stdout';
+
+    if (type === 'stderr')
+        colorClass = 'log-stderr';
+
+    else if (type === 'info')
+        colorClass = 'log-info';
+
+    else if (type === 'command')
+        colorClass = 'log-command';
+
+    line.innerHTML = `
+
+        <span class="log-time">
+            [${time}]
+        </span>
+
+        <span class="${colorClass}">
+            ${escapeHtml(String(message ?? ''))}
+        </span>
+
+    `;
+
+    consoleOutput.appendChild(line);
+
+    consoleOutput.scrollTop =
+        consoleOutput.scrollHeight;
+
+    while (consoleOutput.children.length > 500) {
+
+        consoleOutput.removeChild(
+            consoleOutput.children[0]
+        );
+
+    }
+
+}
+
+function escapeHtml(text) {
+
+    const div =
+        document.createElement('div');
+
+    div.textContent =
+        text;
+
+    return div.innerHTML;
+
+}
+
+function updateStatusUI(running) {
+
+    isRunning = running;
+
+    const serverStatusEl =
+        document.getElementById('serverStatus');
+
+    if (running) {
+
+        statusBadge.className =
+            'status-badge running';
+
+        statusText.innerHTML =
+            '<span class="pulse-dot"></span> شغال';
+
+        serverStatusEl.innerHTML =
+            'يعمل';
+
+        serverStatusEl.className =
+            'server-status status-running';
+
+    } else {
+
+        statusBadge.className =
+            'status-badge stopped';
+
+        statusText.innerHTML =
+            '<span class="stop-dot"></span> متوقف';
+
+        serverStatusEl.innerHTML =
+            'متوقف';
+
+        serverStatusEl.className =
+            'server-status status-stopped';
+
+    }
+
+    /*
+     * Console permission
+     */
+
+    consoleInput.disabled =
+        !serverPermissions.consoleCommand ||
+        !running;
+
+    sendBtn.disabled =
+        !serverPermissions.consoleCommand ||
+        !running;
+
+
+    /*
+     * Console actions
+     */
+
+    const actions =
+        document.querySelector('.console-actions');
+
+    if (!actions)
+        return;
+
+    let html = '';
+
+    if (!running) {
+
+        if (serverPermissions.start) {
+
+            html += `
+
+                <button
+                    class="btn btn-success btn-sm"
+                    onclick="startServer()"
+                >
+                    <i class="fas fa-play"></i>
+                    تشغيل
+                </button>
+
+            `;
+
+        }
+
+    } else {
+
+        if (serverPermissions.stop) {
+
+            html += `
+
+                <button
+                    class="btn btn-danger btn-sm"
+                    onclick="stopServer()"
+                >
+                    <i class="fas fa-power-off"></i>
+                    إيقاف
+                </button>
+
+            `;
+
+        }
+
+        if (serverPermissions.restart) {
+
+            html += `
+
+                <button
+                    class="btn btn-secondary btn-sm"
+                    onclick="restartServer()"
+                >
+                    <i class="fas fa-rotate"></i>
+                    إعادة تشغيل
+                </button>
+
+            `;
+
+        }
+
+    }
+
+    if (serverPermissions.console) {
+
+        html += `
+
+            <button
+                class="btn btn-secondary btn-sm"
+                onclick="clearConsole()"
+            >
+                <i class="fas fa-broom"></i>
+                مسح
+            </button>
+
+        `;
+
+    }
+
+    actions.innerHTML = html;
+
+}
+
+function sendCommand() {
+
+    if (!serverPermissions.consoleCommand) {
+
+        showToast(
+            'ليس لديك صلاحية إرسال أوامر Console.',
+            'error'
+        );
+
+        return;
+
+    }
+
+    const command =
+        consoleInput.value.trim();
+
+    if (!command || !isRunning)
+        return;
+
+    socket.emit('console-command', {
+        serverId,
+        command
+    });
+
+    addLogLine(
+        'command',
+        `> ${command}`,
+        Date.now()
+    );
+
+    consoleInput.value = '';
+
+}
+
+function clearConsole() {
+
+    consoleOutput.innerHTML = `
+
+        <div class="console-placeholder">
+
+            <div class="console-placeholder-icon">
+                <i class="fas fa-broom"></i>
+            </div>
+
+            <p>
+                تم تنظيف الكونسول
+            </p>
+
+        </div>
+
+    `;
+
+}
+
+async function startServer() {
+
+    if (!serverPermissions.start) {
+
+        showToast(
+            'ليس لديك صلاحية تشغيل السيرفر.',
+            'error'
+        );
+
+        return;
+
+    }
+
+    try {
+
+        showToast(
+            'جاري إرسال طلب تشغيل السيرفر...',
+            'info'
+        );
+
+        const res =
+            await fetch(
+                `/servers/${serverId}/start`,
+                { method: 'POST' }
+            );
+
+        const data =
+            await res.json();
+
+        if (data.success) {
+
+            updateStatusUI(true);
+
+            showToast(
+                'تم تشغيل السيرفر بنجاح.',
+                'success'
+            );
+
+        } else {
+
+            showToast(
+                data.error || 'فشل تشغيل السيرفر.',
+                'error'
+            );
+
+        }
+
+    } catch (err) {
+
+        showToast(
+            'تعذر الاتصال بالخادم.',
+            'error'
+        );
+
+    }
+
+}
+
+async function stopServer() {
+
+    if (!serverPermissions.stop) {
+
+        showToast(
+            'ليس لديك صلاحية إيقاف السيرفر.',
+            'error'
+        );
+
+        return;
+
+    }
+
+    try {
+
+        const res =
+            await fetch(
+                `/servers/${serverId}/stop`,
+                { method: 'POST' }
+            );
+
+        const data =
+            await res.json();
+
+        if (data.success) {
+
+            updateStatusUI(false);
+
+            showToast(
+                'تم إيقاف السيرفر.',
+                'success'
+            );
+
+        } else {
+
+            showToast(
+                data.error || 'فشل إيقاف السيرفر.',
+                'error'
+            );
+
+        }
+
+    } catch (err) {
+
+        showToast(
+            'تعذر الاتصال بالخادم.',
+            'error'
+        );
+
+    }
+
+}
+
+async function restartServer() {
+
+    if (!serverPermissions.restart) {
+
+        showToast(
+            'ليس لديك صلاحية إعادة تشغيل السيرفر.',
+            'error'
+        );
+
+        return;
+
+    }
+
+    try {
+
+        showToast(
+            'جاري إعادة تشغيل السيرفر...',
+            'info'
+        );
+
+        const res =
+            await fetch(
+                `/servers/${serverId}/restart`,
+                { method: 'POST' }
+            );
+
+        const data =
+            await res.json();
+
+        if (data.success) {
+
+            updateStatusUI(true);
+
+            showToast(
+                'تمت إعادة تشغيل السيرفر.',
+                'success'
+            );
+
+        } else {
+
+            showToast(
+                data.error || 'فشل إعادة التشغيل.',
+                'error'
+            );
+
+        }
+
+    } catch (err) {
+
+        showToast(
+            'تعذر الاتصال بالخادم.',
+            'error'
+        );
+
+    }
+
+}
+
+consoleInput.addEventListener(
+    'keypress',
+    e => {
+
+        if (e.key === 'Enter')
+            sendCommand();
+
+    }
+);
+
+/* =========================================================
+   UPTIME
+========================================================= */
+
+setInterval(() => {
+
+    if (!isRunning) {
+
+        document.getElementById('uptime')
+            .textContent = '—';
+
+        return;
+
+    }
+
+    const uptime =
+        Math.floor(
+            (Date.now() - startTime) / 1000
+        );
+
+    const hours =
+        Math.floor(uptime / 3600);
+
+    const minutes =
+        Math.floor((uptime % 3600) / 60);
+
+    const seconds =
+        uptime % 60;
+
+    document.getElementById('uptime')
+        .textContent =
+        `${hours}h ${minutes}m ${seconds}s`;
+
+}, 1000);
+
+/* =========================================================
+   TABS
+========================================================= */
+
+function switchTab(id, el) {
+
+    const requiredPermissions = {
+
+        console: 'console',
+        files: 'files',
+        packages: 'packages',
+        settings: 'settings',
+        users: null,
+        databases: 'packages'
+
+    };
+
+    if (id === 'users') {
+
+        if (!isServerOwner && !isSystemAdmin) {
+
+            showToast(
+                'فقط صاحب السيرفر يستطيع إدارة المستخدمين.',
+                'error'
+            );
+
+            return;
+        }
+
+    } else {
+
+        const permission = requiredPermissions[id];
+
+        if (
+            permission &&
+            !serverPermissions[permission]
+        ) {
+
+            showToast(
+                'ليس لديك صلاحية الوصول إلى هذا القسم.',
+                'error'
+            );
+
+            return;
+        }
+    }
+
+    document.querySelectorAll('.tab-content')
+        .forEach(t => t.classList.remove('active'));
+
+    document.querySelectorAll('.tab-btn')
+        .forEach(b => b.classList.remove('active'));
+
+    const target = document.getElementById(id);
+
+    if (!target) {
+        return;
+    }
+
+    target.classList.add('active');
+
+    if (el) {
+        el.classList.add('active');
+    }
+
+    if (id === 'files') {
+        refreshFiles();
+    }
+
+    if (id === 'databases') {
+        refreshDatabases();
+    }
+
+    if (id === 'users') {
+        refreshServerUsers();
+    }
+}
+
+/* =========================================================
+   DATABASES
+========================================================= */
+
+async function refreshDatabases() {
+
+    try {
+
+        const r =
+            await fetch(
+                `/servers/${serverId}/databases`
+            );
+
+        const d =
+            await r.json();
+
+        const list =
+            document.getElementById('databaseList');
+
+        if (!d.databases ||
+            d.databases.length === 0) {
+
+            list.innerHTML = `
+
+                <tr>
+
+                    <td
+                        colspan="5"
+                        style="
+                            text-align:center;
+                            color:#667085;
+                            padding:35px;
+                        "
+                    >
+
+                        <i
+                            class="fas fa-database"
+                            style="
+                                font-size:30px;
+                                display:block;
+                                margin-bottom:10px;
+                            "
+                        ></i>
+
+                        لا توجد قواعد بيانات بعد
+
+                    </td>
+
+                </tr>
+
+            `;
+
+            return;
+
+        }
+
+        list.innerHTML =
+            d.databases.map(db => `
+
+                <tr>
+
+                    <td>
+                        <i
+                            class="fas fa-database"
+                            style="color:#818cf8;margin-left:7px;"
+                        ></i>
+                        ${escapeHtml(db.name)}
+                    </td>
+
+                    <td>
+                        ${escapeHtml(db.username || '-')}
+                    </td>
+
+                    <td>
+                        ${escapeHtml(db.host || '-')}
+                    </td>
+
+                    <td>
+                        ${escapeHtml(db.size || '-')}
+                    </td>
+
+                    <td>
+
+                        <button
+                            class="btn btn-sm btn-danger"
+                            onclick="deleteDatabase('${db.id}')"
+                        >
+                            <i class="fas fa-trash-can"></i>
+                        </button>
+
+                    </td>
+
+                </tr>
+
+            `).join('');
+
+    } catch (err) {
+
+        console.warn(
+            'Database endpoint unavailable',
+            err
+        );
+
+    }
+
+}
+
+function showCreateDatabaseModal() {
+
+    const name =
+        prompt('اسم قاعدة البيانات:');
+
+    if (!name)
+        return;
+
+    fetch(
+        `/servers/${serverId}/databases`,
+        {
+            method: 'POST',
+            headers: {
+                'Content-Type':
+                    'application/json'
+            },
+            body:
+                JSON.stringify({ name })
+        }
+    )
+    .then(() => {
+
+        showToast(
+            'تم إرسال طلب إنشاء قاعدة البيانات.',
+            'success'
+        );
+
+        refreshDatabases();
+
+    })
+    .catch(() => {
+
+        showToast(
+            'فشل إنشاء قاعدة البيانات.',
+            'error'
+        );
+
+    });
+
+}
+
+function deleteDatabase(id) {
+
+    if (!confirm(
+        'هل تريد حذف قاعدة البيانات؟'
+    ))
+        return;
+
+    fetch(
+        `/servers/${serverId}/databases/${id}`,
+        {
+            method: 'DELETE'
+        }
+    )
+    .then(() => {
+
+        showToast(
+            'تم حذف قاعدة البيانات.',
+            'success'
+        );
+
+        refreshDatabases();
+
+    })
+    .catch(() => {
+
+        showToast(
+            'فشل حذف قاعدة البيانات.',
+            'error'
+        );
+
+    });
+
+}
+
+/* =========================================================
+   COLLABORATORS / USERS
+========================================================= */
+
+async function refreshServerUsers() {
+
+    try {
+
+        const r =
+            await fetch(
+                `/servers/${serverId}/users`
+            );
+
+        const d =
+            await r.json();
+
+        if (!d.users)
+            return;
+
+        const list =
+            document.getElementById(
+                'serverUsersList'
+            );
+
+        if (!list)
+            return;
+
+        const ownerRow = `
+
+            <tr>
+
+                <td>
+
+                    <i
+                        class="fas fa-crown"
+                        style="
+                            color:#fbbf24;
+                            margin-left:7px;
+                        "
+                    ></i>
+
+                    ${escapeHtml(serverName)}
+
+                    <span style="color:#64748b;">
+                        (المالك)
+                    </span>
+
+                </td>
+
+                <td>
+                    <span style="color:#34d399;">
+                        كل الصلاحيات
+                    </span>
+                </td>
+
+                <td>—</td>
+
+                <td>—</td>
+
+            </tr>
+
+        `;
+
+        const collaborators =
+            d.users.map(u => {
+
+                const permissionCount =
+                    u.permissions
+                        ? Object.values(u.permissions)
+                            .filter(Boolean)
+                            .length
+                        : 0;
+
+                return `
+
+                    <tr>
+
+                        <td>
+
+                            <i
+                                class="fas fa-user-group"
+                                style="
+                                    color:#22c55e;
+                                    margin-left:7px;
+                                "
+                            ></i>
+
+                            ${escapeHtml(
+                                u.username || 'مستخدم'
+                            )}
+
+                            ${
+                                u.email
+                                ? `
+                                    <div
+                                        style="
+                                            font-size:12px;
+                                            color:#64748b;
+                                            margin-top:4px;
+                                        "
+                                    >
+                                        ${escapeHtml(u.email)}
+                                    </div>
+                                `
+                                : ''
+                            }
+
+                            ${
+                                u.discordId
+                                ? `
+                                    <div
+                                        style="
+                                            font-size:11px;
+                                            color:#475569;
+                                            margin-top:3px;
+                                        "
+                                    >
+                                        Discord:
+                                        ${escapeHtml(u.discordId)}
+                                    </div>
+                                `
+                                : ''
+                            }
+
+                        </td>
+
+                        <td>
+
+                            <span
+                                style="
+                                    color:#34d399;
+                                "
+                            >
+                                ${permissionCount}
+                                صلاحية
+                            </span>
+
+                        </td>
+
+                        <td>
+
+                            ${
+                                u.addedAt
+                                ? new Date(
+                                    u.addedAt
+                                ).toLocaleDateString('ar')
+                                : '—'
+                            }
+
+                        </td>
+
+                        <td>
+
+                            <button
+                                class="btn btn-sm btn-secondary"
+                                onclick="
+                                    editCollaboratorPermissions(
+                                        '${u.id}'
+                                    )
+                                "
+                                title="الصلاحيات"
+                            >
+                                <i class="fas fa-shield-halved"></i>
+                            </button>
+
+                            <button
+                                class="btn btn-sm btn-danger"
+                                onclick="
+                                    removeCollaborator(
+                                        '${u.id}'
+                                    )
+                                "
+                                title="إزالة"
+                            >
+                                <i class="fas fa-user-minus"></i>
+                            </button>
+
+                        </td>
+
+                    </tr>
+
+                `;
+
+            }).join('');
+
+        list.innerHTML =
+            ownerRow +
+            collaborators;
+
+    } catch (err) {
+
+        console.warn(
+            'Users endpoint unavailable',
+            err
+        );
+
+    }
+
+}
+
+
+/* =========================================================
+   ADD COLLABORATOR
+========================================================= */
+
+function showAddUserModal() {
+
+    if (!isServerOwner && !isSystemAdmin) {
+
+        showToast(
+            'فقط صاحب السيرفر يستطيع إدارة المتعاونين.',
+            'error'
+        );
+
+        return;
+
+    }
+
+    const identifier =
+        prompt(
+            'أدخل Discord ID أو البريد الإلكتروني المسجل في الموقع:'
+        );
+
+    if (!identifier)
+        return;
+
+    fetch(
+        `/servers/${serverId}/collaborators/add`,
+        {
+            method: 'POST',
+
+            headers: {
+                'Content-Type':
+                    'application/json'
+            },
+
+            body: JSON.stringify({
+                identifier:
+                    identifier.trim()
+            })
+        }
+    )
+    .then(async r => {
+
+        const data =
+            await r.json();
+
+        if (!r.ok || !data.success) {
+
+            throw new Error(
+                data.error ||
+                'فشل إضافة المتعاون'
+            );
+
+        }
+
+        showToast(
+            `تمت إضافة ${
+                data.user?.username || 'المستخدم'
+            } بنجاح.`,
+            'success'
+        );
+
+        refreshServerUsers();
+
+    })
+    .catch(err => {
+
+        showToast(
+            err.message ||
+            'فشل إضافة المتعاون.',
+            'error'
+        );
+
+    });
+
+}
+
+
+/* =========================================================
+   REMOVE COLLABORATOR
+========================================================= */
+
+function removeCollaborator(userId) {
+
+    if (!isServerOwner && !isSystemAdmin) {
+
+        showToast(
+            'غير مصرح لك بإدارة المتعاونين.',
+            'error'
+        );
+
+        return;
+
+    }
+
+    if (!confirm(
+        'هل أنت متأكد من إزالة هذا المتعاون من السيرفر؟'
+    ))
+        return;
+
+    fetch(
+        `/servers/${serverId}/collaborators/remove`,
+        {
+            method: 'POST',
+
+            headers: {
+                'Content-Type':
+                    'application/json'
+            },
+
+            body: JSON.stringify({
+                userId
+            })
+        }
+    )
+    .then(async r => {
+
+        const data =
+            await r.json();
+
+        if (!r.ok || !data.success) {
+
+            throw new Error(
+                data.error ||
+                'فشل إزالة المتعاون'
+            );
+
+        }
+
+        showToast(
+            'تمت إزالة المتعاون.',
+            'success'
+        );
+
+        refreshServerUsers();
+
+    })
+    .catch(err => {
+
+        showToast(
+            err.message ||
+            'فشل إزالة المتعاون.',
+            'error'
+        );
+
+    });
+
+}
+
+
+/* =========================================================
+   COLLABORATOR PERMISSIONS
+========================================================= */
+
+function editCollaboratorPermissions(userId) {
+
+    if (!isServerOwner) {
+
+        showToast(
+            'فقط صاحب السيرفر يستطيع تعديل الصلاحيات.',
+            'error'
+        );
+
+        return;
+    }
+
+    const permissions = [
+
+        {
+            key: 'view',
+            name: 'مشاهدة السيرفر'
+        },
+
+        {
+            key: 'start',
+            name: 'تشغيل السيرفر'
+        },
+
+        {
+            key: 'stop',
+            name: 'إيقاف السيرفر'
+        },
+
+        {
+            key: 'restart',
+            name: 'إعادة تشغيل السيرفر'
+        },
+
+        {
+            key: 'console',
+            name: 'مشاهدة Console'
+        },
+
+        {
+            key: 'consoleCommand',
+            name: 'إرسال أوامر Console'
+        },
+
+        {
+            key: 'files',
+            name: 'الوصول للملفات'
+        },
+
+        {
+            key: 'fileEdit',
+            name: 'تعديل الملفات'
+        },
+
+        {
+            key: 'upload',
+            name: 'رفع الملفات'
+        },
+
+        {
+            key: 'deleteFiles',
+            name: 'حذف الملفات'
+        },
+
+        {
+            key: 'packages',
+            name: 'إدارة Packages'
+        },
+
+        {
+            key: 'settings',
+            name: 'إعدادات السيرفر'
+        }
+
+    ];
+
+    const current = prompt(
+        'اكتب الصلاحيات المطلوبة مفصولة بفاصلة:\n\n' +
+
+        permissions
+            .map(p => `${p.key} = ${p.name}`)
+            .join('\n') +
+
+        '\n\nمثال:\nview,start,console,files'
+    );
+
+    if (current === null) {
+        return;
+    }
+
+    const selected = current
+        .split(',')
+        .map(x => x.trim())
+        .filter(Boolean);
+
+    const permissionData = {};
+
+    permissions.forEach(permission => {
+
+        permissionData[permission.key] =
+            selected.includes(permission.key);
+
+    });
+
+    // المتعاون يجب أن يستطيع مشاهدة السيرفر دائمًا
+    permissionData.view = true;
+
+    fetch(
+        `/servers/${serverId}/collaborators/permissions`,
+        {
+            method: 'POST',
+
+            headers: {
+                'Content-Type': 'application/json'
+            },
+
+            body: JSON.stringify({
+                userId,
+                permissions: permissionData
+            })
+        }
+    )
+    .then(async r => {
+
+        const data = await r.json();
+
+        if (!r.ok || !data.success) {
+
+            throw new Error(
+                data.error ||
+                'فشل تحديث الصلاحيات'
+            );
+        }
+
+        showToast(
+            'تم تحديث صلاحيات المتعاون.',
+            'success'
+        );
+
+        refreshServerUsers();
+
+    })
+    .catch(err => {
+
+        showToast(
+            err.message ||
+            'فشل تحديث الصلاحيات.',
+            'error'
+        );
+
+    });
+
+}
+/* =========================================================
+   SERVER NAME
+========================================================= */
+
+function editName() {
+
+    if (!isServerOwner && !isSystemAdmin) {
+
+        showToast(
+            'فقط صاحب السيرفر يستطيع تغيير اسم السيرفر.',
+            'error'
+        );
+
+        return;
+
+    }
+
+    const n =
+        prompt(
+            'اسم السيرفر الجديد:',
+            serverName
+        );
+
+    if (!n || n === serverName)
+        return;
+
+    fetch(
+        `/servers/${serverId}/rename`,
+        {
+            method: 'POST',
+            headers: {
+                'Content-Type':
+                    'application/json'
+            },
+            body:
+                JSON.stringify({ name: n })
+        }
+    )
+    .then(r => r.json())
+    .then(d => {
+
+        if (d.success) {
+
+            serverName = n;
+
+            document.getElementById(
+                'serverName'
+            ).textContent = n;
+
+            document.title = n;
+
+            showToast(
+                'تم تغيير اسم السيرفر.',
+                'success'
+            );
+
+        } else {
+
+            showToast(
+                d.error || 'فشل تغيير الاسم.',
+                'error'
+            );
+
+        }
+
+    })
+    .catch(() => {
+
+        showToast(
+            'فشل تغيير اسم السيرفر.',
+            'error'
+        );
+
+    });
+
+}
+
+/* =========================================================
+   SETTINGS
+========================================================= */
+
+async function saveSettings() {
+
+    if (!serverPermissions.settings) {
+
+        showToast(
+            'ليس لديك صلاحية تعديل إعدادات السيرفر.',
+            'error'
+        );
+
+        return;
+
+    }
+
+    try {
+
+        const mainFile =
+            document.getElementById(
+                'mainFile'
+            ).value.trim();
+
+        const nodeVersion =
+            document.getElementById(
+                'nodeVersion'
+            ).value;
+
+        const envText =
+            document.getElementById(
+                'envVariables'
+            ).value;
+
+        const envVars = {};
+
+        envText
+            .split('\n')
+            .forEach(line => {
+
+                const index =
+                    line.indexOf('=');
+
+                if (index === -1)
+                    return;
+
+                const key =
+                    line.slice(0,index).trim();
+
+                const value =
+                    line.slice(index + 1).trim();
+
+                if (key)
+                    envVars[key] = value;
+
+            });
+
+        const r =
+            await fetch(
+                `/servers/${serverId}/settings`,
+                {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type':
+                            'application/json'
+                    },
+                    body:
+                        JSON.stringify({
+                            mainFile,
+                            nodeVersion,
+                            envVariables: envVars
+                        })
+                }
+            );
+
+        const d =
+            await r.json();
+
+        if (d.success) {
+
+            showToast(
+                'تم حفظ إعدادات السيرفر بنجاح.',
+                'success'
+            );
+
+        } else {
+
+            showToast(
+                d.error || 'فشل حفظ الإعدادات.',
+                'error'
+            );
+
+        }
+
+    } catch (err) {
+
+        showToast(
+            'حدث خطأ أثناء حفظ الإعدادات.',
+            'error'
+        );
+
+    }
+
+}
+
+/* =========================================================
+   FILE MANAGER
+========================================================= */
+
+async function refreshFiles() {
+
+    if (!serverPermissions.files) {
+
+        showToast(
+            'ليس لديك صلاحية الوصول إلى الملفات.',
+            'error'
+        );
+
+        return;
+
+    }
+
+    try {
+
+        const r =
+            await fetch(
+                `/servers/${serverId}/files?dir=${encodeURIComponent(currentPath)}`
+            );
+
+        const d =
+            await r.json();
+
+        let html = '';
+
+        if (currentPath) {
+
+            const parent =
+                currentPath
+                    .split('/')
+                    .slice(0,-1)
+                    .join('/');
+
+            html += `
+
+                <tr>
+
+                    <td colspan="5">
+
+                        <a
+                            href="#"
+                            onclick="navigateTo('${parent}');return false;"
+                            style="
+                                color:#818cf8;
+                                text-decoration:none;
+                            "
+                        >
+
+                            <i class="fas fa-arrow-up"></i>
+                            الرجوع
+
+                        </a>
+
+                    </td>
+
+                </tr>
+
+            `;
+
+        }
+
+        (d.files || []).forEach(f => {
+
+            const icon =
+                getFileIcon(
+                    f.name,
+                    f.isDirectory
+                );
+
+            const size =
+                f.isDirectory
+                    ? '—'
+                    : formatSize(f.size);
+
+            const menuId =
+                'menu-' +
+                btoa(
+                    unescape(
+                        encodeURIComponent(f.path)
+                    )
+                )
+                .replace(/[^a-zA-Z0-9]/g,'_');
+
+            html += `
+
+                <tr>
+
+                    <td>
+
+                        <input
+                            type="checkbox"
+                            class="file-checkbox"
+                            value="${escapeHtml(f.path)}"
+                            onchange="updateSelection()"
+                        >
+
+                    </td>
+
+                    <td>
+
+                        <span
+                            class="file-name"
+                            onclick="${
+                                f.isDirectory
+                                ? `navigateTo('${escapeJs(f.path)}')`
+                                : `editFile('${escapeJs(f.path)}')`
+                            }"
+                        >
+
+                            ${icon}
+
+                            ${escapeHtml(f.name)}
+
+                        </span>
+
+                    </td>
+
+                    <td>
+                        ${size}
+                    </td>
+
+                    <td>
+                        ${
+                            f.modified
+                            ? new Date(
+                                f.modified
+                              ).toLocaleString('ar')
+                            : '—'
+                        }
+                    </td>
+
+                    <td>
+
+                        <div class="file-actions-menu">
+
+                            <button
+                                class="menu-dots"
+                                onclick="toggleMenu(event,'${escapeJs(menuId)}')"
+                            >
+                                <i class="fas fa-ellipsis"></i>
+                            </button>
+
+                            <div
+                                class="menu-dropdown"
+                                id="${menuId}"
+                            >
+
+                                <div
+                                    class="menu-item"
+                                    onclick="editFile('${escapeJs(f.path)}')"
+                                >
+                                    <i class="fas fa-pen-to-square"></i>
+                                    تحرير
+                                </div>
+
+                                <div
+                                    class="menu-item"
+                                    onclick="downloadFile('${escapeJs(f.path)}')"
+                                >
+                                    <i class="fas fa-cloud-arrow-down"></i>
+                                    تحميل
+                                </div>
+
+                                <div
+                                    class="menu-item"
+                                    onclick="showRenameModal('${escapeJs(f.path)}','${escapeJs(f.name)}')"
+                                >
+                                    <i class="fas fa-signature"></i>
+                                    إعادة تسمية
+                                </div>
+
+                                <div
+                                    class="menu-item danger"
+                                    onclick="deleteFile('${escapeJs(f.path)}')"
+                                >
+                                    <i class="fas fa-trash-can"></i>
+                                    حذف
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                    </td>
+
+                </tr>
+
+            `;
+
+        });
+
+        document.getElementById(
+            'fileList'
+        ).innerHTML =
+            html ||
+
+            `
+
+                <tr>
+
+                    <td
+                        colspan="5"
+                        style="
+                            padding:40px;
+                            text-align:center;
+                            color:#667085;
+                        "
+                    >
+
+                        <i
+                            class="fas fa-folder-open"
+                            style="
+                                display:block;
+                                font-size:30px;
+                                margin-bottom:10px;
+                            "
+                        ></i>
+
+                        المجلد فارغ
+
+                    </td>
+
+                </tr>
+
+            `;
+
+        updateBreadcrumb();
+
+        selectedPaths = [];
+
+        document.getElementById(
+            'selectAllFiles'
+        ).checked = false;
+
+        updateSelection();
+
+    } catch (err) {
+
+        document.getElementById(
+            'fileList'
+        ).innerHTML = `
+
+            <tr>
+
+                <td
+                    colspan="5"
+                    style="
+                        text-align:center;
+                        padding:35px;
+                        color:#fb7185;
+                    "
+                >
+
+                    <i class="fas fa-circle-xmark"></i>
+
+                    فشل تحميل الملفات
+
+                </td>
+
+            </tr>
+
+        `;
+
+    }
+
+}
+
+function escapeJs(text) {
+
+    return String(text)
+        .replace(/\\/g,'\\\\')
+        .replace(/'/g,"\\'")
+        .replace(/\n/g,'\\n')
+        .replace(/\r/g,'\\r');
+
+}
+
+function toggleMenu(event, id) {
+
+    event.stopPropagation();
+
+    document.querySelectorAll(
+        '.menu-dropdown'
+    ).forEach(m =>
+        m.classList.remove('active')
+    );
+
+    const menu =
+        document.getElementById(id);
+
+    if (menu)
+        menu.classList.add('active');
+
+}
+
+document.addEventListener(
+    'click',
+    () => {
+
+        document.querySelectorAll(
+            '.menu-dropdown'
+        ).forEach(m =>
+            m.classList.remove('active')
+        );
+
+    }
+);
+
+function getFileIcon(name, isDir) {
+
+    if (isDir)
+        return '<i class="fas fa-folder"></i>';
+
+    const ext =
+        name
+            .split('.')
+            .pop()
+            .toLowerCase();
+
+    const icons = {
+
+        js:
+            '<i class="fab fa-js"></i>',
+
+        json:
+            '<i class="fas fa-code"></i>',
+
+        html:
+            '<i class="fab fa-html5"></i>',
+
+        css:
+            '<i class="fab fa-css3-alt"></i>',
+
+        md:
+            '<i class="fab fa-markdown"></i>',
+
+        py:
+            '<i class="fab fa-python"></i>',
+
+        php:
+            '<i class="fab fa-php"></i>',
+
+        sh:
+            '<i class="fas fa-terminal"></i>',
+
+        txt:
+            '<i class="fas fa-file-lines"></i>',
+
+        env:
+            '<i class="fas fa-key"></i>',
+
+        zip:
+            '<i class="fas fa-file-zipper"></i>',
+
+        rar:
+            '<i class="fas fa-file-zipper"></i>',
+
+        tar:
+            '<i class="fas fa-file-zipper"></i>'
+
+    };
+
+    return (
+        icons[ext] ||
+        '<i class="fas fa-file"></i>'
+    );
+
+}
+
+function formatSize(bytes) {
+
+    if (!bytes)
+        return '0 B';
+
+    if (bytes < 1024)
+        return bytes + ' B';
+
+    if (bytes < 1048576)
+        return (
+            bytes / 1024
+        ).toFixed(2) + ' KB';
+
+    if (bytes < 1073741824)
+        return (
+            bytes / 1048576
+        ).toFixed(2) + ' MB';
+
+    return (
+        bytes / 1073741824
+    ).toFixed(2) + ' GB';
+
+}
+
+function navigateTo(path) {
+
+    currentPath = path || '';
+
+    refreshFiles();
+
+}
+
+function updateBreadcrumb() {
+
+    const parts =
+        currentPath
+            .split('/')
+            .filter(Boolean);
+
+    let html = `
+
+        <a
+            href="#"
+            onclick="navigateTo('');return false;"
+        >
+            <i class="fas fa-house"></i>
+            الرئيسية
+        </a>
+
+    `;
+
+    let build = '';
+
+    parts.forEach(p => {
+
+        build +=
+            (build ? '/' : '') + p;
+
+        html += `
+
+            <span style="color:#475166;">
+                /
+            </span>
+
+            <a
+                href="#"
+                onclick="navigateTo('${escapeJs(build)}');return false;"
+            >
+                ${escapeHtml(p)}
+            </a>
+
+        `;
+
+    });
+
+    document.getElementById(
+        'breadcrumb'
+    ).innerHTML = html;
+
+}
+
+/* =========================================================
+   EDITOR
+========================================================= */
+
+function getLanguage(filename) {
+
+    const ext =
+        filename
+            .split('.')
+            .pop()
+            .toLowerCase();
+
+    const langs = {
+
+        js: 'javascript',
+        json: 'javascript',
+        html: 'htmlmixed',
+        css: 'css',
+        md: 'markdown',
+        py: 'python',
+        php: 'php',
+        sh: 'shell',
+        yml: 'yaml',
+        yaml: 'yaml'
+
+    };
+
+    return (
+        langs[ext] ||
+        'javascript'
+    );
+
+}
+
+async function editFile(path) {
+
+    if (!serverPermissions.fileEdit) {
+
+        showToast(
+            'ليس لديك صلاحية تعديل الملفات.',
+            'error'
+        );
+
+        return;
+
+    }
+
+    try {
+
+        const r =
+            await fetch(
+                `/servers/${serverId}/files/read?file=${encodeURIComponent(path)}`
+            );
+
+        const d =
+            await r.json();
+
+        if (d.error) {
+
+            showToast(
+                d.error,
+                'error'
+            );
+
+            return;
+
+        }
+
+        currentFile = path;
+
+        const lang =
+            getLanguage(path);
+
+        const langNames = {
+
+            javascript: 'JavaScript',
+            htmlmixed: 'HTML',
+            css: 'CSS',
+            markdown: 'Markdown',
+            python: 'Python',
+            php: 'PHP',
+            shell: 'Shell',
+            yaml: 'YAML'
+
+        };
+
+        document.getElementById(
+            'editorIcon'
+        ).className =
+            getFileIcon(
+                path,
+                false
+            )
+            .match(
+                /(?:fas|fab)\s+fa-[a-z0-9-]+/
+            )?.[0]
+            ||
+            'fas fa-file-code';
+
+        document.getElementById(
+            'editorTitle'
+        ).textContent = path;
+
+        document.getElementById(
+            'editorLang'
+        ).textContent =
+            langNames[lang] || lang;
+
+        document.getElementById(
+            'editorModal'
+        ).classList.add('active');
+
+        setTimeout(() => {
+
+            if (editor) {
+
+                editor.toTextArea();
+
+                editor = null;
+
+            }
+
+            editor =
+                CodeMirror.fromTextArea(
+                    document.getElementById(
+                        'editor'
+                    ),
+                    {
+
+                        mode: lang,
+
+                        theme: 'dracula',
+
+                        lineNumbers: true,
+
+                        matchBrackets: true,
+
+                        autoCloseBrackets: true,
+
+                        autoCloseTags: true,
+
+                        foldGutter: true,
+
+                        gutters: [
+                            'CodeMirror-linenumbers',
+                            'CodeMirror-foldgutter'
+                        ],
+
+                        extraKeys: {
+
+                            'Ctrl-S':
+                                saveFileFromEditor,
+
+                            'Cmd-S':
+                                saveFileFromEditor
+
+                        },
+
+                        lineWrapping: true,
+
+                        styleActiveLine: true,
+
+                        indentUnit: 2,
+
+                        tabSize: 2
+
+                    }
+                );
+
+            editor.setValue(
+                d.content || ''
+            );
+
+            editor.refresh();
+
+            editor.on(
+                'cursorActivity',
+                () => {
+
+                    const pos =
+                        editor.getCursor();
+
+                    document.getElementById(
+                        'editorCursor'
+                    ).textContent =
+                        `Ln ${pos.line + 1}, Col ${pos.ch + 1}`;
+
+                    document.getElementById(
+                        'editorSize'
+                    ).textContent =
+                        `${editor.lineCount()} lines`;
+
+                }
+            );
+
+            editor.focus();
+
+        },100);
+
+    } catch (err) {
+
+        showToast(
+            'فشل فتح الملف.',
+            'error'
+        );
+
+    }
+
+}
+
+async function saveFileFromEditor() {
+
+    if (!editor)
+        return;
+
+    try {
+
+        const r =
+            await fetch(
+                `/servers/${serverId}/files/save`,
+                {
+                    method: 'POST',
+
+                    headers: {
+                        'Content-Type':
+                            'application/json'
+                    },
+
+                    body:
+                        JSON.stringify({
+                            file: currentFile,
+                            content:
+                                editor.getValue()
+                        })
+
+                }
+            );
+
+        const d =
+            await r.json();
+
+        if (d.success === false) {
+
+            showToast(
+                d.error || 'فشل حفظ الملف.',
+                'error'
+            );
+
+            return;
+
+        }
+
+        showToast(
+            'تم حفظ الملف بنجاح.',
+            'success'
+        );
+
+        closeModal('editorModal');
+
+        refreshFiles();
+
+    } catch (err) {
+
+        showToast(
+            'فشل حفظ الملف.',
+            'error'
+        );
+
+    }
+
+}
+
+/* =========================================================
+   CREATE FILE / FOLDER
+========================================================= */
+
+async function createFile() {
+
+    if (!serverPermissions.fileEdit) {
+
+        showToast(
+            'ليس لديك صلاحية إنشاء الملفات.',
+            'error'
+        );
+
+        return;
+
+    }
+
+    const name =
+        document.getElementById(
+            'newFileName'
+        ).value.trim();
+
+    if (!name) {
+
+        showToast(
+            'أدخل اسم الملف.',
+            'warning'
+        );
+
+        return;
+
+    }
+
+    try {
+
+        await fetch(
+            `/servers/${serverId}/files/create`,
+            {
+                method: 'POST',
+
+                headers: {
+                    'Content-Type':
+                        'application/json'
+                },
+
+                body:
+                    JSON.stringify({
+
+                        path:
+                            currentPath
+                            ? currentPath + '/' + name
+                            : name,
+
+                        type: 'file',
+
+                        content: ''
+
+                    })
+
+            }
+        );
+
+        closeModal(
+            'createFileModal'
+        );
+
+        showToast(
+            'تم إنشاء الملف.',
+            'success'
+        );
+
+        refreshFiles();
+
+    } catch (err) {
+
+        showToast(
+            'فشل إنشاء الملف.',
+            'error'
+        );
+
+    }
+
+}
+
+async function createFolder() {
+
+    if (!serverPermissions.fileEdit) {
+
+        showToast(
+            'ليس لديك صلاحية إنشاء المجلدات.',
+            'error'
+        );
+
+        return;
+
+    }
+
+    const name =
+        document.getElementById(
+            'newFolderName'
+        ).value.trim();
+
+    if (!name) {
+
+        showToast(
+            'أدخل اسم المجلد.',
+            'warning'
+        );
+
+        return;
+
+    }
+
+    try {
+
+        await fetch(
+            `/servers/${serverId}/files/create`,
+            {
+                method: 'POST',
+
+                headers: {
+                    'Content-Type':
+                        'application/json'
+                },
+
+                body:
+                    JSON.stringify({
+
+                        path:
+                            currentPath
+                            ? currentPath + '/' + name
+                            : name,
+
+                        type: 'folder'
+
+                    })
+
+            }
+        );
+
+        closeModal(
+            'createFolderModal'
+        );
+
+        showToast(
+            'تم إنشاء المجلد.',
+            'success'
+        );
+
+        refreshFiles();
+
+    } catch (err) {
+
+        showToast(
+            'فشل إنشاء المجلد.',
+            'error'
+        );
+
+    }
+
+}
+
+/* =========================================================
+   DELETE / RENAME / DOWNLOAD
+========================================================= */
+
+async function deleteFile(path) {
+
+    if (!serverPermissions.deleteFiles) {
+
+        showToast(
+            'ليس لديك صلاحية حذف الملفات.',
+            'error'
+        );
+
+        return;
+
+    }
+
+    if (!confirm(
+        'هل تريد حذف هذا العنصر؟'
+    ))
+        return;
+
+    try {
+
+        await fetch(
+            `/servers/${serverId}/files/delete`,
+            {
+                method: 'POST',
+
+                headers: {
+                    'Content-Type':
+                        'application/json'
+                },
+
+                body:
+                    JSON.stringify({ path })
+
+            }
+        );
+
+        showToast(
+            'تم حذف العنصر.',
+            'success'
+        );
+
+        refreshFiles();
+
+    } catch (err) {
+
+        showToast(
+            'فشل حذف العنصر.',
+            'error'
+        );
+
+    }
+
+}
+
+function showRenameModal(path,name) {
+
+    if (!serverPermissions.fileEdit) {
+
+        showToast(
+            'ليس لديك صلاحية إعادة تسمية الملفات.',
+            'error'
+        );
+
+        return;
+
+    }
+
+    document.getElementById(
+        'renameOldPath'
+    ).value = path;
+
+    document.getElementById(
+        'renameNewName'
+    ).value = name;
+
+    document.getElementById(
+        'renameModal'
+    ).classList.add('active');
+
+}
+
+async function renameFile() {
+
+    if (!serverPermissions.fileEdit) {
+
+        showToast(
+            'ليس لديك صلاحية إعادة تسمية الملفات.',
+            'error'
+        );
+
+        return;
+
+    }
+
+    const old =
+        document.getElementById(
+            'renameOldPath'
+        ).value;
+
+    const name =
+        document.getElementById(
+            'renameNewName'
+        ).value.trim();
+
+    if (!name) {
+
+        showToast(
+            'أدخل الاسم الجديد.',
+            'warning'
+        );
+
+        return;
+
+    }
+
+    try {
+
+        await fetch(
+            `/servers/${serverId}/files/rename`,
+            {
+                method: 'POST',
+
+                headers: {
+                    'Content-Type':
+                        'application/json'
+                },
+
+                body:
+                    JSON.stringify({
+                        oldPath: old,
+                        newName: name
+                    })
+
+            }
+        );
+
+        closeModal(
+            'renameModal'
+        );
+
+        showToast(
+            'تمت إعادة التسمية.',
+            'success'
+        );
+
+        refreshFiles();
+
+    } catch (err) {
+
+        showToast(
+            'فشلت إعادة التسمية.',
+            'error'
+        );
+
+    }
+
+}
+
+function downloadFile(path) {
+
+    window.open(
+        `/servers/${serverId}/files/read?file=${encodeURIComponent(path)}&download=true`,
+        '_blank'
+    );
+
+}
+
+/* =========================================================
+   MODALS
+========================================================= */
+
+function showUploadModal() {
+
+    if (!serverPermissions.upload) {
+
+        showToast(
+            'ليس لديك صلاحية رفع الملفات.',
+            'error'
+        );
+
+        return;
+
+    }
+
+    document.getElementById(
+        'uploadModal'
+    ).classList.add('active');
+
+    selectedFiles = [];
+
+    document.getElementById(
+        'selectedFiles'
+    ).innerHTML = '';
+
+}
+
+function showCreateFileModal() {
+
+    document.getElementById(
+        'createFileModal'
+    ).classList.add('active');
+
+    document.getElementById(
+        'newFileName'
+    ).value = '';
+
+}
+
+function showCreateFolderModal() {
+
+    document.getElementById(
+        'createFolderModal'
+    ).classList.add('active');
+
+    document.getElementById(
+        'newFolderName'
+    ).value = '';
+
+}
+
+function closeModal(id) {
+
+    const modal =
+        document.getElementById(id);
+
+    if (!modal)
+        return;
+
+    modal.classList.remove('active');
+
+    if (
+        id === 'editorModal' &&
+        editor
+    ) {
+
+        editor.toTextArea();
+
+        editor = null;
+
+    }
+
+}
+
+/* =========================================================
+   UPLOAD
+========================================================= */
+
+function renderSelectedFiles() {
+
+    document.getElementById(
+        'selectedFiles'
+    ).innerHTML =
+        selectedFiles
+            .map(f => `
+
+                <div
+                    style="
+                        display:flex;
+                        align-items:center;
+                        gap:8px;
+                        padding:6px 0;
+                        color:#cbd5e1;
+                        font-size:11px;
+                    "
+                >
+
+                    ${getFileIcon(f.name,false)}
+
+                    <span>
+                        ${escapeHtml(f.name)}
+                    </span>
+
+                </div>
+
+            `)
+            .join('');
+
+}
+
+document.getElementById(
+    'dropZone'
+).onclick = () =>
+    document.getElementById(
+        'fileInput'
+    ).click();
+
+document.getElementById(
+    'dropZone'
+).ondragover = e => {
+
+    e.preventDefault();
+
+    e.currentTarget.style.borderColor =
+        'rgba(99,102,241,.7)';
+
+};
+
+document.getElementById(
+    'dropZone'
+).ondragleave = e => {
+
+    e.currentTarget.style.borderColor =
+        '';
+
+};
+
+document.getElementById(
+    'dropZone'
+).ondrop = e => {
+
+    e.preventDefault();
+
+    selectedFiles =
+        Array.from(
+            e.dataTransfer.files
+        );
+
+    renderSelectedFiles();
+
+};
+
+document.getElementById(
+    'fileInput'
+).onchange = e => {
+
+    selectedFiles =
+        Array.from(
+            e.target.files
+        );
+
+    renderSelectedFiles();
+
+};
+
+async function uploadFiles() {
+
+    if (!serverPermissions.upload) {
+
+        showToast(
+            'ليس لديك صلاحية رفع الملفات.',
+            'error'
+        );
+
+        return;
+
+    }
+
+    if (!selectedFiles.length) {
+
+        showToast(
+            'اختر ملفات أولاً.',
+            'warning'
+        );
+
+        return;
+
+    }
+
+    try {
+
+        const form =
+            new FormData();
+
+        selectedFiles.forEach(
+            f =>
+                form.append(
+                    'files',
+                    f
+                )
+        );
+
+        form.append(
+            'dir',
+            currentPath
+        );
+
+        form.append(
+            'extract',
+            document.getElementById(
+                'extractArchive'
+            ).checked
+        );
+
+        const res =
+            await fetch(
+                `/servers/${serverId}/files/upload`,
+                {
+                    method: 'POST',
+                    body: form
+                }
+            );
+
+        const data =
+            await res.json()
+                .catch(() => ({}));
+
+        if (data.success === false) {
+
+            showToast(
+                data.error || 'فشل رفع الملفات.',
+                'error'
+            );
+
+            return;
+
+        }
+
+        closeModal(
+            'uploadModal'
+        );
+
+        showToast(
+            'تم رفع الملفات بنجاح.',
+            'success'
+        );
+
+        refreshFiles();
+
+    } catch (err) {
+
+        showToast(
+            'فشل رفع الملفات.',
+            'error'
+        );
+
+    }
+
+}
+
+/* =========================================================
+   PACKAGES
+========================================================= */
+
+function showPackagesModal() {
+
+    if (!serverPermissions.packages) {
+
+        showToast(
+            'ليس لديك صلاحية إدارة Packages.',
+            'error'
+        );
+
+        return;
+
+    }
+
+    document.getElementById(
+        'packagesModal'
+    ).classList.add('active');
+
+}
+
+function downloadPackage() {
+
+    if (!serverPermissions.packages) {
+
+        showToast(
+            'ليس لديك صلاحية إدارة Packages.',
+            'error'
+        );
+
+        return;
+
+    }
+
+    const selected =
+        document.getElementById(
+            'packageSelect'
+        ).value;
+
+    const custom =
+        document.getElementById(
+            'customPackage'
+        ).value.trim();
+
+    const packageName =
+        custom || selected;
+
+    if (!packageName) {
+
+        showToast(
+            'اختر أو اكتب اسم البكج.',
+            'warning'
+        );
+
+        return;
+
+    }
+
+    showToast(
+        `جاري تنزيل ${packageName}...`,
+        'info'
+    );
+
+    window.location.href =
+        `/servers/${serverId}/packages/download?name=${encodeURIComponent(packageName)}`;
+
+}
+
+/* =========================================================
+   FILE SELECTION
+========================================================= */
+
+function updateSelection() {
+
+    selectedPaths = [];
+
+    document
+        .querySelectorAll(
+            '.file-checkbox:checked'
+        )
+        .forEach(cb => {
+
+            selectedPaths.push(
+                cb.value
+            );
+
+        });
+
+    document.getElementById(
+        'selectedCount'
+    ).textContent =
+        `${selectedPaths.length} محدد`;
+
+    document.getElementById(
+        'bulkActions'
+    ).style.display =
+        selectedPaths.length
+            ? 'flex'
+            : 'none';
+
+}
+
+function toggleSelectAll(el) {
+
+    document
+        .querySelectorAll(
+            '.file-checkbox'
+        )
+        .forEach(cb => {
+
+            cb.checked =
+                el.checked;
+
+        });
+
+    updateSelection();
+
+}
+
+async function deleteSelected() {
+
+    if (!serverPermissions.deleteFiles) {
+
+        showToast(
+            'ليس لديك صلاحية حذف الملفات.',
+            'error'
+        );
+
+        return;
+
+    }
+
+    if (!selectedPaths.length)
+        return;
+
+    if (!confirm(
+        `حذف ${selectedPaths.length} عنصر؟`
+    ))
+        return;
+
+    try {
+
+        for (const path of selectedPaths) {
+
+            await fetch(
+                `/servers/${serverId}/files/delete`,
+                {
+                    method: 'POST',
+
+                    headers: {
+                        'Content-Type':
+                            'application/json'
+                    },
+
+                    body:
+                        JSON.stringify({
+                            path
+                        })
+
+                }
+            );
+
+        }
+
+        showToast(
+            'تم حذف العناصر المحددة.',
+            'success'
+        );
+
+        selectedPaths = [];
+
+        refreshFiles();
+
+    } catch (err) {
+
+        showToast(
+            'حدث خطأ أثناء الحذف.',
+            'error'
+        );
+
+    }
+
+}
+
+async function archiveSelected() {
+
+    if (!serverPermissions.fileEdit) {
+
+        showToast(
+            'ليس لديك صلاحية ضغط الملفات.',
+            'error'
+        );
+
+        return;
+
+    }
+
+    if (!selectedPaths.length)
+        return;
+
+    const name =
+        prompt(
+            'اسم الأرشيف:',
+            'archive.zip'
+        );
+
+    if (!name)
+        return;
+
+    try {
+
+        const res =
+            await fetch(
+                `/servers/${serverId}/files/archive`,
+                {
+                    method: 'POST',
+
+                    headers: {
+                        'Content-Type':
+                            'application/json'
+                    },
+
+                    body:
+                        JSON.stringify({
+
+                            paths:
+                                selectedPaths,
+
+                            archiveName:
+                                name
+
+                        })
+
+                }
+            );
+
+        const data =
+            await res.json();
+
+        if (data.success) {
+
+            showToast(
+                'تم إنشاء الأرشيف بنجاح.',
+                'success'
+            );
+
+            refreshFiles();
+
+        } else {
+
+            showToast(
+                data.error ||
+                'فشل إنشاء الأرشيف.',
+                'error'
+            );
+
+        }
+
+    } catch (err) {
+
+        showToast(
+            'فشل إنشاء الأرشيف.',
+            'error'
+        );
+
+    }
+
+}
+
+/* =========================================================
+   KEYBOARD
+========================================================= */
+
+document.addEventListener(
+    'keydown',
+    e => {
+
+        if (e.key === 'Escape') {
+
+            document
+                .querySelectorAll(
+                    '.modal-overlay'
+                )
+                .forEach(m =>
+                    m.classList.remove(
+                        'active'
+                    )
+                );
+
+        }
+
+    }
+);
+
+/* =========================================================
+   INIT
+========================================================= */
+
+refreshFiles();
+
+</script>
+
+</body>
+</html>

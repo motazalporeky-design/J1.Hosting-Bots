@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html dir="rtl">
+<head>
+<meta charset="UTF-8">
+<title>انتهى الاشتراك</title>
+</head>
+<body>
+
+<h1>⛔ انتهى اشتراك السيرفر</h1>
+
+<p>
+السيرفر:
+<%= server.name %>
+</p>
+
+<p>
+الخطة:
+<%= server.planName %>
+</p>
+
+<form action="/servers/<%= server._id %>/renew" method="POST">
+    <button type="submit">
+        🔄 تجديد الاشتراك
+    </button>
+</form>
+
+</body>
+</html>

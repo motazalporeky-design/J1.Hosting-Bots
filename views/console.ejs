@@ -1,0 +1,1708 @@
+<% 
+title = 'Console - ' + server.name;
+%>
+
+<style>
+
+/* =========================================================
+   ROOT
+========================================================= */
+
+:root {
+
+    --black: #070707;
+    --black-2: #0c0c0c;
+    --black-3: #111111;
+    --black-4: #171717;
+
+    --white: #ffffff;
+    --white-soft: #eeeeee;
+
+    --text: #e5e5e5;
+    --text-soft: #c5c5c5;
+    --muted: #858585;
+
+    --gray: #a0a0a0;
+
+    --border: rgba(255,255,255,.08);
+    --border-soft: rgba(255,255,255,.055);
+
+    --danger: #ef4444;
+    --warning: #f59e0b;
+
+    --shadow:
+        0 15px 50px rgba(0,0,0,.35);
+}
+
+
+/* =========================================================
+   CONSOLE CONTAINER
+========================================================= */
+
+.console-container {
+
+    display: flex;
+
+    flex-direction: column;
+
+    height:
+        calc(100vh - 60px);
+
+    min-height:
+        400px;
+
+    background:
+
+        radial-gradient(
+            circle at 90% 0%,
+            rgba(255,255,255,.055),
+            transparent 30%
+        ),
+
+        linear-gradient(
+            145deg,
+            #090909,
+            #111111 50%,
+            #070707
+        );
+
+    color:
+        var(--text);
+}
+
+
+/* =========================================================
+   CONSOLE HEADER
+========================================================= */
+
+.console-header {
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: space-between;
+
+    gap: 20px;
+
+    padding:
+        13px 20px;
+
+    background:
+        rgba(15,15,15,.88);
+
+    border-bottom:
+        1px solid var(--border);
+
+    box-shadow:
+        0 5px 25px rgba(0,0,0,.22);
+
+    backdrop-filter:
+        blur(18px);
+
+    -webkit-backdrop-filter:
+        blur(18px);
+
+    flex-shrink: 0;
+}
+
+
+/* =========================================================
+   STATUS
+========================================================= */
+
+.console-status {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 12px;
+
+    min-width: 0;
+}
+
+
+.console-status h2 {
+
+    margin: 0;
+
+    color: #ffffff;
+
+    font-size: 18px;
+
+    font-weight: 800;
+
+    white-space: nowrap;
+
+    overflow: hidden;
+
+    text-overflow: ellipsis;
+}
+
+
+/* =========================================================
+   STATUS BADGE
+========================================================= */
+
+.status-badge {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 6px;
+
+    padding:
+        6px 12px;
+
+    border-radius:
+        999px;
+
+    font-size: 12px;
+
+    font-weight: 700;
+
+    white-space: nowrap;
+
+    transition:
+        .2s ease;
+}
+
+
+.status-badge.running {
+
+    background:
+        rgba(255,255,255,.075);
+
+    color:
+        #eeeeee;
+
+    border:
+        1px solid
+        rgba(255,255,255,.14);
+
+    box-shadow:
+        inset 0 0 12px
+        rgba(255,255,255,.02);
+}
+
+
+.status-badge.stopped {
+
+    background:
+        rgba(255,255,255,.035);
+
+    color:
+        #888888;
+
+    border:
+        1px solid
+        rgba(255,255,255,.08);
+}
+
+
+/* =========================================================
+   ACTIONS
+========================================================= */
+
+.console-actions {
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: flex-end;
+
+    gap: 8px;
+
+    flex-wrap: wrap;
+}
+
+
+/* =========================================================
+   BUTTONS
+========================================================= */
+
+.console-actions .btn,
+.console-input-area .btn {
+
+    min-height: 39px;
+
+    border-radius:
+        10px;
+
+    padding:
+        8px 13px;
+
+    border:
+        1px solid transparent;
+
+    font-size: 12px;
+
+    font-weight: 800;
+
+    cursor: pointer;
+
+    transition:
+        transform .2s ease,
+        background .2s ease,
+        border-color .2s ease,
+        box-shadow .2s ease,
+        filter .2s ease;
+}
+
+
+.console-actions .btn:hover,
+.console-input-area .btn:hover {
+
+    transform:
+        translateY(-1px);
+
+    filter:
+        brightness(1.08);
+}
+
+
+.console-actions .btn:active,
+.console-input-area .btn:active {
+
+    transform:
+        scale(.98);
+}
+
+
+/* الأبيض */
+
+.console-actions .btn-success,
+.console-input-area .btn-primary {
+
+    color:
+        #111111;
+
+    background:
+        linear-gradient(
+            135deg,
+            #ffffff,
+            #cfcfcf
+        );
+
+    border-color:
+        rgba(255,255,255,.30);
+
+    box-shadow:
+        0 7px 20px
+        rgba(255,255,255,.07);
+}
+
+
+/* الأحمر */
+
+.console-actions .btn-danger {
+
+    color:
+        #f87171;
+
+    background:
+        rgba(239,68,68,.075);
+
+    border-color:
+        rgba(239,68,68,.18);
+}
+
+
+/* الرمادي */
+
+.console-actions .btn-secondary {
+
+    color:
+        #d2d2d2;
+
+    background:
+        rgba(255,255,255,.045);
+
+    border-color:
+        rgba(255,255,255,.09);
+}
+
+
+.console-actions .btn-secondary:hover {
+
+    background:
+        rgba(255,255,255,.08);
+
+    border-color:
+        rgba(255,255,255,.17);
+}
+
+
+/* =========================================================
+   CONSOLE OUTPUT
+========================================================= */
+
+.console-output {
+
+    position: relative;
+
+    flex: 1;
+
+    min-height: 0;
+
+    background:
+
+        radial-gradient(
+            circle at 85% 0%,
+            rgba(255,255,255,.025),
+            transparent 25%
+        ),
+
+        #0a0a0a;
+
+    padding:
+        16px 18px;
+
+    overflow-y: auto;
+
+    font-family:
+        'Fira Code',
+        'Consolas',
+        'Cascadia Code',
+        monospace;
+
+    font-size: 13px;
+
+    line-height: 1.65;
+
+    color:
+        #eeeeee;
+
+    direction: ltr;
+
+    text-align: left;
+
+    white-space: pre-wrap;
+
+    word-break: break-all;
+
+    border-bottom:
+        1px solid
+        rgba(255,255,255,.05);
+
+    scrollbar-width:
+        thin;
+
+    scrollbar-color:
+        #444 #0a0a0a;
+}
+
+
+/* =========================================================
+   SCROLLBAR
+========================================================= */
+
+.console-output::-webkit-scrollbar {
+
+    width: 9px;
+}
+
+
+.console-output::-webkit-scrollbar-track {
+
+    background:
+        #090909;
+}
+
+
+.console-output::-webkit-scrollbar-thumb {
+
+    background:
+        #3d3d3d;
+
+    border-radius:
+        20px;
+
+    border:
+        2px solid #090909;
+}
+
+
+.console-output::-webkit-scrollbar-thumb:hover {
+
+    background:
+        #555555;
+}
+
+
+/* =========================================================
+   LOG LINE
+========================================================= */
+
+.log-line {
+
+    padding:
+        2px 0;
+
+    min-height:
+        21px;
+}
+
+
+.log-time {
+
+    color:
+        #666666;
+
+    margin-right:
+        10px;
+
+    user-select:
+        none;
+}
+
+
+.log-stdout {
+
+    color:
+        #e5e5e5;
+}
+
+
+.log-stderr {
+
+    color:
+        #c9c9c9;
+}
+
+
+.log-info {
+
+    color:
+        #a9a9a9;
+}
+
+
+/* =========================================================
+   PLACEHOLDER
+========================================================= */
+
+.console-placeholder {
+
+    display: flex;
+
+    flex-direction: column;
+
+    align-items: center;
+
+    justify-content: center;
+
+    height: 100%;
+
+    min-height: 250px;
+
+    color:
+        #666666;
+
+    text-align: center;
+
+    user-select:
+        none;
+}
+
+
+.console-placeholder > div {
+
+    width: 75px;
+
+    height: 75px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    margin-bottom: 14px !important;
+
+    border-radius:
+        20px;
+
+    color:
+        #cfcfcf;
+
+    background:
+        rgba(255,255,255,.045);
+
+    border:
+        1px solid
+        rgba(255,255,255,.09);
+
+    box-shadow:
+        inset 0 0 25px
+        rgba(255,255,255,.025);
+}
+
+
+.console-placeholder p {
+
+    margin:
+        0;
+
+    color:
+        #777777;
+
+    font-size:
+        13px;
+
+    font-weight:
+        600;
+}
+
+
+/* =========================================================
+   INPUT AREA
+========================================================= */
+
+.console-input-area {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 10px;
+
+    padding:
+        11px 15px;
+
+    background:
+        rgba(15,15,15,.94);
+
+    border-top:
+        1px solid
+        rgba(255,255,255,.07);
+
+    box-shadow:
+        0 -8px 30px
+        rgba(0,0,0,.18);
+
+    flex-shrink: 0;
+}
+
+
+/* =========================================================
+   INPUT
+========================================================= */
+
+.console-input {
+
+    flex: 1;
+
+    min-width: 0;
+
+    height: 40px;
+
+    background:
+        #101010;
+
+    border:
+        1px solid
+        rgba(255,255,255,.10);
+
+    border-radius:
+        9px;
+
+    padding:
+        9px 14px;
+
+    color:
+        #eeeeee;
+
+    font-family:
+        'Fira Code',
+        'Consolas',
+        monospace;
+
+    font-size:
+        13px;
+
+    outline:
+        none;
+
+    direction:
+        ltr;
+
+    text-align:
+        left;
+
+    transition:
+        .2s ease;
+}
+
+
+.console-input:focus {
+
+    border-color:
+        rgba(255,255,255,.24);
+
+    background:
+        #141414;
+
+    box-shadow:
+        0 0 0 3px
+        rgba(255,255,255,.035);
+}
+
+
+.console-input::placeholder {
+
+    color:
+        #666666;
+}
+
+
+.console-input:disabled {
+
+    cursor:
+        not-allowed;
+
+    opacity:
+        .45;
+
+    background:
+        #0b0b0b;
+}
+
+
+/* =========================================================
+   DISABLED BUTTON
+========================================================= */
+
+.console-input-area .btn:disabled {
+
+    cursor:
+        not-allowed;
+
+    opacity:
+        .45;
+
+    transform:
+        none;
+
+    filter:
+        none;
+}
+
+
+/* =========================================================
+   MOBILE
+========================================================= */
+
+@media (max-width: 750px) {
+
+    .console-container {
+
+        height:
+            calc(100vh - 55px);
+    }
+
+
+    .console-header {
+
+        padding:
+            11px 13px;
+
+        align-items:
+            flex-start;
+
+        flex-direction:
+            column;
+
+        gap:
+            11px;
+    }
+
+
+    .console-status {
+
+        width:
+            100%;
+
+        justify-content:
+            space-between;
+    }
+
+
+    .console-status h2 {
+
+        font-size:
+            16px;
+    }
+
+
+    .console-actions {
+
+        width:
+            100%;
+
+        justify-content:
+            stretch;
+    }
+
+
+    .console-actions .btn {
+
+        flex:
+            1;
+
+        min-width:
+            0;
+    }
+
+
+    .console-output {
+
+        padding:
+            13px;
+
+        font-size:
+            12px;
+    }
+
+
+    .console-input-area {
+
+        padding:
+            9px 10px;
+    }
+
+
+    .console-input {
+
+        height:
+            40px;
+
+        font-size:
+            12px;
+    }
+
+
+    .console-input-area .btn {
+
+        min-width:
+            70px;
+
+        padding:
+            8px 11px;
+    }
+
+}
+
+
+@media (max-width: 480px) {
+
+    .console-status {
+
+        align-items:
+            flex-start;
+
+        flex-direction:
+            column;
+
+        gap:
+            7px;
+    }
+
+
+    .console-status h2 {
+
+        max-width:
+            100%;
+    }
+
+
+    .console-actions {
+
+        display:
+            grid;
+
+        grid-template-columns:
+            1fr 1fr;
+
+        gap:
+            7px;
+    }
+
+
+    .console-actions .btn {
+
+        width:
+            100%;
+    }
+
+
+    .console-input-area {
+
+        gap:
+            7px;
+    }
+
+
+    .console-input {
+
+        padding:
+            8px 10px;
+    }
+
+
+    .console-input-area .btn {
+
+        min-width:
+            64px;
+    }
+
+}
+
+
+/* =========================================================
+   REDUCED MOTION
+========================================================= */
+
+@media (prefers-reduced-motion: reduce) {
+
+    * {
+
+        transition:
+            none !important;
+
+        animation:
+            none !important;
+    }
+}
+
+</style>
+
+
+<div class="console-container">
+
+
+    <!-- =====================================================
+         HEADER
+    ====================================================== -->
+
+    <div class="console-header">
+
+
+        <div class="console-status">
+
+
+            <h2>
+                ▣ كونسول <%= server.name %>
+            </h2>
+
+
+            <span
+                class="status-badge <%= server.status === 'running' ? 'running' : 'stopped' %>"
+                id="status-badge"
+            >
+
+                <span id="status-text">
+
+                    <%= server.status === 'running'
+                        ? '● شغال'
+                        : '● متوقف'
+                    %>
+
+                </span>
+
+            </span>
+
+
+        </div>
+
+
+        <div class="console-actions">
+
+
+            <% if (server.status === 'running') { %>
+
+
+                <button
+                    class="btn btn-danger"
+                    onclick="stopServer()"
+                >
+
+                    ■ إيقاف
+
+                </button>
+
+
+                <button
+                    class="btn btn-secondary"
+                    onclick="restartServer()"
+                >
+
+                    ↻ إعادة تشغيل
+
+                </button>
+
+
+            <% } else { %>
+
+
+                <button
+                    class="btn btn-success"
+                    onclick="startServer()"
+                >
+
+                    ▶ تشغيل
+
+                </button>
+
+
+            <% } %>
+
+
+            <button
+                class="btn btn-secondary"
+                onclick="clearConsole()"
+            >
+
+                × مسح
+
+            </button>
+
+
+        </div>
+
+
+    </div>
+
+
+    <!-- =====================================================
+         OUTPUT
+    ====================================================== -->
+
+    <div
+        class="console-output"
+        id="console-output"
+    >
+
+
+        <div class="console-placeholder">
+
+
+            <div
+                style="
+                    font-size:48px;
+                "
+            >
+
+                ▣
+
+            </div>
+
+
+            <p>
+                الكونسول جاهز...
+            </p>
+
+
+        </div>
+
+
+    </div>
+
+
+    <!-- =====================================================
+         INPUT
+    ====================================================== -->
+
+    <div class="console-input-area">
+
+
+        <input
+            type="text"
+            class="console-input"
+            id="console-input"
+            placeholder="اكتب أمر..."
+            <%= server.status !== 'running'
+                ? 'disabled'
+                : ''
+            %>
+        >
+
+
+        <button
+            class="btn btn-primary"
+            onclick="sendCommand()"
+            id="send-btn"
+            <%= server.status !== 'running'
+                ? 'disabled'
+                : ''
+            %>
+        >
+
+            → إرسال
+
+        </button>
+
+
+    </div>
+
+
+</div>
+
+
+<script src="/socket.io/socket.io.js"></script>
+
+
+<script>
+
+const socket = io();
+
+
+const serverId =
+    '<%= server._id %>';
+
+
+const serverName =
+    '<%= server.name %>';
+
+
+const consoleOutput =
+    document.getElementById(
+        'console-output'
+    );
+
+
+const consoleInput =
+    document.getElementById(
+        'console-input'
+    );
+
+
+const sendBtn =
+    document.getElementById(
+        'send-btn'
+    );
+
+
+const statusBadge =
+    document.getElementById(
+        'status-badge'
+    );
+
+
+const statusText =
+    document.getElementById(
+        'status-text'
+    );
+
+
+let isRunning =
+    <%= server.status === 'running' %>;
+
+
+/* =========================================================
+   JOIN SERVER ROOM
+========================================================= */
+
+socket.emit(
+    'joinServer',
+    serverId
+);
+
+
+/* =========================================================
+   REQUEST OLD LOGS
+========================================================= */
+
+socket.emit(
+    'get-console-history',
+    {
+        serverId
+    }
+);
+
+
+/* =========================================================
+   NEW LOGS
+========================================================= */
+
+socket.on(
+    'console-log',
+    (data) => {
+
+        addLogLine(
+            data.type,
+            data.message,
+            data.timestamp ||
+                Date.now()
+        );
+
+    }
+);
+
+
+/* =========================================================
+   OLD LOGS
+========================================================= */
+
+socket.on(
+    'console-history',
+    (logs) => {
+
+        if (
+            logs &&
+            logs.length > 0
+        ) {
+
+            consoleOutput.innerHTML =
+                '';
+
+            logs.forEach(
+                log => {
+
+                    addLogLine(
+                        log.type,
+                        log.message,
+                        log.timestamp
+                    );
+
+                }
+            );
+
+        }
+
+    }
+);
+
+
+/* =========================================================
+   SERVER STATUS
+========================================================= */
+
+socket.on(
+    'status-update',
+    (data) => {
+
+        if (
+            data.id === serverId
+        ) {
+
+            isRunning =
+                data.status ===
+                'running';
+
+            updateStatusUI(
+                isRunning
+            );
+
+        }
+
+    }
+);
+
+
+/* =========================================================
+   ADD LOG
+========================================================= */
+
+function addLogLine(
+    type,
+    message,
+    timestamp
+) {
+
+
+    const placeholder =
+        consoleOutput.querySelector(
+            '.console-placeholder'
+        );
+
+
+    if (placeholder) {
+
+        placeholder.remove();
+
+    }
+
+
+    const line =
+        document.createElement(
+            'div'
+        );
+
+
+    line.className =
+        'log-line';
+
+
+    const time =
+        new Date(
+            timestamp
+        ).toLocaleTimeString(
+            'en-US',
+            {
+                hour12: false
+            }
+        );
+
+
+    let colorClass =
+        'log-stdout';
+
+
+    if (
+        type === 'stderr'
+    ) {
+
+        colorClass =
+            'log-stderr';
+
+    }
+
+
+    else if (
+        type === 'info'
+    ) {
+
+        colorClass =
+            'log-info';
+
+    }
+
+
+    line.innerHTML = `
+
+        <span class="log-time">
+            [${time}]
+        </span>
+
+        <span class="${colorClass}">
+            ${escapeHtml(message)}
+        </span>
+
+    `;
+
+
+    consoleOutput.appendChild(
+        line
+    );
+
+
+    consoleOutput.scrollTop =
+        consoleOutput.scrollHeight;
+
+
+    /* الحد الأقصى 500 سطر */
+
+    if (
+        consoleOutput.children.length
+        > 500
+    ) {
+
+        consoleOutput.removeChild(
+            consoleOutput.children[0]
+        );
+
+    }
+
+}
+
+
+/* =========================================================
+   ESCAPE HTML
+========================================================= */
+
+function escapeHtml(text) {
+
+    const div =
+        document.createElement(
+            'div'
+        );
+
+
+    div.textContent =
+        text;
+
+
+    return div.innerHTML;
+
+}
+
+
+/* =========================================================
+   UPDATE STATUS UI
+========================================================= */
+
+function updateStatusUI(
+    running
+) {
+
+
+    isRunning =
+        running;
+
+
+    if (running) {
+
+
+        statusBadge.className =
+            'status-badge running';
+
+
+        statusText.innerHTML =
+            '● شغال';
+
+
+        consoleInput.disabled =
+            false;
+
+
+        sendBtn.disabled =
+            false;
+
+
+        document.querySelector(
+            '.console-actions'
+        ).innerHTML = `
+
+            <button
+                class="btn btn-danger"
+                onclick="stopServer()"
+            >
+                ■ إيقاف
+            </button>
+
+            <button
+                class="btn btn-secondary"
+                onclick="restartServer()"
+            >
+                ↻ إعادة تشغيل
+            </button>
+
+            <button
+                class="btn btn-secondary"
+                onclick="clearConsole()"
+            >
+                × مسح
+            </button>
+
+        `;
+
+
+    } else {
+
+
+        statusBadge.className =
+            'status-badge stopped';
+
+
+        statusText.innerHTML =
+            '● متوقف';
+
+
+        consoleInput.disabled =
+            true;
+
+
+        sendBtn.disabled =
+            true;
+
+
+        document.querySelector(
+            '.console-actions'
+        ).innerHTML = `
+
+            <button
+                class="btn btn-success"
+                onclick="startServer()"
+            >
+                ▶ تشغيل
+            </button>
+
+            <button
+                class="btn btn-secondary"
+                onclick="clearConsole()"
+            >
+                × مسح
+            </button>
+
+        `;
+
+    }
+
+}
+
+
+/* =========================================================
+   SEND COMMAND
+========================================================= */
+
+function sendCommand() {
+
+
+    const command =
+        consoleInput.value.trim();
+
+
+    if (
+        !command ||
+        !isRunning
+    ) {
+
+        return;
+
+    }
+
+
+    socket.emit(
+        'console-command',
+        {
+            serverId,
+            command
+        }
+    );
+
+
+    addLogLine(
+        'info',
+        `> ${command}`,
+        Date.now()
+    );
+
+
+    consoleInput.value =
+        '';
+
+}
+
+
+/* =========================================================
+   CLEAR CONSOLE
+========================================================= */
+
+function clearConsole() {
+
+
+    consoleOutput.innerHTML = `
+
+        <div class="console-placeholder">
+
+            <div
+                style="
+                    font-size:48px;
+                    margin-bottom:10px;
+                "
+            >
+                ▣
+            </div>
+
+            <p>
+                تم مسح الكونسول
+            </p>
+
+        </div>
+
+    `;
+
+}
+
+
+/* =========================================================
+   START SERVER
+========================================================= */
+
+async function startServer() {
+
+
+    try {
+
+
+        const res =
+            await fetch(
+                `/servers/${serverId}/start`,
+                {
+                    method:
+                        'POST'
+                }
+            );
+
+
+        const data =
+            await res.json();
+
+
+        if (
+            data.success
+        ) {
+
+            updateStatusUI(
+                true
+            );
+
+        } else {
+
+            alert(
+                data.error ||
+                'فشل تشغيل السيرفر'
+            );
+
+        }
+
+
+    } catch (err) {
+
+
+        console.error(
+            err
+        );
+
+
+        alert(
+            'فشل تشغيل السيرفر'
+        );
+
+    }
+
+}
+
+
+/* =========================================================
+   STOP SERVER
+========================================================= */
+
+async function stopServer() {
+
+
+    try {
+
+
+        const res =
+            await fetch(
+                `/servers/${serverId}/stop`,
+                {
+                    method:
+                        'POST'
+                }
+            );
+
+
+        const data =
+            await res.json();
+
+
+        if (
+            data.success
+        ) {
+
+            updateStatusUI(
+                false
+            );
+
+        } else {
+
+            alert(
+                data.error ||
+                'فشل إيقاف السيرفر'
+            );
+
+        }
+
+
+    } catch (err) {
+
+
+        console.error(
+            err
+        );
+
+
+        alert(
+            'فشل إيقاف السيرفر'
+        );
+
+    }
+
+}
+
+
+/* =========================================================
+   RESTART SERVER
+========================================================= */
+
+async function restartServer() {
+
+
+    try {
+
+
+        const res =
+            await fetch(
+                `/servers/${serverId}/restart`,
+                {
+                    method:
+                        'POST'
+                }
+            );
+
+
+        const data =
+            await res.json();
+
+
+        if (
+            data.success
+        ) {
+
+            updateStatusUI(
+                true
+            );
+
+        } else {
+
+            alert(
+                data.error ||
+                'فشل إعادة تشغيل السيرفر'
+            );
+
+        }
+
+
+    } catch (err) {
+
+
+        console.error(
+            err
+        );
+
+
+        alert(
+            'فشل إعادة تشغيل السيرفر'
+        );
+
+    }
+
+}
+
+
+/* =========================================================
+   ENTER TO SEND
+========================================================= */
+
+consoleInput.addEventListener(
+    'keypress',
+    (e) => {
+
+        if (
+            e.key === 'Enter'
+        ) {
+
+            sendCommand();
+
+        }
+
+    }
+);
+
+</script>

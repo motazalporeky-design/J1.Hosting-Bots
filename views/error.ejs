@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <title>خطأ - J1 Studio</title>
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+    <div class="error-container">
+        <div class="error-box">
+            <div class="error-code"><%= error.status || 500 %></div>
+            <h2><%= message %></h2>
+            <a href="/dashboard" class="btn btn-primary">العودة للوحة التحكم</a>
+        </div>
+    </div>
+</body>
+</html>

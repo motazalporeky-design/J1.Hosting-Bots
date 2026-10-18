@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>محظور - J1 Studio</title>
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+    <div class="error-container">
+        <div class="error-box">
+            <div class="error-code">🚫</div>
+            <h2 style="color: #ef4444;">تم حظر حسابك</h2>
+            <% if (typeof reason !== 'undefined' && reason) { %>
+                <p style="color: #fca5a5; margin: 20px 0;">السبب: <%= reason %></p>
+            <% } %>
+            <p style="color: #888;">إذا كنت تعتقد أن هذا خطأ، يرجى التواصل مع الإدارة</p>
+        </div>
+    </div>
+</body>
+</html>

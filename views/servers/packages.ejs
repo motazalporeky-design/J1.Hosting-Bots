@@ -1,0 +1,490 @@
+
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>إدارة البكجات</title>
+
+<style>
+:root{
+    --bg:#070707;
+    --bg-soft:#0d0d0d;
+    --card:#121212;
+    --card-hover:#181818;
+    --input:#0b0b0b;
+    --border:rgba(255,255,255,.08);
+    --border-hover:rgba(255,255,255,.16);
+    --white:#ffffff;
+    --text:#f5f5f5;
+    --text-soft:#c8c8c8;
+    --muted:#888888;
+    --success:#d4d4d4;
+    --error:#bdbdbd;
+    --shadow:0 15px 45px rgba(0,0,0,.45);
+}
+
+*{
+    box-sizing:border-box;
+}
+
+html{
+    scroll-behavior:smooth;
+}
+
+body{
+    background:
+        radial-gradient(circle at top right, rgba(255,255,255,.035), transparent 30%),
+        radial-gradient(circle at bottom left, rgba(255,255,255,.025), transparent 30%),
+        var(--bg);
+
+    color:var(--text);
+    font-family:Tahoma, Arial, sans-serif;
+    margin:0;
+    padding:30px 20px;
+    min-height:100vh;
+}
+
+/* خلفية شبكية خفيفة */
+body::before{
+    content:"";
+    position:fixed;
+    inset:0;
+    pointer-events:none;
+    background-image:
+        linear-gradient(rgba(255,255,255,.018) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,.018) 1px, transparent 1px);
+    background-size:40px 40px;
+    mask-image:linear-gradient(to bottom, black, transparent);
+}
+
+.container{
+    max-width:900px;
+    margin:auto;
+    position:relative;
+    z-index:1;
+}
+
+/* البطاقات */
+.card{
+    background:
+        linear-gradient(
+            145deg,
+            rgba(255,255,255,.035),
+            rgba(255,255,255,.01)
+        ),
+        var(--card);
+
+    border:1px solid var(--border);
+    padding:26px;
+    border-radius:18px;
+    margin-bottom:22px;
+
+    box-shadow:var(--shadow);
+
+    backdrop-filter:blur(10px);
+    -webkit-backdrop-filter:blur(10px);
+
+    transition:
+        border-color .25s ease,
+        transform .25s ease,
+        box-shadow .25s ease;
+}
+
+.card:hover{
+    border-color:var(--border-hover);
+    box-shadow:0 20px 55px rgba(0,0,0,.55);
+}
+
+.card h2{
+    margin:0 0 20px;
+    font-size:20px;
+    font-weight:700;
+    color:var(--white);
+
+    display:flex;
+    align-items:center;
+    gap:9px;
+}
+
+/* الحقول */
+input{
+    width:100%;
+    height:48px;
+    padding:0 15px;
+
+    background:var(--input);
+    color:var(--white);
+
+    border:1px solid var(--border);
+    border-radius:11px;
+
+    margin-bottom:12px;
+
+    outline:none;
+    font-family:inherit;
+    font-size:14px;
+
+    transition:
+        border-color .2s ease,
+        background .2s ease,
+        box-shadow .2s ease;
+}
+
+input::placeholder{
+    color:#686868;
+}
+
+input:focus{
+    background:#101010;
+    border-color:rgba(255,255,255,.25);
+    box-shadow:0 0 0 3px rgba(255,255,255,.035);
+}
+
+/* الأزرار */
+button{
+    background:linear-gradient(
+        135deg,
+        #f4f4f4,
+        #cfcfcf
+    );
+
+    color:#080808;
+
+    border:1px solid rgba(255,255,255,.25);
+    padding:12px 20px;
+    border-radius:11px;
+
+    cursor:pointer;
+
+    font-family:inherit;
+    font-size:14px;
+    font-weight:bold;
+
+    box-shadow:
+        0 8px 20px rgba(0,0,0,.3),
+        inset 0 1px 0 rgba(255,255,255,.7);
+
+    transition:
+        transform .2s ease,
+        opacity .2s ease,
+        box-shadow .2s ease;
+}
+
+button:hover{
+    opacity:.92;
+    transform:translateY(-1px);
+
+    box-shadow:
+        0 11px 25px rgba(0,0,0,.4),
+        inset 0 1px 0 rgba(255,255,255,.8);
+}
+
+button:active{
+    transform:translateY(0);
+}
+
+/* نتيجة التثبيت */
+#result{
+    margin-top:16px;
+}
+
+.success{
+    color:#e2e2e2;
+
+    background:rgba(255,255,255,.045);
+    border:1px solid rgba(255,255,255,.09);
+
+    padding:12px 14px;
+    border-radius:10px;
+
+    margin:0;
+}
+
+/* الخطأ */
+.error{
+    color:#d0d0d0;
+
+    background:#0a0a0a;
+    border:1px solid rgba(255,255,255,.09);
+
+    padding:13px 14px;
+    border-radius:10px;
+
+    margin:12px 0 0;
+
+    font-family:Consolas, monospace;
+    font-size:13px;
+}
+
+/* البكجات */
+#packages{
+    margin-top:16px;
+}
+
+.package{
+    background:
+        linear-gradient(
+            135deg,
+            rgba(255,255,255,.035),
+            rgba(255,255,255,.015)
+        ),
+        #101010;
+
+    border:1px solid var(--border);
+
+    padding:15px 17px;
+    border-radius:12px;
+    margin-top:10px;
+
+    transition:
+        background .2s ease,
+        border-color .2s ease,
+        transform .2s ease;
+}
+
+.package:hover{
+    background:#171717;
+    border-color:var(--border-hover);
+    transform:translateX(-2px);
+}
+
+.package strong{
+    color:var(--white);
+    font-size:15px;
+    word-break:break-word;
+}
+
+.package br + *{
+    color:var(--muted);
+}
+
+.package{
+    color:#999;
+    font-size:13px;
+}
+
+/* النصوص */
+#packages > p{
+    color:var(--muted);
+    text-align:center;
+
+    background:#0c0c0c;
+    border:1px dashed rgba(255,255,255,.08);
+
+    padding:18px;
+    border-radius:11px;
+}
+
+/* Scrollbar */
+::-webkit-scrollbar{
+    width:8px;
+}
+
+::-webkit-scrollbar-track{
+    background:#080808;
+}
+
+::-webkit-scrollbar-thumb{
+    background:#333;
+    border-radius:10px;
+}
+
+::-webkit-scrollbar-thumb:hover{
+    background:#4a4a4a;
+}
+
+/* الجوال */
+@media(max-width:600px){
+
+    body{
+        padding:18px 12px;
+    }
+
+    .card{
+        padding:20px;
+        border-radius:15px;
+    }
+
+    .card h2{
+        font-size:18px;
+    }
+
+    input{
+        height:46px;
+        font-size:13px;
+    }
+
+    button{
+        width:100%;
+        padding:12px;
+    }
+
+    .package{
+        padding:14px;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+    <div class="card">
+
+        <h2>📦 تنزيل باكج جديد</h2>
+
+        <input
+            type="text"
+            id="packageName"
+            placeholder="مثال: express أو @discordjs/voice"
+        >
+
+        <button onclick="downloadPackage()">
+            تنزيل الباكج
+        </button>
+
+        <div id="result"></div>
+
+    </div>
+
+
+    <div class="card">
+
+        <h2>📋 البكجات المثبتة</h2>
+
+        <button onclick="loadPackages()">
+            تحديث القائمة
+        </button>
+
+        <div id="packages"></div>
+
+    </div>
+
+</div>
+
+
+<script>
+
+const serverId = "<%= server._id %>";
+
+
+async function downloadPackage(){
+
+    const packageName =
+        document.getElementById("packageName").value.trim();
+
+    if(!packageName){
+
+        alert("اكتب اسم الباكج");
+
+        return;
+    }
+
+
+    const result =
+        document.getElementById("result");
+
+
+    result.innerHTML =
+        "⏳ جاري التثبيت...";
+
+
+    try{
+
+        const response = await fetch(
+            `/servers/${serverId}/packages/download?name=${encodeURIComponent(packageName)}`,
+            {
+                method:"POST"
+            }
+        );
+
+
+        const data =
+            await response.json();
+
+
+        if(data.success){
+
+            result.innerHTML =
+                `<p class="success">✅ تم تثبيت ${packageName}</p>`;
+
+
+            loadPackages();
+
+        }else{
+
+            result.innerHTML =
+                `<pre class="error">${data.error}</pre>`;
+
+        }
+
+
+    }catch(err){
+
+        result.innerHTML =
+            `<pre class="error">${err.message}</pre>`;
+
+    }
+
+}
+
+
+async function loadPackages(){
+
+    try{
+
+        const response = await fetch(
+            `/servers/${serverId}/packages`
+        );
+
+
+        const data =
+            await response.json();
+
+
+        const container =
+            document.getElementById("packages");
+
+
+        container.innerHTML = "";
+
+
+        if(!data.packages || data.packages.length === 0){
+
+            container.innerHTML =
+                "<p>لا توجد بكجات مثبتة</p>";
+
+            return;
+        }
+
+
+        data.packages.forEach(pkg => {
+
+            container.innerHTML += `
+                <div class="package">
+                    <strong>${pkg.name}</strong>
+                    <br>
+                    ${pkg.version}
+                </div>
+            `;
+
+        });
+
+
+    }catch(err){
+
+        console.error(err);
+
+    }
+
+}
+
+
+loadPackages();
+
+</script>
+
+</body>
+</html>

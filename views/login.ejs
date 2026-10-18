@@ -1,0 +1,1519 @@
+
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
+    >
+
+    <title>تسجيل الدخول - J1 Studio</title>
+
+
+    <!-- =========================
+         Google Font
+    ========================= -->
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <link
+        href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800;900&display=swap"
+        rel="stylesheet"
+    >
+
+
+    <style>
+
+        /* =====================================================
+           ROOT
+        ===================================================== */
+
+        :root {
+
+            --bg: #070707;
+            --bg-soft: #0d0d0d;
+            --bg-light: #151515;
+
+            --white: #ffffff;
+            --text: #f5f5f5;
+            --text-soft: #c7c7c7;
+            --muted: #858585;
+
+            --border: rgba(255, 255, 255, 0.10);
+            --border-light: rgba(255, 255, 255, 0.18);
+
+            --card: rgba(255, 255, 255, 0.055);
+            --card-hover: rgba(255, 255, 255, 0.075);
+
+            --shadow: rgba(0, 0, 0, 0.55);
+
+        }
+
+
+        /* =====================================================
+           RESET
+        ===================================================== */
+
+        * {
+
+            margin: 0;
+            padding: 0;
+
+            box-sizing: border-box;
+
+            font-family: "Cairo", sans-serif;
+
+            -webkit-tap-highlight-color: transparent;
+        }
+
+
+        html {
+
+            width: 100%;
+            min-height: 100%;
+
+            background: var(--bg);
+
+            overflow-x: hidden;
+
+            scroll-behavior: smooth;
+        }
+
+
+        body {
+
+            width: 100%;
+
+            min-height: 100vh;
+            min-height: 100dvh;
+
+            position: relative;
+
+            display: flex;
+
+            align-items: center;
+            justify-content: center;
+
+            padding:
+                max(20px, env(safe-area-inset-top))
+                max(15px, env(safe-area-inset-right))
+                max(20px, env(safe-area-inset-bottom))
+                max(15px, env(safe-area-inset-left));
+
+            color: var(--text);
+
+            background:
+
+                radial-gradient(
+                    circle at 15% 15%,
+                    rgba(255, 255, 255, 0.065),
+                    transparent 28%
+                ),
+
+                radial-gradient(
+                    circle at 85% 85%,
+                    rgba(255, 255, 255, 0.045),
+                    transparent 30%
+                ),
+
+                linear-gradient(
+                    145deg,
+                    #050505 0%,
+                    #0b0b0b 48%,
+                    #111111 100%
+                );
+
+            overflow-x: hidden;
+            overflow-y: auto;
+        }
+
+
+        /* =====================================================
+           GRID BACKGROUND
+        ===================================================== */
+
+        body::before {
+
+            content: "";
+
+            position: fixed;
+
+            inset: 0;
+
+            pointer-events: none;
+
+            background-image:
+
+                linear-gradient(
+                    rgba(255, 255, 255, 0.018) 1px,
+                    transparent 1px
+                ),
+
+                linear-gradient(
+                    90deg,
+                    rgba(255, 255, 255, 0.018) 1px,
+                    transparent 1px
+                );
+
+            background-size: 55px 55px;
+
+            mask-image:
+                linear-gradient(
+                    to bottom,
+                    transparent,
+                    black 25%,
+                    black 75%,
+                    transparent
+                );
+
+            -webkit-mask-image:
+                linear-gradient(
+                    to bottom,
+                    transparent,
+                    black 25%,
+                    black 75%,
+                    transparent
+                );
+
+            z-index: 0;
+        }
+
+
+        /* =====================================================
+           LIGHT EFFECTS
+        ===================================================== */
+
+        .glow {
+
+            position: fixed;
+
+            border-radius: 50%;
+
+            pointer-events: none;
+
+            filter: blur(90px);
+
+            -webkit-filter: blur(90px);
+
+            z-index: 0;
+
+            opacity: 0.7;
+
+            animation: float 10s ease-in-out infinite;
+        }
+
+
+        .glow.one {
+
+            width: 320px;
+            height: 320px;
+
+            top: -150px;
+            right: -120px;
+
+            background: rgba(255, 255, 255, 0.055);
+        }
+
+
+        .glow.two {
+
+            width: 300px;
+            height: 300px;
+
+            bottom: -150px;
+            left: -120px;
+
+            background: rgba(255, 255, 255, 0.04);
+
+            animation-delay: -3s;
+        }
+
+
+        @keyframes float {
+
+            0%,
+            100% {
+                transform: translate3d(0, 0, 0);
+            }
+
+            50% {
+                transform: translate3d(18px, -20px, 0);
+            }
+
+        }
+
+
+        /* =====================================================
+           CONTAINER
+        ===================================================== */
+
+        .auth-container {
+
+            width: 100%;
+
+            max-width: 460px;
+
+            position: relative;
+
+            z-index: 2;
+
+            margin: auto;
+        }
+
+
+        /* =====================================================
+           LOGIN CARD
+        ===================================================== */
+
+        .auth-box {
+
+            width: 100%;
+
+            position: relative;
+
+            padding: 42px 36px;
+
+            border-radius: 24px;
+
+            background:
+
+                linear-gradient(
+                    145deg,
+                    rgba(255, 255, 255, 0.075),
+                    rgba(255, 255, 255, 0.035)
+                );
+
+            border: 1px solid var(--border);
+
+            backdrop-filter: blur(22px);
+
+            -webkit-backdrop-filter: blur(22px);
+
+            box-shadow:
+
+                0 30px 80px var(--shadow),
+
+                0 0 50px rgba(255, 255, 255, 0.025),
+
+                inset 0 1px 0
+                rgba(255, 255, 255, 0.055);
+
+            overflow: hidden;
+
+            animation: appear 0.55s ease forwards;
+        }
+
+
+        .auth-box::before {
+
+            content: "";
+
+            position: absolute;
+
+            top: 0;
+
+            left: 12%;
+            right: 12%;
+
+            height: 2px;
+
+            background:
+
+                linear-gradient(
+                    90deg,
+                    transparent,
+                    rgba(255,255,255,0.85),
+                    rgba(180,180,180,0.6),
+                    rgba(255,255,255,0.85),
+                    transparent
+                );
+
+            box-shadow:
+                0 0 18px rgba(255,255,255,0.15);
+
+            pointer-events: none;
+        }
+
+
+        .auth-box::after {
+
+            content: "";
+
+            position: absolute;
+
+            width: 180px;
+            height: 180px;
+
+            top: -100px;
+            left: -100px;
+
+            border-radius: 50%;
+
+            background: rgba(255,255,255,0.035);
+
+            filter: blur(18px);
+
+            pointer-events: none;
+        }
+
+
+        @keyframes appear {
+
+            from {
+
+                opacity: 0;
+
+                transform:
+                    translateY(22px)
+                    scale(0.98);
+            }
+
+            to {
+
+                opacity: 1;
+
+                transform:
+                    translateY(0)
+                    scale(1);
+            }
+
+        }
+
+
+        /* =====================================================
+           BRAND
+        ===================================================== */
+
+        .brand {
+
+            text-align: center;
+
+            margin-bottom: 30px;
+        }
+
+
+        .brand-icon {
+
+            width: 72px;
+            height: 72px;
+
+            margin: 0 auto 17px;
+
+            display: flex;
+
+            align-items: center;
+            justify-content: center;
+
+            border-radius: 19px;
+
+            background:
+
+                linear-gradient(
+                    145deg,
+                    rgba(255,255,255,0.11),
+                    rgba(255,255,255,0.035)
+                );
+
+            border: 1px solid var(--border-light);
+
+            box-shadow:
+
+                0 15px 35px rgba(0,0,0,0.28),
+
+                inset 0 1px 0
+                rgba(255,255,255,0.08);
+        }
+
+
+        .brand-icon svg {
+
+            width: 37px;
+            height: 37px;
+
+            fill: var(--white);
+
+            filter:
+                drop-shadow(
+                    0 0 10px rgba(255,255,255,0.18)
+                );
+        }
+
+
+        .brand h1 {
+
+            margin-bottom: 8px;
+
+            font-size: 27px;
+
+            font-weight: 900;
+
+            letter-spacing: -0.5px;
+
+            color: var(--white);
+        }
+
+
+        .brand h1 span {
+
+            background:
+
+                linear-gradient(
+                    90deg,
+                    #ffffff,
+                    #a9a9a9
+                );
+
+            -webkit-background-clip: text;
+
+            background-clip: text;
+
+            color: transparent;
+        }
+
+
+        .brand p {
+
+            color: var(--muted);
+
+            font-size: 13px;
+
+            font-weight: 500;
+
+            line-height: 1.8;
+        }
+
+
+        /* =====================================================
+           ERROR ALERT
+        ===================================================== */
+
+        .alert {
+
+            width: 100%;
+
+            padding: 12px 14px;
+
+            margin-bottom: 19px;
+
+            border-radius: 12px;
+
+            font-size: 13px;
+
+            font-weight: 700;
+
+            text-align: center;
+
+            line-height: 1.7;
+
+            overflow-wrap: anywhere;
+        }
+
+
+        .alert-error {
+
+            color: #d8d8d8;
+
+            background:
+                rgba(255,255,255,0.045);
+
+            border:
+                1px solid rgba(255,255,255,0.12);
+
+            box-shadow:
+                0 8px 25px rgba(0,0,0,0.15);
+        }
+
+
+        /* =====================================================
+           FORM
+        ===================================================== */
+
+        .form-group {
+
+            margin-bottom: 18px;
+        }
+
+
+        .form-group label {
+
+            display: block;
+
+            margin-bottom: 8px;
+
+            color: var(--text-soft);
+
+            font-size: 13px;
+
+            font-weight: 800;
+        }
+
+
+        .input-wrapper {
+
+            position: relative;
+
+            width: 100%;
+        }
+
+
+        .input-icon {
+
+            position: absolute;
+
+            right: 15px;
+
+            top: 50%;
+
+            transform:
+                translateY(-50%);
+
+            color: #777777;
+
+            pointer-events: none;
+
+            display: flex;
+
+            z-index: 2;
+        }
+
+
+        .input-icon svg {
+
+            width: 19px;
+            height: 19px;
+
+            stroke: currentColor;
+        }
+
+
+        .form-group input {
+
+            display: block;
+
+            width: 100%;
+
+            height: 54px;
+
+            padding:
+                0 48px
+                0 15px;
+
+            border-radius: 13px;
+
+            outline: none;
+
+            border:
+                1px solid
+                rgba(255,255,255,0.09);
+
+            background:
+                rgba(0,0,0,0.32);
+
+            color: var(--white);
+
+            font-family: "Cairo", sans-serif;
+
+            font-size: 14px;
+
+            font-weight: 600;
+
+            transition:
+                border-color 0.2s ease,
+                box-shadow 0.2s ease,
+                background 0.2s ease;
+
+            appearance: none;
+
+            -webkit-appearance: none;
+        }
+
+
+        .form-group input::placeholder {
+
+            color: #666666;
+        }
+
+
+        .form-group input:hover {
+
+            border-color:
+                rgba(255,255,255,0.17);
+        }
+
+
+        .form-group input:focus {
+
+            border-color:
+                rgba(255,255,255,0.38);
+
+            background:
+                rgba(255,255,255,0.035);
+
+            box-shadow:
+
+                0 0 0 4px
+                rgba(255,255,255,0.045),
+
+                0 0 25px
+                rgba(255,255,255,0.035);
+        }
+
+
+        /* منع تكبير الجوال */
+
+        @media screen and (max-width: 600px) {
+
+            .form-group input {
+
+                font-size: 16px;
+            }
+
+        }
+
+
+        /* =====================================================
+           BUTTON
+        ===================================================== */
+
+        .btn {
+
+            width: 100%;
+
+            min-height: 54px;
+
+            display: flex;
+
+            align-items: center;
+            justify-content: center;
+
+            gap: 9px;
+
+            border: none;
+
+            border-radius: 13px;
+
+            font-family: "Cairo", sans-serif;
+
+            font-size: 14px;
+
+            font-weight: 800;
+
+            text-decoration: none;
+
+            cursor: pointer;
+
+            position: relative;
+
+            overflow: hidden;
+
+            touch-action: manipulation;
+
+            user-select: none;
+
+            -webkit-user-select: none;
+
+            transition:
+                transform 0.2s ease,
+                box-shadow 0.2s ease,
+                background 0.2s ease;
+        }
+
+
+        .btn-primary {
+
+            color: #080808;
+
+            background:
+
+                linear-gradient(
+                    135deg,
+                    #ffffff,
+                    #d8d8d8
+                );
+
+            border:
+                1px solid
+                rgba(255,255,255,0.8);
+
+            box-shadow:
+
+                0 10px 28px
+                rgba(0,0,0,0.28),
+
+                inset 0 1px 0
+                rgba(255,255,255,0.8);
+        }
+
+
+        .btn-primary:hover {
+
+            transform: translateY(-2px);
+
+            background:
+
+                linear-gradient(
+                    135deg,
+                    #ffffff,
+                    #eeeeee
+                );
+
+            box-shadow:
+
+                0 15px 35px
+                rgba(0,0,0,0.4),
+
+                0 0 25px
+                rgba(255,255,255,0.06);
+        }
+
+
+        .btn-primary:active {
+
+            transform: translateY(0);
+        }
+
+
+        /* =====================================================
+           DIVIDER
+        ===================================================== */
+
+        .auth-divider {
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 13px;
+
+            margin: 23px 0;
+
+            color: #656565;
+
+            font-size: 12px;
+
+            font-weight: 800;
+        }
+
+
+        .auth-divider::before,
+        .auth-divider::after {
+
+            content: "";
+
+            flex: 1;
+
+            height: 1px;
+
+            background:
+
+                linear-gradient(
+                    90deg,
+                    transparent,
+                    rgba(255,255,255,0.12)
+                );
+        }
+
+
+        .auth-divider::after {
+
+            background:
+
+                linear-gradient(
+                    90deg,
+                    rgba(255,255,255,0.12),
+                    transparent
+                );
+        }
+
+
+        .auth-divider span {
+
+            padding: 0 3px;
+        }
+
+
+        /* =====================================================
+           DISCORD BUTTON
+        ===================================================== */
+
+        .btn-discord {
+
+            color: var(--white);
+
+            background:
+
+                linear-gradient(
+                    135deg,
+                    #303030,
+                    #171717
+                );
+
+            border:
+                1px solid
+                rgba(255,255,255,0.12);
+
+            box-shadow:
+
+                0 10px 28px
+                rgba(0,0,0,0.25);
+        }
+
+
+        .btn-discord:hover {
+
+            transform: translateY(-2px);
+
+            background:
+
+                linear-gradient(
+                    135deg,
+                    #3a3a3a,
+                    #1e1e1e
+                );
+
+            border-color:
+                rgba(255,255,255,0.22);
+
+            box-shadow:
+
+                0 15px 35px
+                rgba(0,0,0,0.38),
+
+                0 0 20px
+                rgba(255,255,255,0.035);
+        }
+
+
+        .btn-discord:active {
+
+            transform: translateY(0);
+        }
+
+
+        .btn-discord svg {
+
+            width: 21px;
+
+            height: 21px;
+
+            flex-shrink: 0;
+
+            fill: currentColor;
+        }
+
+
+        /* =====================================================
+           FOOTER
+        ===================================================== */
+
+        .auth-footer {
+
+            margin-top: 25px;
+
+            text-align: center;
+
+            color: #777777;
+
+            font-size: 13px;
+
+            font-weight: 500;
+
+            line-height: 1.8;
+        }
+
+
+        .auth-footer a {
+
+            color: var(--white);
+
+            text-decoration: none;
+
+            font-weight: 900;
+
+            transition: 0.2s ease;
+        }
+
+
+        .auth-footer a:hover {
+
+            color: #bdbdbd;
+
+            text-shadow:
+                0 0 12px
+                rgba(255,255,255,0.18);
+        }
+
+
+        /* =====================================================
+           SECURITY
+        ===================================================== */
+
+        .security {
+
+            display: flex;
+
+            justify-content: center;
+
+            align-items: center;
+
+            gap: 7px;
+
+            margin-top: 18px;
+
+            color: #555555;
+
+            font-size: 10px;
+        }
+
+
+        .security-dot {
+
+            width: 6px;
+
+            height: 6px;
+
+            border-radius: 50%;
+
+            background: #bdbdbd;
+
+            box-shadow:
+                0 0 8px
+                rgba(255,255,255,0.35);
+        }
+
+
+        /* =====================================================
+           MOBILE
+        ===================================================== */
+
+        @media (max-width: 520px) {
+
+            body {
+
+                align-items: flex-start;
+
+                padding:
+
+                    max(18px, env(safe-area-inset-top))
+                    max(12px, env(safe-area-inset-right))
+                    max(18px, env(safe-area-inset-bottom))
+                    max(12px, env(safe-area-inset-left));
+            }
+
+
+            .auth-container {
+
+                width: 100%;
+
+                max-width: 100%;
+
+                margin: 15px auto;
+            }
+
+
+            .auth-box {
+
+                padding: 31px 20px;
+
+                border-radius: 21px;
+
+                backdrop-filter: blur(18px);
+
+                -webkit-backdrop-filter: blur(18px);
+            }
+
+
+            .brand {
+
+                margin-bottom: 24px;
+            }
+
+
+            .brand-icon {
+
+                width: 65px;
+                height: 65px;
+
+                border-radius: 18px;
+
+                margin-bottom: 14px;
+            }
+
+
+            .brand-icon svg {
+
+                width: 33px;
+                height: 33px;
+            }
+
+
+            .brand h1 {
+
+                font-size: 23px;
+
+                line-height: 1.5;
+            }
+
+
+            .brand p {
+
+                font-size: 12px;
+
+                padding: 0 8px;
+            }
+
+
+            .form-group {
+
+                margin-bottom: 16px;
+            }
+
+
+            .form-group label {
+
+                font-size: 12px;
+            }
+
+
+            .form-group input {
+
+                height: 54px;
+
+                border-radius: 13px;
+
+                padding-right: 45px;
+
+                padding-left: 13px;
+
+                font-size: 16px;
+            }
+
+
+            .input-icon {
+
+                right: 14px;
+            }
+
+
+            .btn {
+
+                min-height: 54px;
+
+                border-radius: 13px;
+
+                font-size: 13px;
+            }
+
+
+            .auth-divider {
+
+                margin: 21px 0;
+            }
+
+
+            .auth-footer {
+
+                margin-top: 22px;
+
+                font-size: 12px;
+            }
+
+        }
+
+
+        /* =====================================================
+           SMALL PHONES
+        ===================================================== */
+
+        @media (max-width: 360px) {
+
+            .auth-box {
+
+                padding: 27px 16px;
+            }
+
+
+            .brand h1 {
+
+                font-size: 21px;
+            }
+
+
+            .brand p {
+
+                font-size: 11px;
+            }
+
+
+            .brand-icon {
+
+                width: 61px;
+                height: 61px;
+            }
+
+
+            .form-group input {
+
+                height: 52px;
+            }
+
+
+            .btn {
+
+                min-height: 52px;
+            }
+
+        }
+
+
+        /* =====================================================
+           LANDSCAPE MOBILE
+        ===================================================== */
+
+        @media (max-height: 650px) and (orientation: landscape) {
+
+            body {
+
+                align-items: flex-start;
+            }
+
+
+            .auth-container {
+
+                margin: 15px auto;
+            }
+
+
+            .auth-box {
+
+                padding-top: 25px;
+
+                padding-bottom: 25px;
+            }
+
+
+            .brand {
+
+                margin-bottom: 18px;
+            }
+
+
+            .brand-icon {
+
+                width: 55px;
+                height: 55px;
+
+                margin-bottom: 9px;
+            }
+
+
+            .brand-icon svg {
+
+                width: 29px;
+                height: 29px;
+            }
+
+
+            .form-group {
+
+                margin-bottom: 12px;
+            }
+
+        }
+
+
+        /* =====================================================
+           REDUCE MOTION
+        ===================================================== */
+
+        @media (prefers-reduced-motion: reduce) {
+
+            *,
+            *::before,
+            *::after {
+
+                animation-duration: 0.01ms !important;
+
+                animation-iteration-count: 1 !important;
+
+                transition-duration: 0.01ms !important;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+    <!-- تأثيرات الخلفية -->
+
+    <div class="glow one"></div>
+
+    <div class="glow two"></div>
+
+
+    <!-- =====================================================
+         LOGIN CONTAINER
+    ===================================================== -->
+
+    <div class="auth-container">
+
+        <div class="auth-box">
+
+
+            <!-- =========================
+                 BRAND
+            ========================= -->
+
+            <div class="brand">
+
+                <div class="brand-icon">
+
+                    <svg viewBox="0 0 24 24">
+
+                        <path d="M19.27 5.33C17.94 4.71 16.5 4.26 15 4a.09.09 0 0 0-.07.03c-.18.33-.39.76-.53 1.09a16.09 16.09 0 0 0-4.8 0c-.14-.33-.35-.76-.54-1.09-.01-.02-.04-.03-.07-.03-1.5.26-2.93.71-4.27 1.33-.01 0-.02.01-.03.02-2.72 4.07-3.47 8.03-3.1 11.95 0 .02.01.04.03.05 1.8 1.32 3.53 2.12 5.24 2.65.03.01.06 0 .07-.02.4-.55.76-1.13 1.07-1.74.02-.04 0-.08-.04-.09-.57-.22-1.11-.48-1.64-.78-.04-.02-.04-.08-.01-.11.11-.08.22-.17.33-.25.02-.02.05-.02.07-.01 3.44 1.57 7.15 1.57 10.55 0 .02-.01.05-.01.07.01.11.09.17.22.25.33.04.03.04.09-.01.11-.52.31-1.07.56-1.64.78-.04.01-.05.06-.04.09.31.61.68 1.19 1.07 1.74.01.02.04.03.07.02 1.72-.53 3.45-1.33 5.25-2.65.02-.01.03-.03.03-.05.44-4.53-.73-8.46-3.1-11.95-.01-.01-.02-.02-.04-.02zM8.52 14.91c-1.03 0-1.89-.95-1.89-2.12s.84-2.12 1.89-2.12c1.06 0 1.9.96 1.89 2.12 0 1.17-.84 2.12-1.89 2.12zm6.97 0c-1.03 0-1.89-.95-1.89-2.12s.84-2.12 1.89-2.12c1.06 0 1.9.96 1.89 2.12 0 1.17-.83 2.12-1.89 2.12z"/>
+
+                    </svg>
+
+                </div>
+
+
+                <h1>
+
+                    أهلاً بك في
+
+                    <span>J1 Studio</span>
+
+                </h1>
+
+
+                <p>
+
+                    سجّل الدخول للوصول إلى لوحة التحكم الخاصة بك
+
+                </p>
+
+            </div>
+
+
+            <!-- =========================
+                 ERROR
+            ========================= -->
+
+            <% if (error) { %>
+
+                <div class="alert alert-error">
+
+                    <%= error %>
+
+                </div>
+
+            <% } %>
+
+
+            <!-- =========================
+                 LOGIN FORM
+            ========================= -->
+
+            <form method="POST" action="/login">
+
+
+                <!-- البريد -->
+
+                <div class="form-group">
+
+                    <label for="email">
+
+                        البريد الإلكتروني
+
+                    </label>
+
+
+                    <div class="input-wrapper">
+
+                        <span class="input-icon">
+
+                            <svg
+                                viewBox="0 0 24 24"
+                                fill="none"
+                                stroke-width="2"
+                            >
+
+                                <rect
+                                    x="3"
+                                    y="5"
+                                    width="18"
+                                    height="14"
+                                    rx="2"
+                                ></rect>
+
+                                <path d="m3 7 9 6 9-6"></path>
+
+                            </svg>
+
+                        </span>
+
+
+                        <input
+                            type="email"
+                            id="email"
+                            name="email"
+                            placeholder="example@email.com"
+                            autocomplete="email"
+                            inputmode="email"
+                            autocapitalize="none"
+                            spellcheck="false"
+                            required
+                        >
+
+                    </div>
+
+                </div>
+
+
+                <!-- كلمة المرور -->
+
+                <div class="form-group">
+
+                    <label for="password">
+
+                        كلمة المرور
+
+                    </label>
+
+
+                    <div class="input-wrapper">
+
+                        <span class="input-icon">
+
+                            <svg
+                                viewBox="0 0 24 24"
+                                fill="none"
+                                stroke-width="2"
+                            >
+
+                                <rect
+                                    x="4"
+                                    y="10"
+                                    width="16"
+                                    height="11"
+                                    rx="2"
+                                ></rect>
+
+                                <path d="M8 10V7a4 4 0 0 1 8 0v3"></path>
+
+                            </svg>
+
+                        </span>
+
+
+                        <input
+                            type="password"
+                            id="password"
+                            name="password"
+                            placeholder="••••••••"
+                            autocomplete="current-password"
+                            required
+                        >
+
+                    </div>
+
+                </div>
+
+
+                <!-- تسجيل الدخول -->
+
+                <button
+                    type="submit"
+                    class="btn btn-primary"
+                >
+
+                    تسجيل الدخول
+
+                </button>
+
+            </form>
+
+
+            <!-- =========================
+                 DIVIDER
+            ========================= -->
+
+            <div class="auth-divider">
+
+                <span>أو</span>
+
+            </div>
+
+
+            <!-- =========================
+                 DISCORD
+            ========================= -->
+
+            <a
+                href="/auth/discord"
+                class="btn btn-discord"
+            >
+
+                <svg
+                    viewBox="0 0 24 24"
+                >
+
+                    <path d="M19.27 5.33C17.94 4.71 16.5 4.26 15 4a.09.09 0 0 0-.07.03c-.18.33-.39.76-.53 1.09a16.09 16.09 0 0 0-4.8 0c-.14-.33-.35-.76-.54-1.09-.01-.02-.04-.03-.07-.03-1.5.26-2.93.71-4.27 1.33-.01 0-.02.01-.03.02-2.72 4.07-3.47 8.03-3.1 11.95 0 .02.01.04.03.05 1.8 1.32 3.53 2.12 5.24 2.65.03.01.06 0 .07-.02.4-.55.76-1.13 1.07-1.74.02-.04 0-.08-.04-.09-.57-.22-1.11-.48-1.64-.78-.04-.02-.04-.08-.01-.11.11-.08.22-.17.33-.25.02-.02.05-.02.07-.01 3.44 1.57 7.15 1.57 10.55 0 .02-.01.05-.01.07.01.11.09.17.22.25.33.04.03.04.09-.01.11-.52.31-1.07.56-1.64.78-.04.01-.05.06-.04.09.31.61.68 1.19 1.07 1.74.01.02.04.03.07.02 1.72-.53 3.45-1.33 5.25-2.65.02-.01.03-.03.03-.05.44-4.53-.73-8.46-3.1-11.95-.01-.01-.02-.02-.04-.02zM8.52 14.91c-1.03 0-1.89-.95-1.89-2.12s.84-2.12 1.89-2.12c1.06 0 1.9.96 1.89 2.12 0 1.17-.84 2.12-1.89 2.12zm6.97 0c-1.03 0-1.89-.95-1.89-2.12s.84-2.12 1.89-2.12c1.06 0 1.9.96 1.89 2.12 0 1.17-.83 2.12-1.89 2.12z"/>
+
+                </svg>
+
+
+                دخول عبر ديسكورد
+
+            </a>
+
+
+            <!-- =========================
+                 REGISTER
+            ========================= -->
+
+            <p class="auth-footer">
+
+                ليس لديك حساب؟
+
+                <a href="/register">
+
+                    إنشاء حساب جديد
+
+                </a>
+
+            </p>
+
+
+            <!-- =========================
+                 SECURITY
+            ========================= -->
+
+            <div class="security">
+
+                <span class="security-dot"></span>
+
+                اتصال آمن ومحمي
+
+            </div>
+
+
+        </div>
+
+    </div>
+
+
+</body>
+
+</html>

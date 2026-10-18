@@ -1,0 +1,2757 @@
+
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <meta name="theme-color" content="#111111">
+
+    <title>لوحة التحكم - J1 Studio</title>
+
+    <link rel="stylesheet" href="/css/style.css">
+
+    <link
+        rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+    >
+
+<style>
+
+/* =========================================================
+   ROOT
+========================================================= */
+
+:root {
+
+    --black: #080808;
+    --black-2: #0d0d0d;
+    --black-3: #121212;
+
+    --white: #ffffff;
+    --white-soft: #f3f3f3;
+
+    --text: #eeeeee;
+    --text-soft: #cfcfcf;
+    --muted: #888888;
+
+    --gray: #a0a0a0;
+    --gray-dark: #555555;
+
+    --card: rgba(18,18,18,.88);
+    --card-2: rgba(25,25,25,.78);
+
+    --border: rgba(255,255,255,.08);
+    --border-soft: rgba(255,255,255,.055);
+
+    --white-border: rgba(255,255,255,.16);
+
+    --danger: #ef4444;
+    --warning: #f59e0b;
+
+    --shadow:
+        0 20px 60px rgba(0,0,0,.35);
+}
+
+
+/* =========================================================
+   GLOBAL
+========================================================= */
+
+* {
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+
+    margin: 0;
+
+    min-height: 100vh;
+
+    color: var(--text);
+
+    font-family:
+        system-ui,
+        -apple-system,
+        BlinkMacSystemFont,
+        "Segoe UI",
+        Tahoma,
+        Arial,
+        sans-serif;
+
+    background:
+
+        radial-gradient(
+            circle at 85% 0%,
+            rgba(255,255,255,.12),
+            transparent 30%
+        ),
+
+        radial-gradient(
+            circle at 5% 85%,
+            rgba(255,255,255,.055),
+            transparent 30%
+        ),
+
+        linear-gradient(
+            145deg,
+            #050505,
+            #101010 50%,
+            #070707
+        );
+
+    background-attachment: fixed;
+}
+
+
+/* شبكة خلفية بسيطة */
+
+body::before {
+
+    content: "";
+
+    position: fixed;
+
+    inset: 0;
+
+    pointer-events: none;
+
+    background-image:
+
+        linear-gradient(
+            rgba(255,255,255,.018) 1px,
+            transparent 1px
+        ),
+
+        linear-gradient(
+            90deg,
+            rgba(255,255,255,.018) 1px,
+            transparent 1px
+        );
+
+    background-size: 45px 45px;
+
+    mask-image:
+        linear-gradient(
+            to bottom,
+            black,
+            transparent 85%
+        );
+
+    z-index: -1;
+}
+
+
+.container {
+
+    width:
+        min(
+            1180px,
+            calc(100% - 32px)
+        );
+
+    margin: auto;
+}
+
+
+/* =========================================================
+   NAVBAR
+========================================================= */
+
+.navbar {
+
+    position: sticky;
+
+    top: 0;
+
+    z-index: 100;
+
+    border-bottom:
+        1px solid var(--border);
+
+    background:
+        rgba(7,7,7,.82);
+
+    backdrop-filter:
+        blur(22px);
+
+    -webkit-backdrop-filter:
+        blur(22px);
+}
+
+
+.navbar .container {
+
+    min-height: 76px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: space-between;
+
+    gap: 20px;
+}
+
+
+/* =========================================================
+   LOGO
+========================================================= */
+
+.logo {
+
+    display: inline-flex;
+
+    align-items: center;
+
+    gap: 10px;
+
+    color: #fff !important;
+
+    text-decoration: none;
+
+    font-size: 19px;
+
+    font-weight: 900;
+
+    letter-spacing: -.4px;
+
+    white-space: nowrap;
+}
+
+
+.logo-mark {
+
+    width: 39px;
+    height: 39px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    border-radius: 12px;
+
+    color: #111;
+
+    font-size: 17px;
+
+    background:
+        linear-gradient(
+            145deg,
+            #ffffff,
+            #bdbdbd
+        );
+
+    box-shadow:
+        0 8px 25px rgba(255,255,255,.08);
+}
+
+
+.logo-text span {
+
+    color: #bdbdbd;
+}
+
+
+/* =========================================================
+   NAV MENU
+========================================================= */
+
+.nav-menu {
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: flex-end;
+
+    gap: 9px !important;
+}
+
+
+/* =========================================================
+   USER
+========================================================= */
+
+.user-info {
+
+    min-height: 44px;
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 9px;
+
+    padding:
+        5px 11px 5px 7px;
+
+    border-radius: 13px;
+
+    background:
+        rgba(255,255,255,.035);
+
+    border:
+        1px solid var(--border);
+
+    color: #e7e7e7;
+
+    font-size: 14px;
+
+    font-weight: 700;
+}
+
+
+.avatar {
+
+    width: 33px !important;
+    height: 33px !important;
+
+    object-fit: cover;
+
+    border-radius: 50%;
+
+    border:
+        2px solid rgba(255,255,255,.35);
+
+    box-shadow:
+        0 0 0 3px rgba(255,255,255,.035);
+}
+
+
+/* =========================================================
+   COINS
+========================================================= */
+
+.coins-badge {
+
+    min-height: 44px;
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 8px;
+
+    padding:
+        0 13px;
+
+    border-radius: 13px;
+
+    color: #eeeeee;
+
+    background:
+        rgba(255,255,255,.055);
+
+    border:
+        1px solid rgba(255,255,255,.10);
+
+    font-size: 14px;
+
+    font-weight: 800;
+}
+
+
+.coins-badge i {
+
+    color: #cfcfcf;
+
+    font-size: 14px;
+}
+
+
+/* =========================================================
+   BUTTONS
+========================================================= */
+
+.btn {
+
+    min-height: 43px;
+
+    border-radius: 11px !important;
+
+    border:
+        1px solid transparent;
+
+    padding:
+        9px 14px !important;
+
+    display: inline-flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    gap: 7px;
+
+    text-decoration: none !important;
+
+    font-size: 13px;
+
+    font-weight: 800;
+
+    cursor: pointer;
+
+    transition:
+        transform .2s ease,
+        box-shadow .2s ease,
+        background .2s ease,
+        border-color .2s ease,
+        filter .2s ease;
+}
+
+
+.btn:hover {
+
+    transform:
+        translateY(-2px);
+
+    filter:
+        brightness(1.08);
+}
+
+
+.btn:active {
+
+    transform:
+        translateY(0)
+        scale(.98);
+}
+
+
+/* زر أساسي أبيض */
+
+.btn-primary,
+.btn-success {
+
+    color: #111 !important;
+
+    background:
+        linear-gradient(
+            135deg,
+            #ffffff,
+            #cfcfcf
+        ) !important;
+
+    border-color:
+        rgba(255,255,255,.35) !important;
+
+    box-shadow:
+        0 9px 28px rgba(255,255,255,.08);
+}
+
+
+/* زر Outline */
+
+.btn-outline {
+
+    color: #dedede !important;
+
+    background:
+        rgba(255,255,255,.025) !important;
+
+    border-color:
+        rgba(255,255,255,.10) !important;
+}
+
+
+.btn-outline:hover {
+
+    color: #ffffff !important;
+
+    background:
+        rgba(255,255,255,.075) !important;
+
+    border-color:
+        rgba(255,255,255,.20) !important;
+
+    box-shadow:
+        0 8px 25px rgba(255,255,255,.045);
+}
+
+
+/* Warning */
+
+.btn-warning {
+
+    color: #fbbf24 !important;
+
+    background:
+        rgba(245,158,11,.08) !important;
+
+    border-color:
+        rgba(245,158,11,.20) !important;
+}
+
+
+/* Info */
+
+.btn-info {
+
+    color: #d5d5d5 !important;
+
+    background:
+        rgba(255,255,255,.055) !important;
+
+    border-color:
+        rgba(255,255,255,.12) !important;
+}
+
+
+/* Danger */
+
+.btn-danger {
+
+    color: #f87171 !important;
+
+    background:
+        rgba(239,68,68,.075) !important;
+
+    border-color:
+        rgba(239,68,68,.18) !important;
+}
+
+
+.btn-sm {
+
+    min-height: 38px;
+
+    padding:
+        8px 12px !important;
+
+    font-size: 12px;
+}
+
+
+/* =========================================================
+   DASHBOARD
+========================================================= */
+
+.dashboard {
+
+    padding:
+        38px 0 70px;
+}
+
+
+/* =========================================================
+   WELCOME
+========================================================= */
+
+.welcome {
+
+    position: relative;
+
+    overflow: hidden;
+
+    margin-bottom: 22px;
+
+    padding: 25px;
+
+    border:
+        1px solid var(--border);
+
+    border-radius: 20px;
+
+    background:
+
+        linear-gradient(
+            135deg,
+            rgba(255,255,255,.075),
+            rgba(16,16,16,.90) 48%,
+            rgba(9,9,9,.96)
+        );
+
+    box-shadow:
+        var(--shadow);
+}
+
+
+.welcome::before {
+
+    content: "";
+
+    position: absolute;
+
+    width: 190px;
+    height: 190px;
+
+    top: -90px;
+    left: -60px;
+
+    border-radius: 50%;
+
+    background:
+        rgba(255,255,255,.045);
+
+    filter:
+        blur(15px);
+}
+
+
+.welcome-content {
+
+    position: relative;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: space-between;
+
+    gap: 20px;
+}
+
+
+.welcome h1 {
+
+    margin:
+        0 0 7px;
+
+    font-size:
+        clamp(
+            23px,
+            3vw,
+            32px
+        );
+
+    font-weight: 900;
+
+    letter-spacing:
+        -.8px;
+}
+
+
+.welcome h1 span {
+
+    color: #bdbdbd;
+}
+
+
+.welcome p {
+
+    margin: 0;
+
+    color:
+        var(--muted);
+
+    font-size: 14px;
+}
+
+
+/* أيقونة الترحيب */
+
+.welcome-icon {
+
+    width: 65px;
+    height: 65px;
+
+    flex:
+        0 0 65px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    border-radius: 18px;
+
+    font-size: 27px;
+
+    color: #eeeeee;
+
+    background:
+        rgba(255,255,255,.055);
+
+    border:
+        1px solid rgba(255,255,255,.12);
+
+    box-shadow:
+        inset 0 0 25px
+        rgba(255,255,255,.025);
+}
+
+
+/* =========================================================
+   STATS
+========================================================= */
+
+.stats-grid {
+
+    display: grid !important;
+
+    grid-template-columns:
+        repeat(3,1fr);
+
+    gap: 15px !important;
+}
+
+
+.stat-card {
+
+    position: relative;
+
+    overflow: hidden;
+
+    min-height: 128px;
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 16px;
+
+    padding: 20px;
+
+    background:
+
+        linear-gradient(
+            145deg,
+            rgba(25,25,25,.92),
+            rgba(10,10,10,.95)
+        ) !important;
+
+    border:
+        1px solid var(--border) !important;
+
+    border-radius:
+        17px !important;
+
+    box-shadow:
+        0 12px 40px
+        rgba(0,0,0,.22);
+
+    backdrop-filter:
+        blur(15px);
+
+    transition:
+        transform .25s ease,
+        border-color .25s ease,
+        box-shadow .25s ease;
+}
+
+
+.stat-card::after {
+
+    content: "";
+
+    position: absolute;
+
+    width: 90px;
+    height: 90px;
+
+    top: -45px;
+    left: -25px;
+
+    border-radius: 50%;
+
+    background:
+        rgba(255,255,255,.035);
+
+    filter:
+        blur(5px);
+}
+
+
+.stat-card:hover {
+
+    transform:
+        translateY(-4px);
+
+    border-color:
+        rgba(255,255,255,.17) !important;
+
+    box-shadow:
+        0 20px 50px
+        rgba(0,0,0,.30);
+}
+
+
+.stat-icon {
+
+    width: 55px;
+    height: 55px;
+
+    flex:
+        0 0 55px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    border-radius: 15px;
+
+    background:
+        rgba(255,255,255,.055) !important;
+
+    border:
+        1px solid rgba(255,255,255,.10);
+
+    color: #d7d7d7;
+
+    font-size: 21px;
+}
+
+
+.stat-content {
+
+    position: relative;
+
+    z-index: 1;
+}
+
+
+.stat-content h3 {
+
+    margin:
+        0 0 5px;
+
+    font-size: 24px;
+
+    line-height: 1;
+
+    font-weight: 900;
+}
+
+
+.stat-content p {
+
+    margin: 0;
+
+    color:
+        var(--muted);
+
+    font-size: 13px;
+
+    font-weight: 700;
+}
+
+
+/* =========================================================
+   SECTION HEADER
+========================================================= */
+
+.section-header {
+
+    margin-top: 35px;
+
+    margin-bottom: 18px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: space-between;
+
+    gap: 15px;
+}
+
+
+.section-title {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 12px;
+}
+
+
+.section-title-icon {
+
+    width: 41px;
+    height: 41px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    border-radius: 12px;
+
+    color: #dedede;
+
+    background:
+        rgba(255,255,255,.055);
+
+    border:
+        1px solid rgba(255,255,255,.10);
+}
+
+
+.section-header h2 {
+    margin: 0;
+
+    font-size: 21px;
+
+    font-weight: 900;
+
+    letter-spacing: -.4px;
+
+    color: #f5f5f5;
+
+    text-shadow:
+        0 1px 8px rgba(255,255,255,.08);
+}
+
+
+.section-header p {
+
+    margin:
+        3px 0 0;
+
+    color:
+        var(--muted);
+
+    font-size: 12px;
+}
+
+
+/* =========================================================
+   SERVERS
+========================================================= */
+
+.servers-grid {
+
+    display: grid !important;
+
+    grid-template-columns:
+        repeat(2,minmax(0,1fr));
+
+    gap: 16px !important;
+}
+
+
+.server-card {
+
+    position: relative;
+
+    overflow: hidden;
+
+    padding: 20px;
+
+    background:
+
+        linear-gradient(
+            145deg,
+            rgba(25,25,25,.94),
+            rgba(8,8,8,.97)
+        ) !important;
+
+    border:
+        1px solid
+        rgba(255,255,255,.07)
+        !important;
+
+    border-radius:
+        18px !important;
+
+    box-shadow:
+        0 14px 45px
+        rgba(0,0,0,.28);
+
+    transition:
+        transform .25s ease,
+        border-color .25s ease,
+        box-shadow .25s ease;
+}
+
+
+/* الخط العلوي */
+
+.server-card::before {
+
+    content: "";
+
+    position: absolute;
+
+    top: 0;
+
+    right: 10%;
+    left: 10%;
+
+    height: 2px;
+
+    background:
+        linear-gradient(
+            90deg,
+            transparent,
+            #ffffff,
+            transparent
+        );
+
+    opacity: .35;
+}
+
+
+.server-card::after {
+
+    content: "";
+
+    position: absolute;
+
+    width: 150px;
+    height: 150px;
+
+    top: -100px;
+    left: -70px;
+
+    border-radius: 50%;
+
+    background:
+        rgba(255,255,255,.025);
+
+    filter:
+        blur(15px);
+
+    pointer-events:
+        none;
+}
+
+
+.server-card:hover {
+
+    transform:
+        translateY(-4px);
+
+    border-color:
+        rgba(255,255,255,.17) !important;
+
+    box-shadow:
+        0 22px 60px
+        rgba(0,0,0,.38);
+}
+
+
+/* =========================================================
+   SERVER HEADER
+========================================================= */
+
+.server-header {
+
+    position: relative;
+
+    z-index: 2;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: space-between;
+
+    gap: 12px;
+
+    margin-bottom: 18px;
+}
+
+
+.server-header h3 {
+
+    min-width: 0;
+
+    margin: 0;
+
+    overflow: hidden;
+
+    text-overflow: ellipsis;
+
+    white-space: nowrap;
+
+    font-size: 16px;
+
+    font-weight: 900;
+}
+
+
+.server-header h3 i {
+
+    margin-left: 5px;
+
+    color: #d5d5d5 !important;
+}
+
+
+/* =========================================================
+   SERVER STATUS
+========================================================= */
+
+.server-status {
+
+    flex-shrink: 0;
+
+    display: inline-flex;
+
+    align-items: center;
+
+    gap: 6px;
+
+    border-radius:
+        999px !important;
+
+    padding:
+        6px 10px !important;
+
+    font-size: 11px;
+
+    font-weight: 800;
+
+    white-space: nowrap;
+
+    border:
+        1px solid transparent;
+}
+
+
+.server-status i {
+
+    font-size: 9px;
+}
+
+
+/* Running */
+
+.status-running {
+
+    color: #d7d7d7 !important;
+
+    background:
+        rgba(255,255,255,.075) !important;
+
+    border-color:
+        rgba(255,255,255,.14);
+}
+
+
+/* Starting */
+
+.status-starting {
+
+    color: #facc15 !important;
+
+    background:
+        rgba(234,179,8,.09) !important;
+
+    border-color:
+        rgba(234,179,8,.16);
+}
+
+
+/* Stopping */
+
+.status-stopping {
+
+    color: #fb923c !important;
+
+    background:
+        rgba(249,115,22,.09) !important;
+
+    border-color:
+        rgba(249,115,22,.16);
+}
+
+
+/* Error */
+
+.status-error {
+
+    color: #f87171 !important;
+
+    background:
+        rgba(239,68,68,.09) !important;
+
+    border-color:
+        rgba(239,68,68,.16);
+}
+
+
+/* Stopped */
+
+.status-stopped {
+
+    color: #999999 !important;
+
+    background:
+        rgba(148,163,184,.07) !important;
+
+    border-color:
+        rgba(148,163,184,.14);
+}
+
+
+/* =========================================================
+   SERVER INFO
+========================================================= */
+
+.server-info {
+
+    position: relative;
+
+    z-index: 2;
+
+    display: grid;
+
+    grid-template-columns:
+        1fr 1fr;
+
+    gap: 9px;
+}
+
+
+.info-row {
+
+    min-width: 0;
+
+    padding: 12px;
+
+    border-radius: 12px;
+
+    background:
+        rgba(255,255,255,.025);
+
+    border:
+        1px solid
+        rgba(255,255,255,.05);
+}
+
+
+.info-label {
+
+    display: block;
+
+    margin-bottom: 5px;
+
+    color:
+        var(--muted);
+
+    font-size: 11px;
+
+    font-weight: 700;
+}
+
+
+.info-value {
+
+    display: block;
+
+    overflow: hidden;
+
+    text-overflow: ellipsis;
+
+    white-space: nowrap;
+
+    color:
+        #e9e9e9;
+
+    font-size: 13px;
+
+    font-weight: 800;
+}
+
+
+/* =========================================================
+   SERVER ACTIONS
+========================================================= */
+
+.server-actions {
+
+    position: relative;
+
+    z-index: 2;
+
+    display: flex;
+
+    flex-wrap: wrap;
+
+    gap: 8px;
+
+    margin-top: 13px;
+}
+
+
+.server-actions .btn {
+
+    flex: 1;
+
+    min-width: 90px;
+}
+
+
+/* =========================================================
+   SERVER LINK
+========================================================= */
+
+.server-link {
+
+    position: relative;
+
+    z-index: 2;
+
+    margin-top: 12px;
+
+    padding:
+        11px 13px;
+
+    border-radius: 11px;
+
+    background:
+        rgba(255,255,255,.035);
+
+    border:
+        1px solid
+        rgba(255,255,255,.07);
+}
+
+
+.server-link a {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 7px;
+
+    overflow: hidden;
+
+    text-overflow: ellipsis;
+
+    white-space: nowrap;
+
+    color:
+        #d6d6d6 !important;
+
+    text-decoration: none;
+
+    font-size: 12px;
+
+    font-weight: 700;
+}
+
+
+.server-link a:hover {
+
+    color:
+        #ffffff !important;
+}
+
+
+/* =========================================================
+   EMPTY STATE
+========================================================= */
+
+.empty-state {
+
+    margin-top: 20px;
+
+    padding:
+        55px 20px;
+
+    text-align: center;
+
+    border:
+        1px dashed
+        rgba(255,255,255,.15)
+        !important;
+
+    border-radius:
+        19px !important;
+
+    background:
+
+        linear-gradient(
+            145deg,
+            rgba(25,25,25,.72),
+            rgba(8,8,8,.82)
+        ) !important;
+}
+
+
+.empty-icon {
+
+    width: 65px;
+    height: 65px;
+
+    margin:
+        0 auto 15px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    border-radius: 18px;
+
+    background:
+        rgba(255,255,255,.055);
+
+    border:
+        1px solid
+        rgba(255,255,255,.10);
+
+    color:
+        #d8d8d8;
+
+    font-size: 25px;
+}
+
+
+.empty-state h3 {
+
+    margin:
+        0 0 7px;
+
+    font-size: 18px;
+
+    font-weight: 900;
+}
+
+
+.empty-state p {
+
+    margin:
+        0 0 20px;
+
+    color:
+        var(--muted);
+
+    font-size: 13px;
+}
+
+
+/* =========================================================
+   LOADING
+========================================================= */
+
+.server-card.loading {
+
+    pointer-events:
+        none;
+
+    opacity:
+        .65;
+}
+
+
+.server-card.loading::before {
+
+    animation:
+        loadingLine 1s infinite;
+}
+
+
+@keyframes loadingLine {
+
+    0% {
+
+        opacity: .15;
+
+        transform:
+            scaleX(.4);
+    }
+
+    50% {
+
+        opacity: 1;
+
+        transform:
+            scaleX(1);
+    }
+
+    100% {
+
+        opacity: .15;
+
+        transform:
+            scaleX(.4);
+    }
+}
+
+
+/* =========================================================
+   MOBILE
+========================================================= */
+
+@media (max-width:900px) {
+
+    .navbar .container {
+
+        min-height: 70px;
+    }
+
+    .nav-menu {
+
+        gap: 7px !important;
+    }
+
+    .user-info span {
+
+        display: none;
+    }
+
+    .stats-grid {
+
+        grid-template-columns:
+            1fr 1fr;
+    }
+
+    .stats-grid .stat-card:last-child {
+
+        grid-column:
+            span 2;
+    }
+
+    .servers-grid {
+
+        grid-template-columns:
+            1fr;
+    }
+}
+
+
+@media (max-width:650px) {
+
+    .container {
+
+        width:
+            min(
+                100% - 22px,
+                1180px
+            );
+    }
+
+    .navbar .container {
+
+        min-height: 64px;
+    }
+
+    .logo-text {
+
+        display: none;
+    }
+
+    .logo-mark {
+
+        width: 38px;
+        height: 38px;
+    }
+
+    .nav-menu {
+
+        flex-wrap: wrap;
+    }
+
+    .coins-badge {
+
+        min-height: 39px;
+
+        padding:
+            0 10px;
+    }
+
+    .nav-menu .btn {
+
+        min-height: 39px;
+
+        padding:
+            7px 10px !important;
+    }
+
+    .nav-menu .btn i {
+
+        margin: 0;
+    }
+
+    .nav-menu .btn:not(:has(i)) {
+
+        display: none;
+    }
+
+    .dashboard {
+
+        padding-top: 22px;
+    }
+
+    .welcome {
+
+        padding: 20px;
+
+        border-radius:
+            17px;
+    }
+
+    .welcome-content {
+
+        align-items:
+            flex-start;
+    }
+
+    .welcome-icon {
+
+        width: 52px;
+        height: 52px;
+
+        flex-basis:
+            52px;
+
+        font-size: 22px;
+    }
+
+    .welcome h1 {
+
+        font-size: 22px;
+    }
+
+    .stats-grid {
+
+        grid-template-columns:
+            1fr;
+
+        gap:
+            11px !important;
+    }
+
+    .stats-grid .stat-card:last-child {
+
+        grid-column:
+            auto;
+    }
+
+    .stat-card {
+
+        min-height:
+            100px;
+
+        padding:
+            16px;
+    }
+
+    .section-header {
+
+        align-items:
+            stretch;
+
+        flex-direction:
+            column;
+
+        margin-top:
+            27px;
+    }
+
+    .section-header .btn {
+
+        width:
+            100%;
+    }
+
+    .section-title {
+
+        align-items:
+            center;
+    }
+
+    .server-card {
+
+        padding:
+            16px;
+
+        border-radius:
+            16px !important;
+    }
+
+    .server-info {
+
+        grid-template-columns:
+            1fr;
+    }
+
+    .server-actions .btn {
+
+        flex:
+            1 1 calc(50% - 8px);
+
+        min-width:
+            0;
+    }
+}
+
+
+@media (max-width:400px) {
+
+    .coins-badge {
+
+        padding:
+            0 9px;
+    }
+
+    .server-actions .btn {
+
+        flex-basis:
+            100%;
+    }
+
+    .user-info {
+
+        padding-right:
+            5px;
+
+        padding-left:
+            5px;
+    }
+}
+
+
+/* =========================================================
+   REDUCED MOTION
+========================================================= */
+
+@media (prefers-reduced-motion:reduce) {
+
+    *,
+    *::before,
+    *::after {
+
+        scroll-behavior:
+            auto !important;
+
+        transition:
+            none !important;
+
+        animation:
+            none !important;
+    }
+}
+
+</style>
+
+</head>
+
+
+<body>
+
+
+<nav class="navbar">
+
+    <div class="container">
+
+
+        <a
+            href="/dashboard"
+            class="logo"
+        >
+
+            <span class="logo-mark">
+
+                <i class="fa-solid fa-cube"></i>
+
+            </span>
+
+
+            <span class="logo-text">
+
+                J1
+                <span>Studio</span>
+
+            </span>
+
+        </a>
+
+
+        <% if (typeof user !== 'undefined' && user) { %>
+
+
+        <div class="nav-menu">
+
+
+            <div class="user-info">
+
+
+                <% if (user.discordId && user.discordAvatar) { %>
+
+                    <img
+                        src="https://cdn.discordapp.com/avatars/<%= user.discordId %>/<%= user.discordAvatar %>.png"
+                        class="avatar"
+                        alt="Avatar"
+                        onerror="this.src='https://ui-avatars.com/api/?name=' + encodeURIComponent('<%= user.username %>') + '&background=333333&color=fff'"
+                    >
+
+                <% } else { %>
+
+                    <img
+                        src="https://ui-avatars.com/api/?name=<%= encodeURIComponent(user.username) %>&background=333333&color=fff"
+                        class="avatar"
+                        alt="Avatar"
+                    >
+
+                <% } %>
+
+
+                <span>
+                    <%= user.username %>
+                </span>
+
+
+            </div>
+
+
+            <div class="coins-badge">
+
+                <i class="fa-solid fa-coins"></i>
+
+                <%= user.coins %>
+
+            </div>
+
+<a
+    href="https://discord.gg/sPEAuqXyF"
+    class="btn btn-outline"
+    target="_blank"
+    rel="noopener noreferrer"
+>
+
+    <i class="fa-brands fa-discord"></i>
+
+    الديسكورد
+
+</a>
+
+
+<a
+    href="/api-keys"
+    class="btn btn-outline"
+>
+
+    <i class="fa-solid fa-key"></i>
+
+    API Keys
+
+</a>
+
+
+            <% if (user.isOwner) { %>
+
+
+                <a
+                    href="/admin"
+                    class="btn btn-warning"
+                >
+
+                    <i class="fa-solid fa-crown"></i>
+
+                    لوحة المالك
+
+                </a>
+
+
+            <% } %>
+
+
+            <a
+                href="/logout"
+                class="btn btn-outline"
+            >
+
+                <i class="fa-solid fa-right-from-bracket"></i>
+
+                خروج
+
+            </a>
+
+
+        </div>
+
+
+        <% } %>
+
+
+    </div>
+
+</nav>
+
+
+<main class="dashboard">
+
+
+<div class="container">
+
+
+    <section class="welcome">
+
+
+        <div class="welcome-content">
+
+
+            <div>
+
+
+                <h1>
+
+                    مرحباً بك في
+
+                    <span>
+                        J1 Studio
+                    </span>
+
+                </h1>
+
+
+                <p>
+                    تحكم في سيرفراتك واستضافتك من مكان واحد.
+                </p>
+
+
+            </div>
+
+
+            <div class="welcome-icon">
+
+                <i class="fa-solid fa-server"></i>
+
+            </div>
+
+
+        </div>
+
+
+    </section>
+
+
+    <section class="stats-grid">
+
+
+        <div class="stat-card">
+
+
+            <div class="stat-icon">
+
+                <i class="fa-solid fa-server"></i>
+
+            </div>
+
+
+            <div class="stat-content">
+
+
+                <h3>
+
+                    <%= stats.totalServers %>
+
+                    <span
+                        style="
+                            color:#777;
+                            font-size:16px;
+                        "
+                    >
+                        / <%= stats.maxServers %>
+                    </span>
+
+                </h3>
+
+
+                <p>
+                    السيرفرات
+                </p>
+
+
+            </div>
+
+
+        </div>
+
+
+        <div class="stat-card">
+
+
+            <div class="stat-icon">
+
+                <i class="fa-solid fa-circle-play"></i>
+
+            </div>
+
+
+            <div class="stat-content">
+
+
+                <h3>
+                    <%= stats.runningServers %>
+                </h3>
+
+
+                <p>
+                    قيد التشغيل
+                </p>
+
+
+            </div>
+
+
+        </div>
+
+
+        <div class="stat-card">
+
+
+            <div class="stat-icon">
+
+                <i class="fa-solid fa-coins"></i>
+
+            </div>
+
+
+            <div class="stat-content">
+
+
+                <h3>
+                    <%= user.coins %>
+                </h3>
+
+
+                <p>
+                    عملاتك
+                </p>
+
+
+            </div>
+
+
+        </div>
+
+
+    </section>
+
+
+    <div class="section-header">
+
+
+        <div class="section-title">
+
+
+            <div class="section-title-icon">
+
+                <i class="fa-solid fa-server"></i>
+
+            </div>
+
+
+            <div>
+
+                <h2>
+                    سيرفراتي
+                </h2>
+
+
+                <p>
+                    إدارة وتشغيل سيرفراتك بسهولة
+                </p>
+
+
+            </div>
+
+
+        </div>
+
+
+        <a
+            href="/servers/create"
+            class="btn btn-primary"
+        >
+
+            <i class="fa-solid fa-plus"></i>
+
+            شراء استضافة
+
+        </a>
+
+
+    </div>
+
+
+    <% if (!servers || servers.length === 0) { %>
+
+
+        <div class="empty-state">
+
+
+            <div class="empty-icon">
+
+                <i class="fa-solid fa-server"></i>
+
+            </div>
+
+
+            <h3>
+                لا توجد سيرفرات
+            </h3>
+
+
+            <p>
+                ابدأ بإنشاء أول سيرفر لك واستمتع بالاستضافة.
+            </p>
+
+
+            <a
+                href="/servers/create"
+                class="btn btn-primary"
+            >
+
+                <i class="fa-solid fa-server"></i>
+
+                شراء استضافة
+
+            </a>
+
+
+        </div>
+
+
+    <% } else { %>
+
+
+        <div class="servers-grid">
+
+
+            <% servers.forEach(function(server) { %>
+
+
+                <div
+                    class="server-card"
+                    data-server-id="<%= server._id %>"
+                >
+
+
+                    <div class="server-header">
+
+
+                        <h3>
+
+                            <i
+                                class="fa-solid fa-server"
+                            ></i>
+
+                            <%= server.name %>
+
+                        </h3>
+
+
+                        <span
+                            class="server-status status-<%= server.status %>"
+                        >
+
+
+                            <% if (server.status === 'running') { %>
+
+                                <i class="fa-solid fa-circle-check"></i>
+                                يعمل
+
+                            <% } else if (server.status === 'starting') { %>
+
+                                <i class="fa-solid fa-spinner fa-spin"></i>
+                                جاري التشغيل
+
+                            <% } else if (server.status === 'stopping') { %>
+
+                                <i class="fa-solid fa-spinner fa-spin"></i>
+                                جاري الإيقاف
+
+                            <% } else if (server.status === 'error') { %>
+
+                                <i class="fa-solid fa-circle-xmark"></i>
+                                خطأ
+
+                            <% } else { %>
+
+                                <i class="fa-solid fa-circle-stop"></i>
+                                متوقف
+
+                            <% } %>
+
+
+                        </span>
+
+
+                    </div>
+
+
+                    <div class="server-info">
+
+
+                        <div class="info-row">
+
+                            <span class="info-label">
+                                المنفذ
+                            </span>
+
+                            <span class="info-value">
+                                <%= server.port %>
+                            </span>
+
+                        </div>
+
+
+                        <div class="info-row">
+
+                            <span class="info-label">
+                                الملف الرئيسي
+                            </span>
+
+                            <span class="info-value">
+                                <%= server.mainFile %>
+                            </span>
+
+                        </div>
+
+
+                    </div>
+
+
+                    <div class="server-actions">
+
+
+                        <a
+                            href="/servers/<%= server._id %>"
+                            class="btn btn-sm btn-outline"
+                        >
+
+                            <i class="fa-solid fa-sliders"></i>
+
+                            إدارة
+
+                        </a>
+
+
+                        <% if (server.status === 'running') { %>
+
+
+                            <button
+                                type="button"
+                                class="btn btn-sm btn-warning server-action"
+                                data-action="stop"
+                                data-id="<%= server._id %>"
+                            >
+
+                                <i class="fa-solid fa-power-off"></i>
+
+                                إيقاف
+
+                            </button>
+
+
+                            <button
+                                type="button"
+                                class="btn btn-sm btn-info server-action"
+                                data-action="restart"
+                                data-id="<%= server._id %>"
+                            >
+
+                                <i class="fa-solid fa-arrows-rotate"></i>
+
+                                إعادة
+
+                            </button>
+
+
+                        <% } else { %>
+
+
+                            <button
+                                type="button"
+                                class="btn btn-sm btn-success server-action"
+                                data-action="start"
+                                data-id="<%= server._id %>"
+                            >
+
+                                <i class="fa-solid fa-play"></i>
+
+                                تشغيل
+
+                            </button>
+
+
+                        <% } %>
+
+
+                        <button
+                            type="button"
+                            class="btn btn-sm btn-danger server-action"
+                            data-action="delete"
+                            data-id="<%= server._id %>"
+                        >
+
+                            <i class="fa-solid fa-trash-can"></i>
+
+                            حذف
+
+                        </button>
+
+
+                    </div>
+
+
+                    <% if (server.status === 'running') { %>
+
+
+                        <div class="server-link">
+
+
+                            <a
+                                href="http://localhost:<%= server.port %>"
+                                target="_blank"
+                                rel="noopener noreferrer"
+                            >
+
+                                <i class="fa-solid fa-arrow-up-right-from-square"></i>
+
+                                http://localhost:<%= server.port %>
+
+                            </a>
+
+
+                        </div>
+
+
+                    <% } %>
+
+
+                </div>
+
+
+            <% }); %>
+
+
+        </div>
+
+
+    <% } %>
+
+
+</div>
+
+</main>
+
+
+<script src="/socket.io/socket.io.js"></script>
+
+
+<script>
+
+var socket = io();
+
+
+/* =========================================================
+   SERVER STATUS
+========================================================= */
+
+socket.on('serverStatus', function(data) {
+
+    var card =
+        document.querySelector(
+            '[data-server-id="' + data.id + '"]'
+        );
+
+    if (!card) return;
+
+
+    var statusEl =
+        card.querySelector('.server-status');
+
+
+    if (!statusEl) return;
+
+
+    statusEl.className =
+        'server-status status-' +
+        data.status;
+
+
+    if (data.status === 'running') {
+
+        statusEl.innerHTML =
+            '<i class="fa-solid fa-circle-check"></i> يعمل';
+
+    } else if (data.status === 'starting') {
+
+        statusEl.innerHTML =
+            '<i class="fa-solid fa-spinner fa-spin"></i> جاري التشغيل';
+
+    } else if (data.status === 'stopping') {
+
+        statusEl.innerHTML =
+            '<i class="fa-solid fa-spinner fa-spin"></i> جاري الإيقاف';
+
+    } else if (data.status === 'error') {
+
+        statusEl.innerHTML =
+            '<i class="fa-solid fa-circle-xmark"></i> خطأ';
+
+    } else {
+
+        statusEl.innerHTML =
+            '<i class="fa-solid fa-circle-stop"></i> متوقف';
+
+    }
+
+
+    var actionsDiv =
+        card.querySelector('.server-actions');
+
+
+    if (!actionsDiv) return;
+
+
+    var serverId =
+        data.id;
+
+
+    var portElement =
+        card.querySelector(
+            '.info-row:first-child .info-value'
+        );
+
+
+    var port =
+        portElement
+            ? portElement.textContent.trim()
+            : '';
+
+
+    var actionsHtml =
+
+        '<a href="/servers/' +
+        serverId +
+        '" class="btn btn-sm btn-outline">' +
+
+        '<i class="fa-solid fa-sliders"></i> إدارة' +
+
+        '</a>';
+
+
+    if (data.status === 'running') {
+
+
+        actionsHtml +=
+
+            '<button type="button" ' +
+            'class="btn btn-sm btn-warning server-action" ' +
+            'data-action="stop" ' +
+            'data-id="' +
+            serverId +
+            '">' +
+
+            '<i class="fa-solid fa-power-off"></i> إيقاف' +
+
+            '</button>';
+
+
+        actionsHtml +=
+
+            '<button type="button" ' +
+            'class="btn btn-sm btn-info server-action" ' +
+            'data-action="restart" ' +
+            'data-id="' +
+            serverId +
+            '">' +
+
+            '<i class="fa-solid fa-arrows-rotate"></i> إعادة' +
+
+            '</button>';
+
+
+        var runningLink =
+            card.querySelector('.server-link');
+
+
+        if (!runningLink) {
+
+            runningLink =
+                document.createElement('div');
+
+            runningLink.className =
+                'server-link';
+
+            card.appendChild(
+                runningLink
+            );
+
+        }
+
+
+        runningLink.innerHTML =
+
+            '<a href="http://localhost:' +
+            port +
+            '" target="_blank" rel="noopener noreferrer">' +
+
+            '<i class="fa-solid fa-arrow-up-right-from-square"></i> ' +
+
+            'http://localhost:' +
+            port +
+
+            '</a>';
+
+
+    } else {
+
+
+        actionsHtml +=
+
+            '<button type="button" ' +
+            'class="btn btn-sm btn-success server-action" ' +
+            'data-action="start" ' +
+            'data-id="' +
+            serverId +
+            '">' +
+
+            '<i class="fa-solid fa-play"></i> تشغيل' +
+
+            '</button>';
+
+
+        var stoppedLink =
+            card.querySelector('.server-link');
+
+
+        if (stoppedLink) {
+
+            stoppedLink.remove();
+
+        }
+
+    }
+
+
+    actionsHtml +=
+
+        '<button type="button" ' +
+        'class="btn btn-sm btn-danger server-action" ' +
+        'data-action="delete" ' +
+        'data-id="' +
+        serverId +
+        '">' +
+
+        '<i class="fa-solid fa-trash-can"></i> حذف' +
+
+        '</button>';
+
+
+    actionsDiv.innerHTML =
+        actionsHtml;
+
+
+    bindActionButtons();
+
+});
+
+
+/* =========================================================
+   SERVER ACTION
+========================================================= */
+
+function serverAction(id, action) {
+
+    if (
+        action === 'delete' &&
+        !confirm(
+            'هل أنت متأكد من حذف هذا السيرفر؟'
+        )
+    ) {
+        return;
+    }
+
+
+    var card =
+        document.querySelector(
+            '[data-server-id="' +
+            id +
+            '"]'
+        );
+
+
+    if (card) {
+
+        card.classList.add(
+            'loading'
+        );
+
+    }
+
+
+    fetch(
+        '/servers/' +
+        id +
+        '/' +
+        action,
+        {
+
+            method: 'POST',
+
+            headers: {
+                'Content-Type':
+                    'application/json'
+            }
+
+        }
+    )
+
+    .then(function(res) {
+
+        return res.json();
+
+    })
+
+    .then(function(data) {
+
+
+        if (data.success) {
+
+
+            if (action === 'delete') {
+
+
+                if (card) {
+
+                    card.remove();
+
+                }
+
+
+                setTimeout(
+                    function() {
+
+                        location.reload();
+
+                    },
+                    300
+                );
+
+            }
+
+
+        } else {
+
+
+            if (card) {
+
+                card.classList.remove(
+                    'loading'
+                );
+
+            }
+
+
+            alert(
+                data.error ||
+                'حدث خطأ'
+            );
+
+        }
+
+
+    })
+
+    .catch(function() {
+
+
+        if (card) {
+
+            card.classList.remove(
+                'loading'
+            );
+
+        }
+
+
+        alert(
+            'حدث خطأ في الاتصال'
+        );
+
+    });
+
+}
+
+
+/* =========================================================
+   BIND ACTION BUTTONS
+========================================================= */
+
+function bindActionButtons() {
+
+    document
+        .querySelectorAll(
+            '.server-action'
+        )
+        .forEach(
+            function(btn) {
+
+
+                btn.removeEventListener(
+                    'click',
+                    handleAction
+                );
+
+
+                btn.addEventListener(
+                    'click',
+                    handleAction
+                );
+
+            }
+        );
+
+}
+
+
+/* =========================================================
+   HANDLE ACTION
+========================================================= */
+
+function handleAction(e) {
+
+    e.preventDefault();
+
+
+    var btn =
+        e.currentTarget;
+
+
+    var id =
+        btn.getAttribute(
+            'data-id'
+        );
+
+
+    var action =
+        btn.getAttribute(
+            'data-action'
+        );
+
+
+    serverAction(
+        id,
+        action
+    );
+
+}
+
+
+/* =========================================================
+   INITIALIZE
+========================================================= */
+
+bindActionButtons();
+
+</script>
+
+
+</body>
+
+</html>

@@ -1,0 +1,1369 @@
+
+<!DOCTYPE html>
+
+<html lang="ar" dir="rtl">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>إنشاء سيرفر</title>
+
+    <link rel="stylesheet" href="/css/style.css">
+
+    <style>
+
+        /* =========================================================
+           CREATE SERVER - PREMIUM BLACK / WHITE / GRAY
+        ========================================================= */
+
+        :root {
+            --bg: #070707;
+            --bg-2: #0b0b0b;
+
+            --card: rgba(17, 17, 17, .94);
+            --card-2: #151515;
+
+            --white: #ffffff;
+            --text: #f5f5f5;
+            --text-soft: #d2d2d2;
+            --muted: #8c8c8c;
+            --muted-dark: #666666;
+
+            --border: rgba(255,255,255,.08);
+            --border-hover: rgba(255,255,255,.18);
+
+            --input: rgba(8,8,8,.86);
+            --input-hover: rgba(14,14,14,.96);
+
+            --danger: #ef4444;
+
+            --shadow:
+                0 30px 90px rgba(0,0,0,.55);
+        }
+
+
+        * {
+            box-sizing: border-box;
+        }
+
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+
+        body {
+
+            margin: 0;
+
+            min-height: 100vh;
+
+            background:
+                radial-gradient(
+                    circle at 15% 10%,
+                    rgba(255,255,255,.045),
+                    transparent 28%
+                ),
+
+                radial-gradient(
+                    circle at 85% 85%,
+                    rgba(255,255,255,.025),
+                    transparent 32%
+                ),
+
+                linear-gradient(
+                    135deg,
+                    #050505,
+                    #0b0b0b 50%,
+                    #060606
+                );
+
+            color: var(--text);
+
+            font-family:
+                'Cairo',
+                'Segoe UI',
+                Tahoma,
+                sans-serif;
+
+            overflow-x: hidden;
+        }
+
+
+        /* =========================================================
+           BACKGROUND GRID
+        ========================================================= */
+
+        body::before {
+
+            content: "";
+
+            position: fixed;
+
+            inset: 0;
+
+            pointer-events: none;
+
+            background-image:
+                linear-gradient(
+                    rgba(255,255,255,.018) 1px,
+                    transparent 1px
+                ),
+
+                linear-gradient(
+                    90deg,
+                    rgba(255,255,255,.018) 1px,
+                    transparent 1px
+                );
+
+            background-size: 45px 45px;
+
+            mask-image:
+                linear-gradient(
+                    to bottom,
+                    black,
+                    transparent 90%
+                );
+
+            z-index: 0;
+        }
+
+
+        /* =========================================================
+           SOFT AMBIENT LIGHT
+        ========================================================= */
+
+        body::after {
+
+            content: "";
+
+            position: fixed;
+
+            width: 420px;
+            height: 420px;
+
+            border-radius: 50%;
+
+            background:
+                rgba(255,255,255,.025);
+
+            filter: blur(110px);
+
+            top: -180px;
+            left: -170px;
+
+            pointer-events: none;
+
+            z-index: 0;
+        }
+
+
+        /* =========================================================
+           CONTAINER
+        ========================================================= */
+
+        .create-container {
+
+            width: 100%;
+
+            max-width: 650px;
+
+            margin: 55px auto;
+
+            padding: 0 18px;
+
+            position: relative;
+
+            z-index: 1;
+        }
+
+
+        /* =========================================================
+           HEADER
+        ========================================================= */
+
+        .page-header {
+
+            text-align: center;
+
+            margin-bottom: 24px;
+        }
+
+
+        .page-icon {
+
+            width: 70px;
+            height: 70px;
+
+            margin: 0 auto 15px;
+
+            display: flex;
+
+            align-items: center;
+            justify-content: center;
+
+            border-radius: 20px;
+
+            font-size: 30px;
+
+            background:
+                linear-gradient(
+                    145deg,
+                    rgba(255,255,255,.09),
+                    rgba(255,255,255,.025)
+                );
+
+            border:
+                1px solid
+                rgba(255,255,255,.11);
+
+            box-shadow:
+                0 0 40px rgba(255,255,255,.035),
+
+                inset 0 1px 0
+                rgba(255,255,255,.06);
+        }
+
+
+        .page-header h1 {
+
+            margin: 0;
+
+            font-size: 26px;
+
+            font-weight: 900;
+
+            color: #ffffff;
+
+            letter-spacing: -.5px;
+        }
+
+
+        .page-header p {
+
+            margin: 7px 0 0;
+
+            color: var(--muted);
+
+            font-size: 12px;
+        }
+
+
+        /* =========================================================
+           MAIN CARD
+        ========================================================= */
+
+        .create-card {
+
+            position: relative;
+
+            background:
+                linear-gradient(
+                    145deg,
+                    rgba(22,22,22,.96),
+                    rgba(9,9,9,.98)
+                );
+
+            padding: 30px;
+
+            border-radius: 20px;
+
+            border:
+                1px solid
+                var(--border);
+
+            box-shadow:
+                var(--shadow),
+
+                0 0 45px
+                rgba(255,255,255,.015),
+
+                inset 0 1px 0
+                rgba(255,255,255,.035);
+
+            backdrop-filter: blur(18px);
+
+            overflow: hidden;
+        }
+
+
+        .create-card::before {
+
+            content: "";
+
+            position: absolute;
+
+            top: 0;
+
+            left: 12%;
+            right: 12%;
+
+            height: 1px;
+
+            background:
+                linear-gradient(
+                    90deg,
+                    transparent,
+                    rgba(255,255,255,.30),
+                    transparent
+                );
+        }
+
+
+        .create-card::after {
+
+            content: "";
+
+            position: absolute;
+
+            width: 160px;
+            height: 160px;
+
+            border-radius: 50%;
+
+            background:
+                rgba(255,255,255,.018);
+
+            filter: blur(45px);
+
+            left: -80px;
+            bottom: -80px;
+
+            pointer-events: none;
+        }
+
+
+        /* =========================================================
+           FORM
+        ========================================================= */
+
+        .form-group {
+
+            margin-bottom: 21px;
+        }
+
+
+        .form-label {
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 8px;
+
+            margin-bottom: 8px;
+
+            color: var(--text-soft);
+
+            font-size: 12px;
+
+            font-weight: 700;
+        }
+
+
+        .label-icon {
+
+            width: 25px;
+            height: 25px;
+
+            display: flex;
+
+            align-items: center;
+            justify-content: center;
+
+            border-radius: 8px;
+
+            background:
+                rgba(255,255,255,.045);
+
+            border:
+                1px solid
+                rgba(255,255,255,.07);
+
+            font-size: 12px;
+
+            box-shadow:
+                inset 0 1px 0
+                rgba(255,255,255,.035);
+        }
+
+
+        input,
+        select {
+
+            width: 100%;
+
+            height: 48px;
+
+            padding: 0 14px;
+
+            background:
+                var(--input);
+
+            color: #f0f0f0;
+
+            border:
+                1px solid
+                rgba(255,255,255,.075);
+
+            border-radius: 11px;
+
+            outline: none;
+
+            font-family: inherit;
+
+            font-size: 12px;
+
+            transition:
+                border-color .2s ease,
+                box-shadow .2s ease,
+                background .2s ease,
+                transform .2s ease;
+        }
+
+
+        input::placeholder {
+
+            color: #5f5f5f;
+        }
+
+
+        input:hover,
+        select:hover {
+
+            background:
+                var(--input-hover);
+
+            border-color:
+                rgba(255,255,255,.14);
+        }
+
+
+        input:focus,
+        select:focus {
+
+            background:
+                #101010;
+
+            border-color:
+                rgba(255,255,255,.30);
+
+            box-shadow:
+                0 0 0 3px
+                rgba(255,255,255,.035),
+
+                0 0 25px
+                rgba(255,255,255,.025);
+        }
+
+
+        select {
+
+            cursor: pointer;
+
+            appearance: none;
+
+            padding-left: 42px;
+
+            background-image:
+                linear-gradient(
+                    45deg,
+                    transparent 50%,
+                    #777777 50%
+                ),
+
+                linear-gradient(
+                    135deg,
+                    #777777 50%,
+                    transparent 50%
+                );
+
+            background-position:
+                calc(100% - 20px) 20px,
+                calc(100% - 14px) 20px;
+
+            background-size:
+                6px 6px,
+                6px 6px;
+
+            background-repeat: no-repeat;
+        }
+
+
+        select option {
+
+            background: #111111;
+
+            color: #ffffff;
+        }
+
+
+        /* =========================================================
+           PLAN INFO
+        ========================================================= */
+
+        .plan-info {
+
+            margin-top: 8px;
+
+            padding: 18px;
+
+            border-radius: 14px;
+
+            background:
+                linear-gradient(
+                    145deg,
+                    rgba(255,255,255,.045),
+                    rgba(255,255,255,.018)
+                );
+
+            border:
+                1px solid
+                rgba(255,255,255,.08);
+
+            color: #bdbdbd;
+
+            line-height: 2;
+
+            text-align: center;
+
+            font-size: 12px;
+
+            min-height: 115px;
+
+            transition:
+                .25s ease;
+        }
+
+
+        .plan-info:hover {
+
+            border-color:
+                rgba(255,255,255,.15);
+
+            box-shadow:
+                0 15px 35px
+                rgba(0,0,0,.25);
+        }
+
+
+        .plan-name {
+
+            color: #ffffff;
+
+            font-size: 15px;
+
+            font-weight: 900;
+
+            margin-bottom: 4px;
+        }
+
+
+        .plan-stats {
+
+            display: grid;
+
+            grid-template-columns:
+                repeat(3, 1fr);
+
+            gap: 8px;
+
+            margin-top: 10px;
+        }
+
+
+        .plan-stat {
+
+            padding: 9px 5px;
+
+            border-radius: 9px;
+
+            background:
+                rgba(0,0,0,.28);
+
+            border:
+                1px solid
+                rgba(255,255,255,.045);
+        }
+
+
+        .plan-stat-label {
+
+            display: block;
+
+            color: #777777;
+
+            font-size: 9px;
+
+            margin-bottom: 2px;
+        }
+
+
+        .plan-stat-value {
+
+            display: block;
+
+            color: #eeeeee;
+
+            font-size: 11px;
+
+            font-weight: 800;
+        }
+
+
+        /* =========================================================
+           PRICE
+        ========================================================= */
+
+        .price-box {
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: space-between;
+
+            gap: 10px;
+
+            margin-top: 12px;
+
+            padding: 14px 16px;
+
+            border-radius: 11px;
+
+            background:
+                rgba(255,255,255,.035);
+
+            border:
+                1px solid
+                rgba(255,255,255,.08);
+
+            color: #bcbcbc;
+
+            font-size: 13px;
+
+            font-weight: 700;
+        }
+
+
+        .price-value {
+
+            color: #ffffff;
+
+            font-size: 17px;
+
+            font-weight: 900;
+        }
+
+
+        /* =========================================================
+           ERROR
+        ========================================================= */
+
+        .error-message {
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            gap: 8px;
+
+            margin-bottom: 18px;
+
+            padding: 11px 14px;
+
+            border-radius: 10px;
+
+            background:
+                rgba(239,68,68,.07);
+
+            border:
+                1px solid
+                rgba(239,68,68,.17);
+
+            color: #fca5a5;
+
+            font-size: 12px;
+
+            font-weight: 600;
+        }
+
+
+        /* =========================================================
+           CREATE BUTTON
+        ========================================================= */
+
+        .btn {
+
+            width: 100%;
+
+            height: 50px;
+
+            margin-top: 20px;
+
+            border:
+                1px solid
+                rgba(255,255,255,.14);
+
+            border-radius: 12px;
+
+            cursor: pointer;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #f2f2f2,
+                    #bdbdbd
+                );
+
+            color: #080808;
+
+            font-family: inherit;
+
+            font-size: 13px;
+
+            font-weight: 900;
+
+            box-shadow:
+                0 10px 30px
+                rgba(0,0,0,.35),
+
+                inset 0 1px 0
+                rgba(255,255,255,.55);
+
+            transition:
+                transform .2s ease,
+                box-shadow .2s ease,
+                filter .2s ease;
+        }
+
+
+        .btn:hover {
+
+            transform:
+                translateY(-2px);
+
+            filter:
+                brightness(1.08);
+
+            box-shadow:
+                0 15px 35px
+                rgba(0,0,0,.45),
+
+                0 0 25px
+                rgba(255,255,255,.06);
+        }
+
+
+        .btn:active {
+
+            transform:
+                translateY(0);
+        }
+
+
+        /* =========================================================
+           FOOTER
+        ========================================================= */
+
+        .form-footer {
+
+            display: flex;
+
+            justify-content: center;
+
+            align-items: center;
+
+            gap: 6px;
+
+            margin-top: 15px;
+
+            color: #666666;
+
+            font-size: 10px;
+        }
+
+
+        .secure-dot {
+
+            width: 6px;
+            height: 6px;
+
+            border-radius: 50%;
+
+            background: #cfcfcf;
+
+            box-shadow:
+                0 0 8px
+                rgba(255,255,255,.30);
+        }
+
+
+        /* =========================================================
+           MOBILE
+        ========================================================= */
+
+        @media (max-width: 600px) {
+
+            .create-container {
+
+                margin:
+                    25px auto;
+
+                padding:
+                    0 12px;
+            }
+
+
+            .create-card {
+
+                padding: 21px;
+
+                border-radius: 16px;
+            }
+
+
+            .page-icon {
+
+                width: 59px;
+                height: 59px;
+
+                font-size: 25px;
+
+                border-radius: 17px;
+            }
+
+
+            .page-header h1 {
+
+                font-size: 21px;
+            }
+
+
+            .page-header p {
+
+                font-size: 11px;
+            }
+
+
+            .plan-stats {
+
+                gap: 5px;
+            }
+
+
+            .plan-stat {
+
+                padding:
+                    8px 3px;
+            }
+
+        }
+
+
+        @media (max-width: 380px) {
+
+            .create-card {
+
+                padding: 16px;
+            }
+
+
+            .plan-stats {
+
+                grid-template-columns:
+                    1fr;
+            }
+
+
+            .plan-stat {
+
+                display: flex;
+
+                align-items: center;
+
+                justify-content: space-between;
+
+                padding: 7px 10px;
+            }
+
+
+            .plan-stat-label {
+
+                margin: 0;
+            }
+
+        }
+
+
+        /* =========================================================
+           SCROLLBAR
+        ========================================================= */
+
+        ::-webkit-scrollbar {
+
+            width: 8px;
+            height: 8px;
+        }
+
+
+        ::-webkit-scrollbar-track {
+
+            background: #070707;
+        }
+
+
+        ::-webkit-scrollbar-thumb {
+
+            background:
+                linear-gradient(
+                    #444444,
+                    #222222
+                );
+
+            border-radius: 20px;
+        }
+
+
+        ::-webkit-scrollbar-thumb:hover {
+
+            background: #666666;
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+<div class="create-container">
+
+
+    <!-- =====================================================
+         HEADER
+    ====================================================== -->
+
+    <div class="page-header">
+
+        <div class="page-icon">
+            🚀
+        </div>
+
+        <h1>
+            إنشاء سيرفر جديد
+        </h1>
+
+        <p>
+            أنشئ سيرفرك واختر الخطة المناسبة لمشروعك
+        </p>
+
+    </div>
+
+
+    <!-- =====================================================
+         CARD
+    ====================================================== -->
+
+    <div class="create-card">
+
+
+        <% if (error) { %>
+
+            <div class="error-message">
+
+                ⚠️
+
+                <%= error %>
+
+            </div>
+
+        <% } %>
+
+
+        <form
+            method="POST"
+            action="/servers/create"
+        >
+
+
+            <!-- SERVER NAME -->
+
+            <div class="form-group">
+
+                <label class="form-label">
+
+                    <span class="label-icon">
+                        🖥️
+                    </span>
+
+                    اسم السيرفر
+
+                </label>
+
+
+                <input
+                    type="text"
+                    name="name"
+                    placeholder="My Discord Bot"
+                    autocomplete="off"
+                    required
+                >
+
+            </div>
+
+
+            <!-- PROGRAMMING LANGUAGE -->
+
+            <div class="form-group">
+
+                <label class="form-label">
+
+                    <span class="label-icon">
+                        ⚙️
+                    </span>
+
+                    لغة البرمجة
+
+                </label>
+
+
+                <select
+                    name="language"
+                    id="languageSelect"
+                    required
+                >
+
+                    <option value="nodejs">
+                        Node.js
+                    </option>
+
+                    <option value="python">
+                        Python
+                    </option>
+
+                </select>
+
+            </div>
+
+
+            <!-- MAIN FILE -->
+
+            <div class="form-group">
+
+                <label class="form-label">
+
+                    <span class="label-icon">
+                        📄
+                    </span>
+
+                    الملف الرئيسي
+
+                </label>
+
+
+                <input
+                    type="text"
+                    name="mainFile"
+                    value="index.js"
+                    placeholder="index.js"
+                    id="mainFileInput"
+                    autocomplete="off"
+                    required
+                >
+
+            </div>
+
+
+            <!-- PLAN -->
+
+            <div class="form-group">
+
+                <label class="form-label">
+
+                    <span class="label-icon">
+                        ⚡
+                    </span>
+
+                    اختر خطة الاستضافة
+
+                </label>
+
+
+                <select
+                    name="plan"
+                    id="planSelect"
+                    required
+                >
+
+                    <option value="weekly">
+                        Weekly Plan — 15 Coins
+                    </option>
+
+                    <option value="biweekly">
+                        Biweekly Plan — 25 Coins
+                    </option>
+
+                    <option value="monthly">
+                        Monthly Plan — 40 Coins
+                    </option>
+
+                </select>
+
+            </div>
+
+
+            <!-- PLAN INFO -->
+
+            <div
+                class="plan-info"
+                id="planInfo"
+            ></div>
+
+
+            <!-- PRICE -->
+
+            <div
+                class="price-box"
+                id="priceBox"
+            ></div>
+
+
+            <!-- SUBMIT -->
+
+            <button
+                class="btn"
+                type="submit"
+            >
+
+                🚀
+                إنشاء السيرفر الآن
+
+            </button>
+
+
+            <div class="form-footer">
+
+                <span class="secure-dot"></span>
+
+                موارد مخصصة وآمنة لسيرفرك
+
+            </div>
+
+
+        </form>
+
+    </div>
+
+
+</div>
+
+
+<script>
+
+    /* =========================================================
+       PLANS
+    ========================================================= */
+
+    const plans = {
+
+        weekly: {
+
+            name: "Weekly Plan",
+
+            price: 15,
+
+            cpu: "25%",
+
+            ram: "256MB",
+
+            disk: "1024MB"
+
+        },
+
+        biweekly: {
+
+            name: "Biweekly Plan",
+
+            price: 25,
+
+            cpu: "50%",
+
+            ram: "512MB",
+
+            disk: "2048MB"
+
+        },
+
+        monthly: {
+
+            name: "Monthly Plan",
+
+            price: 40,
+
+            cpu: "100%",
+
+            ram: "1024MB",
+
+            disk: "3072MB"
+
+        }
+
+    };
+
+
+    const select =
+        document.getElementById("planSelect");
+
+
+    const info =
+        document.getElementById("planInfo");
+
+
+    const price =
+        document.getElementById("priceBox");
+
+
+    /* =========================================================
+       UPDATE PLAN
+    ========================================================= */
+
+    function updatePlan() {
+
+        const plan =
+            plans[select.value];
+
+
+        if (!plan) return;
+
+
+        info.innerHTML = `
+
+            <div class="plan-name">
+                ${plan.name}
+            </div>
+
+            <div class="plan-stats">
+
+                <div class="plan-stat">
+
+                    <span class="plan-stat-label">
+                        ⚡ CPU
+                    </span>
+
+                    <span class="plan-stat-value">
+                        ${plan.cpu}
+                    </span>
+
+                </div>
+
+
+                <div class="plan-stat">
+
+                    <span class="plan-stat-label">
+                        🧠 RAM
+                    </span>
+
+                    <span class="plan-stat-value">
+                        ${plan.ram}
+                    </span>
+
+                </div>
+
+
+                <div class="plan-stat">
+
+                    <span class="plan-stat-label">
+                        💾 Disk
+                    </span>
+
+                    <span class="plan-stat-value">
+                        ${plan.disk}
+                    </span>
+
+                </div>
+
+            </div>
+
+        `;
+
+
+        price.innerHTML = `
+
+            <span>
+                💰 تكلفة الخطة
+            </span>
+
+            <span class="price-value">
+                ${plan.price} Coins
+            </span>
+
+        `;
+
+    }
+
+
+    select.addEventListener(
+        "change",
+        updatePlan
+    );
+
+
+    /* =========================================================
+       LANGUAGE / MAIN FILE
+    ========================================================= */
+
+    const languageSelect =
+        document.getElementById(
+            "languageSelect"
+        );
+
+
+    const mainFileInput =
+        document.getElementById(
+            "mainFileInput"
+        );
+
+
+    languageSelect.addEventListener(
+        "change",
+        function () {
+
+            if (this.value === "python") {
+
+                mainFileInput.value =
+                    "main.py";
+
+                mainFileInput.placeholder =
+                    "main.py";
+
+            } else {
+
+                mainFileInput.value =
+                    "index.js";
+
+                mainFileInput.placeholder =
+                    "index.js";
+
+            }
+
+        }
+    );
+
+
+    /* =========================================================
+       INITIALIZE
+    ========================================================= */
+
+    updatePlan();
+
+</script>
+
+
+</body>
+
+</html>
