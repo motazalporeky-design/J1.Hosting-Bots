@@ -205,7 +205,7 @@ client.on("channelCreate", async (channel) => {
 });
 
 
-client.login("MTU1NjU2NjU5MTA1ODA4Mzg2MA.GjZFzZ.gxCydOJkN5bIOr8xLxbpw02cUDdh_-ZA6XKiBI");
+client.login(process.env.DISCORD_TOKEN.trim());
 
 const TRANSFER_CHANNEL_ID = ""; // قناة التحويلات
 
