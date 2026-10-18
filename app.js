@@ -205,7 +205,9 @@ client.on("channelCreate", async (channel) => {
 });
 
 
-client.login(process.env.DISCORD_TOKEN.trim());
+const rawToken = process.env.DISCORD_TOKEN || '';
+console.log('TOKEN CHECK -> length:', rawToken.length, '| parts:', rawToken.split('.').length, '| quotes:', /["']/.test(rawToken), '| spaces:', /\s/.test(rawToken));
+client.login(rawToken.trim().replace(/^["']|["']$/g, ''));
 
 const TRANSFER_CHANNEL_ID = ""; // قناة التحويلات
 
